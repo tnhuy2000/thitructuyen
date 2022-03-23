@@ -25,7 +25,8 @@
 		<div class="card-body">
 		 
 		<a href="{{ route('admin.sapphong.qlphongthi.them') }}" class="btn btn-outline-primary mt-3 "><i class="bx bxs-plus-square"></i> Thêm mới</a>
-		  	
+		<a href="#nhap" class="btn btn-outline-warning mt-3 " data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-in"></i> Nhập từ Excel</a>
+			
             <!-- Bordered Tabs Justified -->
 			<ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
                 <li class="nav-item flex-fill" role="presentation">
@@ -61,7 +62,7 @@
 						</thead>
 						<tbody>
 							@php $count = 1; @endphp
-							@foreach($phongthi as $value)
+							@foreach($phongthi_dangdienra as $value)
 								<tr>
 									<td>{{ $count++ }}</td>
 									<td class="small">{{ $value->maphong }}</td>
@@ -80,10 +81,10 @@
 									<td>{{ $value->soluongthisinh }}</td>
 									<td class="small">{{ $value->ma_meeting }}</td>
 									<td class="small">{{ $value->ghichu }}</td>
-									<td><a href="{{ route('admin.dethi_baithi.qldethi_phongthi.danhsach', ['id' => $value->id]) }}"> <span class="badge bg-danger"><i class="bx bx-plus-circle"></i> Thêm</span></a></td>
-									<td class="text-center">
-										<a href="{{ route('admin.sapphong.qlsv_pt.danhsach', ['id' => $value->id]) }}"> <span class="badge bg-danger"><i class="bx bx-plus-circle"></i> Thí sinh</span></a>
-										<a href="{{ route('admin.sapphong.qlhdt_pt.danhsach', ['id' => $value->id]) }}"><span class="badge bg-primary"><i class="bx bx-plus-circle"></i> Hội đồng thi</span> </a>
+									<td class="small"><a class="btn btn-sm btn-danger" href="{{ route('admin.dethi_baithi.qldethi_phongthi.danhsach', ['id' => $value->id]) }}"><i class="bx bx-plus-circle"></i> Thêm</a></td>
+									<td class="text-center small">
+										<a class="btn btn-sm btn-primary" href="{{ route('admin.sapphong.qlsv_pt.danhsach', ['id' => $value->id]) }}"><i class="bx bx-plus-circle"></i> Thí sinh</a>
+										<a class="btn btn-sm btn-warning mt-1" href="{{ route('admin.sapphong.qlhdt_pt.danhsach', ['id' => $value->id]) }}"><i class="bx bx-plus-circle"></i> Hội đồng thi</a>
 									</td>
 									<td class="text-center"><a href="{{ route('admin.sapphong.qlphongthi.sua', ['id' => $value->id]) }}"><i class="bx bxs-pencil"></i> Sửa</a></td>
 									<td class="text-center"><a onclick="return confirm('Bạn có muốn xóa phòng thi {{$value->maphong}}?')" href="{{ route('admin.sapphong.qlphongthi.xoa', ['id' => $value->id]) }}" ><i class="bx bxs-trash text-danger"></i> Xoá</a></td>
@@ -114,7 +115,7 @@
 						</thead>
 						<tbody>
 							@php $count = 1; @endphp
-							@foreach($phongthi as $value)
+							@foreach($phongthi_sapdienra as $value)
 								<tr>
 									<td>{{ $count++ }}</td>
 									<td class="small">{{ $value->maphong }}</td>
@@ -133,10 +134,10 @@
 									<td>{{ $value->soluongthisinh }}</td>
 									<td class="small">{{ $value->ma_meeting }}</td>
 									<td class="small">{{ $value->ghichu }}</td>
-									<td><a href="{{ route('admin.dethi_baithi.qldethi_phongthi.danhsach', ['id' => $value->id]) }}"> <span class="badge bg-danger"><i class="bx bx-plus-circle"></i> Thêm</span></a></td>
+									<td><a class="btn btn-sm btn-danger" href="{{ route('admin.dethi_baithi.qldethi_phongthi.danhsach', ['id' => $value->id]) }}"><i class="bx bx-plus-circle"></i> Thêm</a></td>
 									<td class="text-center">
-										<a href="{{ route('admin.sapphong.qlsv_pt.danhsach', ['id' => $value->id]) }}"> <span class="badge bg-danger"><i class="bx bx-plus-circle"></i> Thí sinh</span></a>
-										<a href="{{ route('admin.sapphong.qlhdt_pt.danhsach', ['id' => $value->id]) }}"><span class="badge bg-primary"><i class="bx bx-plus-circle"></i> Hội đồng thi</span> </a>
+										<a class="btn btn-sm btn-primary" href="{{ route('admin.sapphong.qlsv_pt.danhsach', ['id' => $value->id]) }}"><i class="bx bx-plus-circle"></i> Thí sinh</a>
+										<a class="btn btn-sm btn-warning mt-1" href="{{ route('admin.sapphong.qlhdt_pt.danhsach', ['id' => $value->id]) }}"><i class="bx bx-plus-circle"></i> Hội đồng thi</a>
 									</td>
 									<td class="text-center"><a href="{{ route('admin.sapphong.qlphongthi.sua', ['id' => $value->id]) }}"><i class="bx bxs-pencil"></i> Sửa</a></td>
 									<td class="text-center"><a onclick="return confirm('Bạn có muốn xóa phòng thi {{$value->maphong}}?')" href="{{ route('admin.sapphong.qlphongthi.xoa', ['id' => $value->id]) }}" ><i class="bx bxs-trash text-danger"></i> Xoá</a></td>
@@ -167,7 +168,7 @@
 						</thead>
 						<tbody>
 							@php $count = 1; @endphp
-							@foreach($phongthi as $value)
+							@foreach($phongthi_daketthuc as $value)
 								<tr>
 									<td>{{ $count++ }}</td>
 									<td class="small">{{ $value->maphong }}</td>
@@ -186,10 +187,10 @@
 									<td>{{ $value->soluongthisinh }}</td>
 									<td class="small">{{ $value->ma_meeting }}</td>
 									<td class="small">{{ $value->ghichu }}</td>
-									<td><a href="{{ route('admin.dethi_baithi.qldethi_phongthi.danhsach', ['id' => $value->id]) }}"> <span class="badge bg-danger"><i class="bx bx-plus-circle"></i> Thêm</span></a></td>
+									<td><a class="btn btn-sm btn-danger" href="{{ route('admin.dethi_baithi.qldethi_phongthi.danhsach', ['id' => $value->id]) }}"><i class="bx bx-plus-circle"></i> Thêm</a></td>
 									<td class="text-center">
-										<a href="{{ route('admin.sapphong.qlsv_pt.danhsach', ['id' => $value->id]) }}"> <span class="badge bg-danger"><i class="bx bx-plus-circle"></i> Thí sinh</span></a>
-										<a href="{{ route('admin.sapphong.qlhdt_pt.danhsach', ['id' => $value->id]) }}"><span class="badge bg-primary"><i class="bx bx-plus-circle"></i> Hội đồng thi</span> </a>
+										<a class="btn btn-sm btn-primary" href="{{ route('admin.sapphong.qlsv_pt.danhsach', ['id' => $value->id]) }}"><i class="bx bx-plus-circle"></i> Thí sinh</a>
+										<a class="btn btn-sm btn-warning mt-1" href="{{ route('admin.sapphong.qlhdt_pt.danhsach', ['id' => $value->id]) }}"><i class="bx bx-plus-circle"></i> Hội đồng thi</a>
 									</td>
 									<td class="text-center"><a href="{{ route('admin.sapphong.qlphongthi.sua', ['id' => $value->id]) }}"><i class="bx bxs-pencil"></i> Sửa</a></td>
 									<td class="text-center"><a onclick="return confirm('Bạn có muốn xóa phòng thi {{$value->maphong}}?')" href="{{ route('admin.sapphong.qlphongthi.xoa', ['id' => $value->id]) }}" ><i class="bx bxs-trash text-danger"></i> Xoá</a></td>
@@ -212,7 +213,29 @@
 </section>
 
 </main><!-- End #main -->
-    
+<form action="{{ route('admin.sapphong.qlphongthi.nhap') }}" method="post" enctype="multipart/form-data">
+	@csrf
+	<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="importModalLabel">Nhập từ Excel</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-0">
+						<label for="file_excel" class="form-label">Chọn tập tin Excel</label>
+						<input type="file" class="form-control" id="file_excel" name="file_excel" required />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
+					<button type="submit" class="btn btn-danger"><i class="fal fa-upload"></i> Nhập dữ liệu</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form> 
 
 @endsection
 @section('javascript')    

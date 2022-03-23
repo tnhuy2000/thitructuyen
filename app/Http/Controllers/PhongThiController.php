@@ -34,14 +34,28 @@ class PhongThiController extends Controller
     }
     public function getDanhSach()
     {
+        $today = Carbon::today();
+
         $phongthi = \DB::table('phongthi')->get();
 		$kythi = \DB::table('cathi')->get();
 	
-		$phongthi = \DB::table('phongthi as p')
+		$phongthi_dangdienra = \DB::table('phongthi as p')
 				->join('cathi as c', 'p.cathi_id', '=', 'c.id')
+                ->where('c.ngaythi', '=', $today )
 				->select('p.id','p.maphong','p.soluongthisinh','p.ma_meeting','p.ghichu','c.tenca','c.ngaythi','c.giobatdau')
 				->orderBy('p.id', 'desc')->get();
-		return view('admin.sapphong.qlphongthi.danhsach',['phongthi' => $phongthi]);
+        $phongthi_sapdienra = \DB::table('phongthi as p')
+            ->join('cathi as c', 'p.cathi_id', '=', 'c.id')
+            ->where('c.ngaythi', '>', $today )
+            ->select('p.id','p.maphong','p.soluongthisinh','p.ma_meeting','p.ghichu','c.tenca','c.ngaythi','c.giobatdau')
+            ->orderBy('p.id', 'desc')->get();
+        $phongthi_daketthuc = \DB::table('phongthi as p')
+            ->join('cathi as c', 'p.cathi_id', '=', 'c.id')
+            ->where('c.ngaythi', '<', $today )
+            ->select('p.id','p.maphong','p.soluongthisinh','p.ma_meeting','p.ghichu','c.tenca','c.ngaythi','c.giobatdau')
+            ->orderBy('p.id', 'desc')->get();
+
+		return view('admin.sapphong.qlphongthi.danhsach',compact('phongthi_dangdienra','phongthi_sapdienra','phongthi_daketthuc'));
     }
     public function getXoa(Request $request)
     {

@@ -27,11 +27,24 @@
               <form action="{{ route('admin.dethi_baithi.qldethi.them') }}" method="post" class="row g-3 needs-validation" novalidate>
                     @csrf
                     <div class="col-md-6">
+                      <label for="validationCustom02" class="form-label">Kỳ thi</label>
+                      <select class="form-control @error('kythi_id') is-invalid @enderror" onchange="testb(this)" id="" name="kythi_id" required>
+                        <option value="">-- Chọn kỳ thi --</option>
+                        @foreach($ktkythi as $value){ 
+                            <option value="{{$value->id}}">{{$value->tenkythi}} năm học {{$value->namhoc}}</option>
+                        }
+                        @endforeach
+                      </select>
+                      @error('kythi_id')
+                      <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                      @enderror
+                    </div>
+                    <div class="col-md-6">
                     <label for="validationCustom01" class="form-label">Học phần</label>
-                    <select class="form-control @error('mahocphan') is-invalid @enderror" id="states" name="mahocphan" class="required">
+                    <select class="form-control @error('mahocphan') is-invalid @enderror" onchange="test(this)" id="sv" name="mahocphan" class="required">
                         <option value="">-- Chọn học phần --</option>
                         @foreach($kthocphan as $value){ 
-                            <option value="{{$value->mahocphan}}">{{$value->tenhocphan}}</option>
+                            <option value="{{$value->mahocphan}}">{{$value->tenhocphan}} - {{$value->mahocphan}}</option>
                         }
                         @endforeach
                       </select>
@@ -40,20 +53,17 @@
                       @enderror
 
                     </div>
-                    <div class="col-md-6">
-                      <label for="validationCustom02" class="form-label">Kỳ thi</label>
-                      <select class="form-control @error('kythi_id') is-invalid @enderror" id="states1" name="kythi_id" required>
-                        <option value="">-- Chọn kỳ thi --</option>
-                        @foreach($ktkythi as $value){ 
-                            <option value="{{$value->id}}">{{$value->tenkythi}}</option>
-                        }
-                        @endforeach
-                      </select>
-                      @error('kythi_id')
+                    
+                    <div class="form-group">
+                      <label for="validationCustom02" class="form-label">Tên đề thi</label>
+                      <input type="hidden" id="hocphan" required>
+                      <input type="hidden" id="kythi" required>
+                      <input type="text" class="form-control @error('tendethi') is-invalid @enderror" id="tendethi" name="tendethi" value="{{ old('tendethi') }}" required>
+                      @error('tendethi')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                       @enderror
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-sm-6">
                       <label for="validationCustom02" class="form-label">Thời gian làm bài (đơn vị: phút)</label>
                       <input type="text" class="form-control @error('thoigianlambai') is-invalid @enderror" id="thoigianlambai" name="thoigianlambai" value="{{ old('thoigianlambai') }}" required>
                       @error('thoigianlambai')
@@ -61,7 +71,7 @@
                       @enderror
                     </div>
                     
-                    <div class="form-group">
+                    <div class="form-group col-sm-6">
                       <label for="MaLoai" class="form-label">Hình thức</label>
                       <select class="form-control" id="hinhthuc" name="hinhthuc" required>
                           <option value="">-- Chọn hình thức --</option>
@@ -88,4 +98,21 @@
 </section>
 
 </main><!-- End #main -->
+@endsection
+@section('javascript')    
+<script type="text/javascript">
+  function test(a) {
+  var x = a.options[a.selectedIndex].text;
+  var kythi=document.getElementById('kythi').value;
+  $('#hocphan').val(x);
+  $('#tendethi').val("Đề thi "+kythi+' học phần '+x);
+  
+  }
+  function testb(a) {
+    var x = a.options[a.selectedIndex].text;
+    var ten=document.getElementById('hocphan').value;
+    $('#kythi').val(x);
+    $('#tendethi').val("Đề thi "+x+ ' học phần '+ten);
+  }
+</script>
 @endsection

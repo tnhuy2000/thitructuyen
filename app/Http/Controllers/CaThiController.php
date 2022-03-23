@@ -32,7 +32,7 @@ class CaThiController extends Controller
             ->join('kythi as k', 'c.kythi_id', '=', 'k.id')
             ->where('c.ngaythi', '<', $today )
             ->select('c.id','c.tenca','c.ngaythi','c.giobatdau', 'k.tenkythi','k.hocky','k.namhoc')
-            ->orderBy('k.namhoc', 'asc')->get();
+            ->orderBy('c.ngaythi', 'desc')->get();
 		return view('admin.sapphong.qlcathi.danhsach',compact('cathi_dangdienra','cathi_dathi','cathi_sapdienra'));
     }
     public function getXoa(Request $request)
@@ -90,7 +90,6 @@ class CaThiController extends Controller
             'tenca'=>'required|max:255|unique:cathi,tenca,' . $request->id . ',id',
             'ngaythi' => 'required|max:255:cathi,ngaythi',
             'giobatdau' => 'required|max:255:cathi,giobatdau',
-            'password' => 'confirmed|min:6',
             'kythi_id' => 'required|max:255:cathi,kythi_id'
         ],[
             'tenca.required'=>'Vui lòng nhập tên ca thi',

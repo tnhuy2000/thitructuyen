@@ -18,13 +18,13 @@ class DeThiPhongThiController extends Controller
                     ->join('kythi as kt', 'kt.id', '=', 'dt.kythi_id')
                     ->join('hocphan as hp', 'hp.mahocphan', '=', 'dt.mahocphan')
                     ->where('dtpt.phongthi_id', '=', $phongthi_id)
-                    ->select('dtpt.dethi_id','pt.maphong', 'dtpt.phongthi_id',
+                    ->select('dtpt.dethi_id','dt.tendethi','pt.maphong', 'dtpt.phongthi_id',
                         'hp.mahocphan','hp.tenhocphan','kt.tenkythi','kt.hocky',
                         'kt.namhoc','dtpt.ghichu','dtpt.id')->get();
 		$ktdethi = \DB::table('dethi as d')
                         ->join('hocphan as hp', 'd.mahocphan', '=', 'hp.mahocphan')
                         ->join('kythi as kt', 'd.kythi_id', '=', 'kt.id')
-                        ->select('d.id', 'd.mahocphan','hp.tenhocphan','hp.sotinchi', 'd.kythi_id','kt.tenkythi','kt.hocky','kt.namhoc','d.thoigianlambai','d.hinhthuc')
+                        ->select('d.id', 'd.tendethi','d.mahocphan','hp.tenhocphan','hp.sotinchi', 'd.kythi_id','kt.tenkythi','kt.hocky','kt.namhoc','d.thoigianlambai','d.hinhthuc')
                         ->orderBy('d.mahocphan', 'asc')->get();
         //$phongthi = PhongThi::all();
 		return view('admin.dethi_baithi.qldethi_phongthi.danhsach',compact('dethi_phongthi','ktphongthi','ktdethi'));

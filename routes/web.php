@@ -145,6 +145,8 @@ Route::prefix('admin')->name('admin.')->middleware(['isAdmin','auth','PreventBac
           Route::post('qlphongthi/sua/{id}', [PhongThiController::class, 'postSua'])->name('qlphongthi.sua');       
           Route::get('qlphongthi/xoa/{id}', [PhongThiController::class, 'getXoa'])->name('qlphongthi.xoa');
 
+          Route::post('qlphongthi/nhap', [PhongThiController::class, 'postNhap'])->name('qlphongthi.nhap');
+
           //sinh vien phong thi
           Route::get('qlsv_pt/all', [SinhVienPhongThiController::class, 'getAllDanhSach'])->name('qlsv_pt.all');
           Route::get('qlsv_pt/{id}', [SinhVienPhongThiController::class, 'getDanhSach'])->name('qlsv_pt.danhsach');

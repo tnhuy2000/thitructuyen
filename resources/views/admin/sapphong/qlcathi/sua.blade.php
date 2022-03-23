@@ -67,26 +67,21 @@
                     </div>
                     <div class="col-md-4">
                       <label for="validationCustom02" class="form-label">Giờ bắt đầu</label>
-                      <input type="time"  class="form-control @error('giobatdau') is-invalid @enderror" id="giobatdau" name="giobatdau" value="{{ $ktcathi->giobatdau }}" required>
+                      <input type="time"  class="form-control @error('giobatdau') is-invalid @enderror" id="giobatdau" name="giobatdau" value="{{ $ktcathi->giobatdau }}" value="{{ old('giobatdau') }}" required>
                       @error('giobatdau')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                       @enderror
                     </div>
                     
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-12">
                       <label for="MaLoai" class="form-label">Mật khẩu ca thi</label>
                       <input type="password" placeholder="Bỏ trống sẽ giữ nguyên mật khẩu cũ"  class="form-control @error('password') is-invalid @enderror" id="password" name="password" value="{{ old('password') }}">
                       @error('password')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                       @enderror
+                      <input class="mt-2" type="checkbox" id="checkbox" onclick="myFunction()"> Hiện mật khẩu
                     </div>
-                    <div class="form-group col-md-6">
-                      <label for="MaLoai" class="form-label">Xác nhận mật khẩu ca thi</label>
-                      <input type="password" placeholder="Bỏ trống sẽ giữ nguyên mật khẩu cũ" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation" name="password_confirmation" value="{{ old('password_confirmation') }}">
-                      @error('password_confirmation')
-                      <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
-                      @enderror
-                    </div>
+                    
                       
                     <div class="col-12">
                       <button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Cập nhật</button>
@@ -103,4 +98,18 @@
 </section>
 
 </main><!-- End #main -->
+@endsection
+@section('javascript')    
+<script type="text/javascript">
+    function myFunction() {
+      var x = document.getElementById("password");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+
+ 
+</script>
 @endsection

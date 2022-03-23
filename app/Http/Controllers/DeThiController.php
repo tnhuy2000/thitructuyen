@@ -19,7 +19,7 @@ class DeThiController extends Controller
 		$dethi = \DB::table('dethi as d')
 				->join('hocphan as hp', 'd.mahocphan', '=', 'hp.mahocphan')
                 ->join('kythi as kt', 'd.kythi_id', '=', 'kt.id')
-				->select('d.id', 'd.mahocphan','hp.tenhocphan','hp.sotinchi', 'd.kythi_id','kt.tenkythi','kt.hocky','kt.namhoc','d.thoigianlambai','d.hinhthuc')
+				->select('d.id','d.tendethi', 'd.mahocphan','hp.tenhocphan','hp.sotinchi', 'd.kythi_id','kt.tenkythi','kt.hocky','kt.namhoc','d.thoigianlambai','d.hinhthuc')
 				->orderBy('d.mahocphan', 'asc')->get();
 		return view('admin.dethi_baithi.qldethi.danhsach',['dethi' => $dethi]);
     }
@@ -46,6 +46,7 @@ class DeThiController extends Controller
         $this->validate($request, [
 			'mahocphan' => 'required|max:8:dethi,mahocphan',
             'kythi_id' => 'required|max:255:dethi,kythi_id',
+            'tendethi' => 'required|max:255:dethi,tendethi',
             'thoigianlambai' => 'required|max:255:dethi,thoigianlambai',
             'hinhthuc' => 'required|max:255:dethi,hinhthuc'
 
@@ -57,6 +58,7 @@ class DeThiController extends Controller
 		\DB::table('dethi')->insert([
             'mahocphan' => $request->mahocphan,
 			'kythi_id' => $request->kythi_id,
+            'tendethi' => $request->tendethi,
             'thoigianlambai' => $request->thoigianlambai,
             'hinhthuc' => $request->hinhthuc,
             'updated_at' => Carbon::now()
@@ -76,6 +78,7 @@ class DeThiController extends Controller
         $this->validate($request, [
             'mahocphan'=>'required|max:255:dethi,mahocphan,' . $request->id . ',id',
             'kythi_id'=>'required|max:255:dethi,kythi_id',
+            'tendethi' => 'required|max:255:dethi,tendethi',
             'thoigianlambai' => 'required|max:255:dethi,thoigianlambai',
             'hinhthuc' => 'required|max:255:dethi,hinhthuc'
         ],[
@@ -85,6 +88,7 @@ class DeThiController extends Controller
         \DB::table('dethi')->where('id', $request->id)->update([
             'mahocphan' => $request->mahocphan,
 			'kythi_id' => $request->kythi_id,
+            'tendethi' => $request->tendethi,
             'thoigianlambai' => $request->thoigianlambai,
             'hinhthuc' => $request->hinhthuc,
         ]);

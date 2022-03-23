@@ -32,9 +32,10 @@
 		  	<thead>
 				<tr>
 					<th width="2%">#</th>
-					<th>Học phần</th>
+					<th width="18%">Học phần</th>
 					<th width="15%">Kỳ thi</th>
-					<th width="15%">TG làm bài</th>
+					<th width="20%">Tên đề thi</th>
+					<th width="9%">TG làm bài</th>
 					<th width="13%">Hình thức</th>
 					<th width="15%">Dữ liệu đề thi</th>
 					<th width="8%" class="text-center">Sửa</th>
@@ -46,33 +47,34 @@
 				@foreach($dethi as $value)
 					<tr>
 						<td>{{ $count++ }}</td>
-						<td>
+						<td class="small">
 							<span style="color:#0000ff;font-weight:bold;">{{ $value->tenhocphan }}</span>
 							<span style="font-size:0.9em;">
 								
 								@if(!empty($value->mahocphan))
-									<br />Mã học phần: {{ $value->mahocphan }}
+									<br />MHP: {{ $value->mahocphan }}
 								@endif
 								@if(!empty($value->sotinchi))
-									<br />Số tín chỉ: {{ $value->sotinchi }}
+									<br />STC: {{ $value->sotinchi }}
 								@endif
 							</span>
 						</td>
 						
-						<td>
+						<td class="small">
 							<span style="color:#0000ff;font-weight:bold;">{{ $value->tenkythi }}</span>
 							<span style="font-size:0.9em;">
 								
 								@if(!empty($value->hocky))
-									<br />Học kỳ:{{ $value->hocky }}
+									<br />HK: {{ $value->hocky }}
 								@endif
 								@if(!empty($value->namhoc))
-									<br />{{ $value->namhoc }}
+									<br />NH: {{ $value->namhoc }}
 								@endif
 							</span>
 						</td>
-						<td>{{ $value->thoigianlambai }}</td>
-						<td>@if($value->hinhthuc=='thuchanh')
+						<td class="small">{{ $value->tendethi }}</td>
+						<td class="small"><span class="badge rounded-pill bg-secondary">{{ $value->thoigianlambai }} phút</span></td>
+						<td class="small">@if($value->hinhthuc=='thuchanh')
 								<span>Thực hành</span>
 							@else
 								<span>Tự luận</span>

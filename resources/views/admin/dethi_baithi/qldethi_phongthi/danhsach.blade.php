@@ -36,6 +36,7 @@
 				
 					<th width="15%">Phòng thi</th>
 					<th>Đề thi</th>
+					<th>Kỳ thi</th>
 					<th>Học phần</th>
 					<th width="10%">Ghi chú</th>
 					<th width="8%">Bài thi</th>
@@ -53,7 +54,10 @@
 							{{ $value->maphong }}
 						</td>
 						<td class="small">
-							<span style="color:#0000ff;font-weight:bold;">{{ $value->tenkythi }}</span>
+						{{ $value->tendethi }}
+						</td>
+						<td>
+						<span style="color:#0000ff;font-weight:bold;">{{ $value->tenkythi }}</span>
 							<span style="font-size:0.9em;">
 								
 								@if(!empty($value->hocky))
@@ -101,7 +105,7 @@
                                 
 							<select  class="form-select @error('dethi_id') is-invalid @enderror" name="dethi_id" required>
 								@foreach($ktdethi as $value)
-									<option value="{{$value->id}}">{{$value->tenhocphan}} - {{$value->tenkythi}} - {{$value->namhoc}} </option>
+									<option value="{{$value->id}}">{{$value->tendethi}} </option>
 								@endforeach
 							</select>
 							@error('dethi_id')
