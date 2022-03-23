@@ -1,16 +1,16 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý tài khoản sinh viên')
+@section('title','Quản lý tài khoản cán bộ coi thi')
 
 @section('content')
 
 <main id="main" class="main">
 
 <div class="pagetitle">
-  <h1>Quản lý tài khoản sinh viên</h1>
+  <h1>Quản lý tài khoản cán bộ coi thi</h1>
   <nav>
 	<ol class="breadcrumb">
 	  <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Bảng điều khiển</a></li>
-	  <li class="breadcrumb-item">Quản lý tài khoản sinh viên</li>
+	  <li class="breadcrumb-item">Quản lý tài khoản cán bộ coi thi</li>
 	  <li class="breadcrumb-item active">Danh sách</li>
 	</ol>
   </nav>
@@ -22,7 +22,7 @@
 
 	  <div class="card">
 		<div class="card-body">
-		  <h5 class="card-title">Danh sách tài khoản sinh viên</h5>
+		  <h5 class="card-title">Danh sách tài khoản cán bộ coi thi</h5>
 		  	<a href="#them" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#myModalThemUser"><i class="bx bxs-plus-square"></i> Thêm mới</a>
 		  	<a href="#nhap" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-in"></i> Nhập từ Excel</a>
 			
@@ -32,7 +32,7 @@
 		  	<thead>
 				<tr>
 					<th class="small" width="2%">#</th>
-					<th class="small" width="15%">Mã số sinh viên</th>
+					<th class="small" width="15%">Mã cán bộ</th>
 					<th class="small">Họ tên</th>
 					<th class="small" width="10%">Username</th>
 					<th class="small" width="25%">Email</th>
@@ -44,10 +44,10 @@
 			</thead>
 			<tbody>
 				@php $count = 1; @endphp
-				@foreach($tksinhvien as $value)
+				@foreach($tkcanbocoithi as $value)
 					<tr>
 						<td>{{ $count++ }}</td>
-						<td class="small">{{ $value->masinhvien }}</td>
+						<td class="small">{{ $value->macanbo }}</td>
 						
 						<td class="small">
 							<span style="color:#0000ff;font-weight:bold;">{{ $value->name }}</span>
@@ -63,12 +63,12 @@
 						</td>
 						<td>
 							@if($value->trangthai==1)
-								<h2><a href="{{ route('admin.qlnguoidung.qltksinhvien.trangthai', ['id'=> $value->id, 'trangthai' => $value->trangthai]) }}">
+								<h2><a href="{{ route('admin.qlnguoidung.qltkcanbocoithi.trangthai', ['id'=> $value->id, 'trangthai' => $value->trangthai]) }}">
 								<i class="bi bi-toggle2-on text-primary"></i>
 								</a>
 								</h2>
 							@else
-								<h2><a href="{{ route('admin.qlnguoidung.qltksinhvien.trangthai', ['id'=> $value->id, 'trangthai' => $value->trangthai]) }}">
+								<h2><a href="{{ route('admin.qlnguoidung.qltkcanbocoithi.trangthai', ['id'=> $value->id, 'trangthai' => $value->trangthai]) }}">
 									<i class="bi bi-toggle2-off text-danger"></i>
 									</a>
 								</h2>
@@ -76,7 +76,7 @@
 						</td>
 					
 						
-						<td class="text-center small"><a class="btn btn-danger btn-sm" onclick="return confirm('Bạn có muốn xóa sinh viên {{$value->name}}?')" href="{{ route('admin.qlnguoidung.qltksinhvien.xoa', ['id' => $value->id]) }}" ><i class="bi bi-trash"></i> </a></td>
+						<td class="text-center small"><a class="btn btn-danger btn-sm" onclick="return confirm('Bạn có muốn xóa cán bộ {{$value->name}}?')" href="{{ route('admin.qlnguoidung.qltkcanbocoithi.xoa', ['id' => $value->id]) }}" ><i class="bi bi-trash"></i> </a></td>
 		
 					</tr>
 				@endforeach
@@ -93,7 +93,7 @@
 
 </main><!-- End #main -->
     
-<form action="{{ route('admin.qlnguoidung.qltksinhvien.nhap') }}" method="post" enctype="multipart/form-data">
+<form action="{{ route('admin.qlnguoidung.qltkcanbocoithi.nhap') }}" method="post" enctype="multipart/form-data">
 	@csrf
 	<input type="hidden" name="role" value="{{$users->role}}">
 	<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
@@ -119,7 +119,7 @@
 </form> 
 
   <!--Thêm mới-->
-  <form action="{{route('admin.qlnguoidung.qltksinhvien.them')}}" method="post">
+  <form action="{{route('admin.qlnguoidung.qltkcanbocoithi.them')}}" method="post">
 		@csrf
 		<input type="hidden" name="role" value="{{$users->role}}">
 		<div class="modal fade" id="myModalThemUser" role="dialog" tabindex="-1" aria-hidden="true">
@@ -133,19 +133,18 @@
 						<form>
 							
 							<div class="mb-3">
-								<label for="message-text" class="col-form-label">Nhập mã số sinh viên:</label>
+								<label for="message-text" class="col-form-label">Nhập mã số cán bộ:</label>
 								<br>
-								<select class="form-select  @error('masinhvien') is-invalid @enderror"  style="width: 100%" id="statesSV" name="masinhvien" required>
+								<select class="form-select  @error('macanbo') is-invalid @enderror"  style="width: 100%" id="statesCB" name="macanbo" required>
 									
-									@foreach($ktsinhvien as $value)
-										<option class="@error('masinhvien') is-invalid @enderror" value="{{$value->masinhvien}}">{{$value->masinhvien}} - {{$value->holot}} {{$value->ten}} </option>
+									@foreach($kthoidongthi as $value)
+										<option class="@error('macanbo') is-invalid @enderror" value="{{$value->macanbo}}">{{$value->macanbo}} - {{$value->holot}} {{$value->ten}} </option>
 									@endforeach
 								</select>
-								@error('masinhvien')
+								@error('macanbo')
 								<div class="invalid-feedback"><strong>{{ $message }}</strong></div>
 								@enderror
 							</div>
-							
 						</form>
 					</div>
 					<div class="modal-footer">
@@ -163,19 +162,18 @@
   		function getXoa(id) {
 			$('#id').val(id);
 		}
-		$('#statesSV').select2({
+		$('#statesCB').select2({
 			dropdownParent: $('#myModalThemUser'),
-			placeholder: "Nhập mã sinh viên",
+			placeholder: "Nhập mã cán bộ",
     		allowClear: true
 		});
-	
-		@if($errors->has('masinhvien') )
+		@if($errors->has('macanbo') )
 	
 		var myModal = new bootstrap.Modal(document.getElementById("myModalThemUser"), {});
 		document.onreadystatechange = function () {
 		myModal.show();
 		};
-					
-		@endif
+				
+	@endif
   </script>
 @endsection

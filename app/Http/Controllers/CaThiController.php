@@ -59,7 +59,7 @@ class CaThiController extends Controller
             'tenca' => 'required|max:255|unique:cathi,tenca',
             'ngaythi' => 'required|max:255:cathi,ngaythi',
             'giobatdau' => 'required|max:255:cathi,giobatdau',
-            'password' => 'required|confirmed|min:6:cathi,matkhaucathi',
+            'password' => 'required|min:6:cathi,matkhaucathi',
             'kythi_id' => 'required|max:255:cathi,kythi_id'
 		],
         [

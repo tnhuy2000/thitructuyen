@@ -208,18 +208,25 @@ Route::prefix('admin')->name('admin.')->middleware(['isAdmin','auth','PreventBac
           // Quản lý người dùng sinh viên
           Route::get('qltksinhvien', [UserController::class, 'getDanhSachSV'])->name('qltksinhvien.danhsach');
           Route::get('qltksinhvien/{id}/trangthai/{trangthai}', [UserController::class, 'getTrangThaiSV'])->name('qltksinhvien.trangthai');
-          Route::get('qltksinhvien/them', [UserController::class, 'getThem'])->name('qltksinhvien.them');
-          Route::post('qltksinhvien/them', [UserController::class, 'postThem'])->name('qltksinhvien.them');
-          Route::get('qltksinhvien/sua/{id}', [UserController::class, 'getSua'])->name('qltksinhvien.sua');
-          Route::post('qltksinhvien/sua/{id}', [UserController::class, 'postSua'])->name('qltksinhvien.sua');       
+          Route::post('qltksinhvien/them', [UserController::class, 'postThem'])->name('qltksinhvien.them');     
           Route::get('qltksinhvien/xoa/{id}', [UserController::class, 'getXoa'])->name('qltksinhvien.xoa');
 
           Route::post('qltksinhvien/nhap', [UserController::class, 'postNhap'])->name('qltksinhvien.nhap');
-          Route::get('qltksinhvien/xuat', [UserController::class, 'getXuat'])->name('qltksinhvien.xuat');
+         // Route::get('qltksinhvien/xuat', [UserController::class, 'getXuat'])->name('qltksinhvien.xuat');
 
-
+          // Quản lý người dùng cán bộ coi thi
           Route::get('qltkcanbocoithi', [UserController::class, 'getDanhSachCB'])->name('qltkcanbocoithi.danhsach');
+          Route::get('qltkcanbocoithi/{id}/trangthai/{trangthai}', [UserController::class, 'getTrangThaiSV'])->name('qltkcanbocoithi.trangthai');
+          Route::post('qltkcanbocoithi/them', [UserController::class, 'postThem'])->name('qltkcanbocoithi.them');     
+          Route::get('qltkcanbocoithi/xoa/{id}', [UserController::class, 'getXoa'])->name('qltkcanbocoithi.xoa');
+          Route::post('qltkcanbocoithi/nhap', [UserController::class, 'postNhap'])->name('qltkcanbocoithi.nhap');
+
           Route::get('qltkthuky', [UserController::class, 'getDanhSachTK'])->name('qltkthuky.danhsach');
+          Route::get('qltkthuky/{id}/trangthai/{trangthai}', [UserController::class, 'getTrangThaiSV'])->name('qltkthuky.trangthai');
+          Route::post('qltkthuky/them', [UserController::class, 'postThem'])->name('qltkthuky.them');     
+          Route::get('qltkthuky/xoa/{id}', [UserController::class, 'getXoa'])->name('qltkthuky.xoa');
+          Route::post('qltkthuky/nhap', [UserController::class, 'postNhap'])->name('qltkthuky.nhap');
+
           Route::get('qltkhoidongthi', [UserController::class, 'getDanhSachHDT'])->name('qltkhoidongthi.danhsach');
          
 
