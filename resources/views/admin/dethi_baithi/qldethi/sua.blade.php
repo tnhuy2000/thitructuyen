@@ -32,11 +32,11 @@
                         <option value="">-- Chọn kỳ thi --</option>
                         @foreach($ktkythi as $value){ 
                           @if($value->id==$ktdethi->kythi_id){
-                            <option value="{{$value->id}}" selected="selected">{{$value->tenkythi}} năm học {{$value->namhoc}}</option>
+                            <option value="{{$value->id}}" selected="selected">{{$value->tenkythi}} học kỳ {{$value->hocky}}, năm học {{$value->namhoc}}</option>
                           }
                           @else
                           {
-                            <option value="{{$value->id}}">{{$value->tenkythi}} năm học {{$value->namhoc}} </option>
+                            <option value="{{$value->id}}">{{$value->tenkythi}} học kỳ {{$value->hocky}}, năm học {{$value->namhoc}} </option>
                           }
                           @endif
                         }
@@ -108,7 +108,7 @@
                     </div>
                    
                     <div class="col-12">
-                      <button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Cập nhật CSDL</button>
+                      <button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Cập nhật</button>
                     </div>
                 </form>
               <!-- End Custom Styled Validation -->

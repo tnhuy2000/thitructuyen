@@ -24,8 +24,8 @@
 		<div class="card-body">
 		  <h5 class="card-title">Danh sách khoa</h5>
 		 
-              	<a href="#nhap" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#importModalKhoa"><i class="bx bxs-archive-in"></i> Nhập từ Excel</a>
-				<a href="{{ route('admin.danhmuc.qlkhoa.xuat') }}" class="btn btn-outline-success"><i class="bx bxs-archive-out"></i> Xuất ra Excel</a>
+              	<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModalKhoa"><i class="bx bxs-archive-out"></i> Nhập từ Excel</a>
+				<a href="{{ route('admin.danhmuc.qlkhoa.xuat') }}" class="btn btn-success"><i class="bx bxs-archive-in"></i> Xuất ra Excel</a>
             <br><br>
 		  <!-- Table with stripped rows -->
 		  <table class="table datatable table-hover table-sm"">
@@ -44,10 +44,10 @@
 					<tr>
 						<td>{{ $count++ }}</td>
 						<td>{{ $value->makhoa }}</td>
-						<td>{{ $value->tenkhoa }}</td>
+						<td class="small">{{ $value->tenkhoa }}</td>
 						
-						<td class="text-center"><a href="#sua" data-bs-toggle="modal" data-bs-target="#myModalSua" onclick="getSua('{{ $value->makhoa}}','{{$value->tenkhoa}}'); return false;"  ><i class="bx bxs-pencil"></i> Sửa</a></td>
-						<td class="text-center"><a href="#xoa" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa('{{ $value->makhoa}}'); return false;"  ><i class="bx bxs-trash text-danger"></i> Xoá</a></td>
+						<td class="text-center"><a href="#sua" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModalSua" onclick="getSua('{{ $value->makhoa}}','{{$value->tenkhoa}}'); return false;"  ><i class="bi bi-pencil-square"></i></a></td>
+						<td class="text-center"><a href="#xoa" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa('{{ $value->makhoa}}'); return false;"  ><i class="bi bi-trash"></i></a></td>
 		
 					</tr>
 				@endforeach
@@ -61,27 +61,29 @@
 	</div>
 	<div class="col-md-4">
                     <div class="card">
-                        <div class="card-header">Thêm mới Khoa/Phòng ban</div>
+                        <div class="card-header fw-bold">Thêm mới Khoa/Phòng ban</div>
+						
                         <div class="card-body">
                             <form action="{{ route('admin.danhmuc.qlkhoa.them') }}" method="post" id="add-khoa-form" autocomplete="off">
                                 @csrf
                                 <div class="form-group mt-2">
-                                    <label for="">Mã khoa</label>
+                                    <label for="">Mã khoa/phòng ban</label>
                                     <input type="text" class="form-control @error('makhoa') is-invalid @enderror" id="makhoa" name="makhoa" placeholder="Mã khoa" value="{{ old('makhoa') }}">
                                     @error('makhoa')
 									<div class="invalid-feedback"><strong>{{ $message }}</strong></div>
 								 	@enderror
                                 </div>
                                 <div class="form-group mt-2">
-                                    <label for="">Tên khoa</label>
-                                    <input type="text" class="form-control @error('tenkhoa') is-invalid @enderror" name="tenkhoa" id="tenkhoa" placeholder="Tên khoa" value="{{ old('tenkhoa') }}">
+                                    <label for="">Tên khoa/ phòng ban</label>
+									<textarea class="form-control @error('tenkhoa') is-invalid @enderror" style="height: 80px" name="tenkhoa" id="tenkhoa" placeholder="Tên khoa">{{ old('tenkhoa') }}</textarea>
+                                    <!-- <input type="text" height="30px" class="form-control @error('tenkhoa') is-invalid @enderror" name="tenkhoa" id="tenkhoa" placeholder="Tên khoa" value="{{ old('tenkhoa') }}"> -->
 									@error('tenkhoa')
 									<div class="invalid-feedback"><strong>{{ $message }}</strong></div>
 									@enderror
                                 </div>
 								<br>
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-outline-primary"><i class="bx bxs-plus-square"></i> Thêm mới</button>
+                                    <button type="submit" class="btn btn-primary"><i class="bx bxs-plus-square"></i> Thêm mới</button>
                                 </div>
                             </form>
                         </div>

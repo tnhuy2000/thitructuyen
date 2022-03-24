@@ -15,13 +15,35 @@ class DeThiController extends Controller
     {
         $kythi = \DB::table('kythi')->get();
 		$hocphan = \DB::table('hocphan')->get();
-	
+        $dt = Carbon::now();
+        $dt1 = Carbon::now();
+        $dt2 = Carbon::now();
+
+
+        $nam1= $dt1->addYear(1);
+        $nam2= $dt2->subYear(1);
+
+        $year= $dt->year;
+        $year1= $nam1->year;
+        $year2= $nam2->year;
+
+        $namhoc1= $year.'-'.$year1;
+        $namhoc2= $year2.'-'.$year;
+
 		$dethi = \DB::table('dethi as d')
 				->join('hocphan as hp', 'd.mahocphan', '=', 'hp.mahocphan')
                 ->join('kythi as kt', 'd.kythi_id', '=', 'kt.id')
+                ->where('kt.namhoc', '=', $namhoc1)
+                ->orWhere('kt.namhoc','=', $namhoc2)
 				->select('d.id','d.tendethi', 'd.mahocphan','hp.tenhocphan','hp.sotinchi', 'd.kythi_id','kt.tenkythi','kt.hocky','kt.namhoc','d.thoigianlambai','d.hinhthuc')
-				->orderBy('d.mahocphan', 'asc')->get();
-		return view('admin.dethi_baithi.qldethi.danhsach',['dethi' => $dethi]);
+				->orderBy('kt.namhoc', 'desc')->get();
+        $dethicu = \DB::table('dethi as d')
+				->join('hocphan as hp', 'd.mahocphan', '=', 'hp.mahocphan')
+                ->join('kythi as kt', 'd.kythi_id', '=', 'kt.id')
+                ->orWhere('kt.namhoc','<', $namhoc2)
+				->select('d.id','d.tendethi', 'd.mahocphan','hp.tenhocphan','hp.sotinchi', 'd.kythi_id','kt.tenkythi','kt.hocky','kt.namhoc','d.thoigianlambai','d.hinhthuc')
+				->orderBy('kt.namhoc', 'desc')->get();
+		return view('admin.dethi_baithi.qldethi.danhsach',compact('dethicu','dethi'));
     }
     public function getXoa(Request $request)
     {

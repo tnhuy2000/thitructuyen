@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Traits\MeetingZoomTrait;
 use App\Models\PhongThi;
+use App\Imports\PhongThiImport;
+use Excel;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;
@@ -133,6 +135,12 @@ class PhongThiController extends Controller
         ]);
         toastr()->success('Cập nhật dữ liệu thành công!');
         return redirect()->route('admin.sapphong.qlphongthi.danhsach');}
+    // Nhập từ Excel
+    public function postNhap(Request $request)
+    {
+        Excel::import(new PhongThiImport, $request->file('file_excel'));
 
+        return redirect()->route('admin.sapphong.qlphongthi.danhsach');
+    }
        
 }

@@ -14,7 +14,7 @@ class PhongThi extends Model
         'maphong',
         'soluongthisinh',
         'ma_meeting',
-        'ma_meeting',
+        'ghichu',
         ];
 
 }

@@ -9,4 +9,5 @@ class DeThi_PhongThi extends Model
 {
     use HasFactory;
     protected $table = 'dethi_phongthi';
+    protected $fillable = ['dethi_id','phongthi_id','ghichu'];
 }

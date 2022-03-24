@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\CaThi;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-
+use App\Imports\CaThiImport;
+use App\Exports\CaThiExport;
+use Excel;
 use Illuminate\Support\Facades\Hash;
 class CaThiController extends Controller
 {
@@ -13,7 +15,7 @@ class CaThiController extends Controller
     public function getDanhSach()
     {
         $cathi = \DB::table('cathi')->get();
-		$kythi = \DB::table('kythi')->get();
+		$ktkythi = \DB::table('kythi')->get();
         
         $today = Carbon::today();
        
@@ -33,7 +35,7 @@ class CaThiController extends Controller
             ->where('c.ngaythi', '<', $today )
             ->select('c.id','c.tenca','c.ngaythi','c.giobatdau', 'k.tenkythi','k.hocky','k.namhoc')
             ->orderBy('c.ngaythi', 'desc')->get();
-		return view('admin.sapphong.qlcathi.danhsach',compact('cathi_dangdienra','cathi_dathi','cathi_sapdienra'));
+		return view('admin.sapphong.qlcathi.danhsach',compact('cathi_dangdienra','cathi_dathi','cathi_sapdienra','ktkythi'));
     }
     public function getXoa(Request $request)
     {
@@ -107,5 +109,16 @@ class CaThiController extends Controller
         toastr()->success('Cập nhật dữ liệu thành công!');
         return redirect()->route('admin.sapphong.qlcathi.danhsach');}
 
-       
+        public function postNhap(Request $request)
+        {
+            Excel::import(new CaThiImport($request->kythi_id), $request->file('file_excel'));
+    
+            return redirect()->route('admin.sapphong.qlphongthi.danhsach');
+        }
+
+        public function postXuat(Request $request)
+        {
+            $kythi=\DB::table('kythi')->where('id', '=', $request->kythi_id )->first();
+            return Excel::download(new CaThiExport($request->kythi_id,$kythi->tenkythi,$kythi->hocky,$kythi->namhoc), 'danh-sach-ca-thi.xlsx');
+        }
 }

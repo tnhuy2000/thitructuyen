@@ -53,7 +53,7 @@
                     <div class="form-group">
                       <label for="MaLoai" class="form-label">Khoa</label>
                      
-                      <select class="form-select" id="makhoa" name="makhoa" required>
+                      <select class="form-select" id="statesKhoa" name="makhoa" required>
                         <option value="">-- Chọn Khoa --</option>
                         @foreach($ktkhoa as $value){
                           <option value="{{$value->makhoa}}">{{$value->tenkhoa}}</option>
@@ -80,4 +80,13 @@
 </section>
 
 </main><!-- End #main -->
+@endsection
+@section('javascript')    
+<script type="text/javascript">
+$(document).ready(function() {
+            $("#statesKhoa").select2();   
+        });
+
+</script>
+
 @endsection

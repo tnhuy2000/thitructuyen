@@ -19,7 +19,7 @@ class DeThiPhongThiController extends Controller
                     ->join('hocphan as hp', 'hp.mahocphan', '=', 'dt.mahocphan')
                     ->where('dtpt.phongthi_id', '=', $phongthi_id)
                     ->select('dtpt.dethi_id','dt.tendethi','pt.maphong', 'dtpt.phongthi_id',
-                        'hp.mahocphan','hp.tenhocphan','kt.tenkythi','kt.hocky',
+                        'hp.mahocphan','hp.tenhocphan','hp.sotinchi','kt.tenkythi','kt.hocky',
                         'kt.namhoc','dtpt.ghichu','dtpt.id')->get();
 		$ktdethi = \DB::table('dethi as d')
                         ->join('hocphan as hp', 'd.mahocphan', '=', 'hp.mahocphan')

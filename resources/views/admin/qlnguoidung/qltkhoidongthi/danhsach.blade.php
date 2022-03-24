@@ -1,16 +1,16 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý tài khoản cán bộ coi thi')
+@section('title','Quản lý tài khoản hội dồng thi')
 
 @section('content')
 
 <main id="main" class="main">
 
 <div class="pagetitle">
-  <h1>Quản lý tài khoản cán bộ coi thi</h1>
+  <h1>Quản lý tài khoản hội dồng thi</h1>
   <nav>
 	<ol class="breadcrumb">
 	  <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Bảng điều khiển</a></li>
-	  <li class="breadcrumb-item">Quản lý tài khoản cán bộ coi thi</li>
+	  <li class="breadcrumb-item">Quản lý tài khoản hội dồng thi</li>
 	  <li class="breadcrumb-item active">Danh sách</li>
 	</ol>
   </nav>
@@ -22,7 +22,7 @@
 
 	  <div class="card">
 		<div class="card-body">
-		  <h5 class="card-title">Danh sách tài khoản cán bộ coi thi</h5>
+		  <h5 class="card-title">Danh sách tài khoản hội dồng thi</h5>
 		  	<a href="#them" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModalThemUser"><i class="bx bxs-plus-square"></i> Thêm mới</a>
 		  	<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-out"></i> Nhập từ Excel</a>
 			
@@ -44,7 +44,7 @@
 			</thead>
 			<tbody>
 				@php $count = 1; @endphp
-				@foreach($tkcanbocoithi as $value)
+				@foreach($tkhoidongthi as $value)
 					<tr>
 						<td>{{ $count++ }}</td>
 						<td class="small">{{ $value->macanbo }}</td>
@@ -63,12 +63,12 @@
 						</td>
 						<td>
 							@if($value->trangthai==1)
-								<h2><a href="{{ route('admin.qlnguoidung.qltkcanbocoithi.trangthai', ['id'=> $value->id, 'trangthai' => $value->trangthai]) }}">
+								<h2><a href="{{ route('admin.qlnguoidung.qltkhoidongthi.trangthai', ['id'=> $value->id, 'trangthai' => $value->trangthai]) }}">
 								<i class="bi bi-toggle2-on text-primary"></i>
 								</a>
 								</h2>
 							@else
-								<h2><a href="{{ route('admin.qlnguoidung.qltkcanbocoithi.trangthai', ['id'=> $value->id, 'trangthai' => $value->trangthai]) }}">
+								<h2><a href="{{ route('admin.qlnguoidung.qltkhoidongthi.trangthai', ['id'=> $value->id, 'trangthai' => $value->trangthai]) }}">
 									<i class="bi bi-toggle2-off text-danger"></i>
 									</a>
 								</h2>
@@ -76,7 +76,7 @@
 						</td>
 					
 						
-						<td class="text-center small"><a class="btn btn-danger btn-sm" onclick="return confirm('Bạn có muốn xóa cán bộ {{$value->name}}?')" href="{{ route('admin.qlnguoidung.qltkcanbocoithi.xoa', ['id' => $value->id]) }}" ><i class="bi bi-trash"></i> </a></td>
+						<td class="text-center small"><a class="btn btn-danger btn-sm" onclick="return confirm('Bạn có muốn xóa cán bộ {{$value->name}}?')" href="{{ route('admin.qlnguoidung.qltkhoidongthi.xoa', ['id' => $value->id]) }}" ><i class="bi bi-trash"></i> </a></td>
 		
 					</tr>
 				@endforeach
@@ -93,9 +93,9 @@
 
 </main><!-- End #main -->
     
-<form action="{{ route('admin.qlnguoidung.qltkcanbocoithi.nhap') }}" method="post" enctype="multipart/form-data">
+<form action="{{ route('admin.qlnguoidung.qltkhoidongthi.nhap') }}" method="post" enctype="multipart/form-data">
 	@csrf
-	<input type="hidden" name="role" value="3">
+	<input type="hidden" name="role" value="4">
 	<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -119,9 +119,9 @@
 </form> 
 
   <!--Thêm mới-->
-  <form action="{{route('admin.qlnguoidung.qltkcanbocoithi.them')}}" method="post">
+  <form action="{{route('admin.qlnguoidung.qltkhoidongthi.them')}}" method="post">
 		@csrf
-		<input type="hidden" name="role" value="3">
+		<input type="hidden" name="role" value="4">
 		<div class="modal fade" id="myModalThemUser" role="dialog" tabindex="-1" aria-hidden="true">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">

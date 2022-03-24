@@ -62,30 +62,36 @@ class LoginController extends Controller
        $input = $request->all();
        //Validate Inputs
        $request->validate([
-        'email'=>'required|email|:users',
+        'username'=>'required|:users',
         'password'=>'required|min:5|max:30'
         ]);
-        if( auth()->attempt(array('email'=>$input['email'], 'password'=>$input['password'])) ){
+        if( auth()->attempt(array('username'=>$input['username'], 'password'=>$input['password'])) ){
+            //dd(auth()->user()->trangthai);
+            if(auth()->user()->trangthai==1){
 
-        if( auth()->user()->role == 1 ){
-            return redirect()->route('admin.dashboard');
-        }
         
-        elseif( auth()->user()->role == 2 ){
-            return redirect()->route('thuky.dashboard');
-        }
-        elseif( auth()->user()->role == 3 ){
-            return redirect()->route('canbocoithi.dashboard');
-        }
-        elseif( auth()->user()->role == 4 ){
-            return redirect()->route('hoidongthi.dashboard');
-        }
-        elseif( auth()->user()->role == 5 ){
-            return redirect()->route('sinhvien.dashboard');
-        }
+                if( auth()->user()->role == 1 ){
+                    return redirect()->route('admin.dashboard');
+                }
+                
+                elseif( auth()->user()->role == 2 ){
+                    return redirect()->route('thuky.dashboard');
+                }
+                elseif( auth()->user()->role == 3 ){
+                    return redirect()->route('canbocoithi.dashboard');
+                }
+                elseif( auth()->user()->role == 4 ){
+                    return redirect()->route('hoidongthi.dashboard');
+                }
+                elseif( auth()->user()->role == 5 ){
+                    return redirect()->route('sinhvien.dashboard');
+                }
+            }else{
+                return redirect()->route('login')->with('fail','Tài khoản đã bị khoá');
+            }
 
-       }else{
-           return redirect()->route('login')->with('fail','Email hoặc mật khẩu không đúng');
-       }
+        }else{
+            return redirect()->route('login')->with('fail','Tài khoản hoặc mật khẩu không chính xác');
+        }
     }
 }

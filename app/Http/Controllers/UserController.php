@@ -45,7 +45,7 @@ class UserController extends Controller
             return redirect()->route('admin.qlnguoidung.qltksinhvien.danhsach');
         }
         else{
-            dd($role);
+            
             $this->validate($request, [
                 'macanbo' => 'required|unique:users,macanbo',
                 
@@ -69,15 +69,13 @@ class UserController extends Controller
                 return redirect()->route('admin.qlnguoidung.qltkcanbocoithi.danhsach');
             elseif($role==2)
                 return redirect()->route('admin.qlnguoidung.qltkthuky.danhsach');
+            elseif($role==4)
+                return redirect()->route('admin.qlnguoidung.qltkhoidongthi.danhsach');
         }
 
         
     }
     public function getDanhSachSV(){
-       
-        $users= \DB::table('users as us')
-                ->where('us.role', '=', 5)
-                ->select('us.*')->first();
         $ktsinhvien = \DB::table('sinhvien as sv')
             ->select('sv.*')
             ->orderBy('sv.masinhvien', 'asc')->get();
@@ -86,61 +84,76 @@ class UserController extends Controller
 				->select('us.*')
 				->orderBy('us.masinhvien', 'asc')->get();
 	
-        return view('admin.qlnguoidung.qltksinhvien.danhsach', compact('tksinhvien','users','ktsinhvien'));
+        return view('admin.qlnguoidung.qltksinhvien.danhsach', compact('tksinhvien','ktsinhvien'));
     }
     public function getDanhSachCB(){
 
-        $users= \DB::table('users as us')
-                ->where('us.role', '=', 3)
-                ->select('us.*')->first();
+       
         $kthoidongthi = \DB::table('hoidongthi as hdt')
+            ->where('hdt.vaitro', '=', "canbocoithi")
             ->select('hdt.*')
             ->orderBy('hdt.macanbo', 'asc')->get();
         $tkcanbocoithi = \DB::table('users as us')
             ->where('us.role', '=', 3)
             ->select('us.*')
             ->orderBy('us.macanbo', 'asc')->get();
-        return view('admin.qlnguoidung.qltkcanbocoithi.danhsach', compact('tkcanbocoithi','users','kthoidongthi'));
+        return view('admin.qlnguoidung.qltkcanbocoithi.danhsach', compact('tkcanbocoithi','kthoidongthi'));
     }
 
     public function getDanhSachTK(){
     
-        $users= \DB::table('users as us')
-                ->where('us.role', '=', 2)
-                ->select('us.*')->first();
         $kthoidongthi = \DB::table('hoidongthi as hdt')
+            ->where('hdt.vaitro', '=', "thuky")
             ->select('hdt.*')
             ->orderBy('hdt.macanbo', 'asc')->get();
         $tkthuky = \DB::table('users as us')
             ->where('us.role', '=', 2)
             ->select('us.*')
             ->orderBy('us.macanbo', 'asc')->get();
-        return view('admin.qlnguoidung.qltkthuky.danhsach', compact('tkthuky','users','kthoidongthi'));
+        return view('admin.qlnguoidung.qltkthuky.danhsach', compact('tkthuky','kthoidongthi'));
     }
     public function getDanhSachHDT(){
-    
+        $kthoidongthi = \DB::table('hoidongthi as hdt')
+            ->where('hdt.vaitro', '=', "hoidongthi")
+            ->select('hdt.*')
+            ->orderBy('hdt.macanbo', 'asc')->get();
         $tkhoidongthi = \DB::table('users as us')
             ->where('us.role', '=', 4)
             ->select('us.*')
             ->orderBy('us.macanbo', 'asc')->get();
 
-        return view('admin.qlnguoidung.qltkhidongthi.danhsach', compact('tkhoidongthi'));
+        return view('admin.qlnguoidung.qltkhoidongthi.danhsach', compact('tkhoidongthi','kthoidongthi'));
     }
-    public function getTrangThaiSV($id,$trangthai)
+    public function getTrangThai($id,$trangthai)
 	{
         $user = User::where('id', $id)->first();
-        if($user->role==5){
+        if($user->role==5)
+        {
             $orm = User::find($id);
             $orm->trangthai = 1 -$orm->trangthai;
             $orm->save();
             return redirect()->route('admin.qlnguoidung.qltksinhvien.danhsach');
+        }
+        elseif($user->role==3)
+        {
+            $orm = User::find($id);
+            $orm->trangthai = 1 -$orm->trangthai;
+            $orm->save();
+            return redirect()->route('admin.qlnguoidung.qltkcanbocoithi.danhsach');
+        }
+        elseif($user->role==2)
+        {
+            $orm = User::find($id);
+            $orm->trangthai = 1 -$orm->trangthai;
+            $orm->save();
+            return redirect()->route('admin.qlnguoidung.qltkthuky.danhsach');
         }
         else
         {
             $orm = User::find($id);
             $orm->trangthai = 1 -$orm->trangthai;
             $orm->save();
-            return redirect()->route('admin.qlnguoidung.qltkcanbocoithi.danhsach');
+            return redirect()->route('admin.qlnguoidung.qltkhoidongthi.danhsach');
         }
 		
 		
@@ -207,10 +220,7 @@ class UserController extends Controller
             }
         }
     }
-    public function ChangeMssv($masinhvien)
-    {
-        
-    }
+  
     public function getXoa(Request $request)
     {
         $user = User::where('id', $request->id)->first();
@@ -224,6 +234,17 @@ class UserController extends Controller
                 return redirect()->route('admin.qlnguoidung.qltksinhvien.danhsach');
             }
         }
+        elseif($user->role==4){
+            try {  
+                \DB::table('users')->where('id', '=', $request->id)->delete();
+                toastr()->success('Xoá dữ liệu thành công!');
+                return redirect()->route('admin.qlnguoidung.qltkhoidongthi.danhsach');
+            } catch (\Illuminate\Database\QueryException $e) {
+                toastr()->warning('Cảnh báo! Dữ liệu này không thể xoá vì để tránh mất dữ liệu.');
+                return redirect()->route('admin.qlnguoidung.qltkhoidongthi.danhsach');
+            }
+        }
+        
         elseif($user->role==3){
             try {  
                 \DB::table('users')->where('id', '=', $request->id)->delete();
@@ -234,13 +255,29 @@ class UserController extends Controller
                 return redirect()->route('admin.qlnguoidung.qltkcanbocoithi.danhsach');
             }
         }
+        elseif($user->role==2){
+            try {  
+                \DB::table('users')->where('id', '=', $request->id)->delete();
+                toastr()->success('Xoá dữ liệu thành công!');
+                return redirect()->route('admin.qlnguoidung.qltkthuky.danhsach');
+            } catch (\Illuminate\Database\QueryException $e) {
+                toastr()->warning('Cảnh báo! Dữ liệu này không thể xoá vì để tránh mất dữ liệu.');
+                return redirect()->route('admin.qlnguoidung.qltkthuky.danhsach');
+            }
+        }
         
     }
     // Nhập từ Excel
     public function postNhap(Request $request)
     {
         Excel::import(new UserImport($request->role), $request->file('file_excel'));
-   
-        return redirect()->route('admin.qlnguoidung.qltksinhvien.danhsach');
+        if($request->role==5)
+            return redirect()->route('admin.qlnguoidung.qltksinhvien.danhsach');
+        elseif($request->role==4)
+            return redirect()->route('admin.qlnguoidung.qltkhoidongthi.danhsach');
+        elseif($request->role==3)
+            return redirect()->route('admin.qlnguoidung.qltkcanbocoithi.danhsach');
+        elseif($request->role==2)
+            return redirect()->route('admin.qlnguoidung.qltkthuky.danhsach');
     }
 }

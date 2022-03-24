@@ -36,8 +36,8 @@
 				
 					<th width="15%">Phòng thi</th>
 					<th>Đề thi</th>
-					<th>Kỳ thi</th>
-					<th>Học phần</th>
+					<th width="15%">Kỳ thi</th>
+					<th width="15%">Học phần</th>
 					<th width="10%">Ghi chú</th>
 					<th width="8%">Bài thi</th>
 					<th width="8%" class="text-center">Sửa</th>
@@ -56,19 +56,29 @@
 						<td class="small">
 						{{ $value->tendethi }}
 						</td>
-						<td>
+						<td class="small">
 						<span style="color:#0000ff;font-weight:bold;">{{ $value->tenkythi }}</span>
 							<span style="font-size:0.9em;">
 								
 								@if(!empty($value->hocky))
-									<br />Học kỳ: {{ $value->hocky }}
+									<br />HK: {{ $value->hocky }}
 								@endif
 								@if(!empty($value->namhoc))
-									<br />Năm học: {{ $value->namhoc }}
+									<br />NH: {{ $value->namhoc }}
 								@endif
 							</span>
 						</td>
-						<td class="small">{{ $value->tenhocphan }}
+						<td class="small"><span style="color:#0000ff;font-weight:bold;">{{ $value->tenhocphan }}</span>
+							<span style="font-size:0.9em;">
+								@if(!empty($value->mahocphan))
+									<br />MHP: {{ $value->mahocphan }}
+								@endif
+								@if(!empty($value->sotinchi))
+									<br />STC: {{ $value->sotinchi }}
+								@endif
+								
+							</span>
+						</td>
 						<td class="small">{{ $value->ghichu }}</td>
 						<td class="small"><a href="{{ route('admin.dethi_baithi.qlbaithi.danhsach', ['id' => $value->id]) }}"> <span class="badge bg-success"><i class="bx bxs-show"></i> Xem</span></a></td>
 						<td><a href="#suaghichu" data-bs-toggle="modal" data-bs-target="#ModalSua" onclick="getSua({{ $value->id }},'{{ $value->dethi_id }}','{{ $value->phongthi_id }}', '{{ $value->ghichu }}'); return false;"><i class="bx bxs-pencil"></i> Sửa</a></td>

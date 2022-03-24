@@ -25,7 +25,7 @@
                 <form class="my-login-validation"  method="POST" action="{{ route('login') }}">
                     @if (Session::get('fail'))
                         <div class="alert alert-danger">
-                        <i class="bi bi-shield-x"></i> Lỗi: {{ Session::get('fail') }}
+                        <i class="bi bi-shield-x"></i> {{ Session::get('fail') }}
                         </div>
                     @endif
                     @if (Session::get('info'))
@@ -38,14 +38,14 @@
                     
                     @csrf
                     <div class="form-group">
-                        <label for="exampleInputEmail1" class="text-uppercase">{{ __('Email Address') }}</label>
-                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ Session::get('verifiedEmail') ? Session::get('verifiedEmail') : old('email') }}">
-                        <span class="text-danger">@error('email'){{ $message }}@enderror</span>
+                        <label for="exampleInputEmail1" class="text-uppercase">Tài khoản</label>
+                        <input id="text" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{old('username') }}">
+                        <span class="text-danger">@error('username'){{ $message }}@enderror</span>
                         
                         
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1" class="text-uppercase">{{ __('Password') }}</label>
+                        <label for="exampleInputPassword1" class="text-uppercase">Mật khẩu</label>
                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="current-password">
                         
                         <span class="text-danger">@error('password'){{ $message }}@enderror</span>
@@ -53,7 +53,7 @@
     
                     <div class="form-check">
                         
-                        <button type="submit" class="btn btn-login float-right">{{ __('Login') }}</button>
+                        <button type="submit" class="btn btn-login float-right">Đăng nhập</button>
                     </div>
                     
     

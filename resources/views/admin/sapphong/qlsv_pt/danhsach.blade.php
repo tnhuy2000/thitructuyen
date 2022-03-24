@@ -25,9 +25,9 @@
 	  <div class="card">
 		<div class="card-body">
 		  	<h5 class="card-title">Danh sách sinh viên phòng {{$ktphongthi->maphong}}</h5>
-			<a href="#them" data-bs-toggle="modal" data-bs-target="#myModalThemSVPT" class="btn btn-outline-primary"><i class="bx bxs-plus-square"></i> Thêm mới</a>
-			<a href="#nhap" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-in"></i> Nhập từ Excel</a>
-			<a href="{{ route('admin.sapphong.qlsv_pt.xuat',['phongthi_id'=> $ktphongthi->id])}}" class="btn btn-outline-success"><i class="bx bxs-archive-out"></i> Xuất ra Excel</a>
+			<a href="#them" data-bs-toggle="modal" data-bs-target="#myModalThemSVPT" class="btn btn-primary"><i class="bx bxs-plus-square"></i> Thêm mới</a>
+			<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-out"></i> Nhập từ Excel</a>
+			<a href="{{ route('admin.sapphong.qlsv_pt.xuat',['phongthi_id'=> $ktphongthi->id])}}" class="btn btn-success"><i class="bx bxs-archive-in"></i> Xuất ra Excel</a>
 		
 		
 		  <!-- Table with stripped rows -->

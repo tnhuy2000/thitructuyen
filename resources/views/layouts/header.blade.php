@@ -42,12 +42,7 @@
     
   
     <script>
-        $(document).ready(function() {
-            $("#states").select2();   
-        });
-        $(document).ready(function() {
-            $("#states1").select2();   
-        });
+        
         
     </script>
 </head>

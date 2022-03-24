@@ -23,9 +23,12 @@
 		<div class="card">
             <div class="card-body">
 			<h5 class="card-title">Danh sách ca thi</h5>
-		  	<a href="{{ route('admin.sapphong.qlcathi.them') }}" class="btn btn-outline-primary"><i class="bx bxs-plus-square"></i> Thêm mới</a>
-        
-              <!-- Bordered Tabs Justified -->
+		  	<a href="{{ route('admin.sapphong.qlcathi.them') }}" class="btn btn-primary"><i class="bx bxs-plus-square"></i> Thêm mới</a>
+			  <a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-out"></i> Nhập từ Excel</a>
+			  <a href="#xuat" data-bs-toggle="modal" data-bs-target="#exportModal" class="btn btn-success"><i class="bx bxs-archive-in"></i> Xuất ra Excel</a>
+		
+			 
+			  <!-- Bordered Tabs Justified -->
               <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
                 <li class="nav-item flex-fill" role="presentation">
                   <button class="nav-link w-100 active fw-bold" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-dangdienra" type="button" role="tab" aria-controls="home" aria-selected="true">Đang diễn ra</button>
@@ -183,23 +186,86 @@
         
 		</div>
 
-	  <div class="card">
-		<div class="card-body">
-		  
-		  	
-            
-		  
-
-		</div>
-	  </div>
-
 	</div>
   </div>
 </section>
 
 </main><!-- End #main -->
     
+<form action="{{ route('admin.sapphong.qlcathi.nhap') }}" method="post" enctype="multipart/form-data">
+	@csrf
+	
+	<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="importModalLabel">Nhập từ Excel</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+                      <label for="MaLoai" class="form-label">Kỳ thi</label>
+                      <select class="form-control" id="kythi_id" name="kythi_id">
+                        <option value="">-- Chọn kỳ thi --</option>
+                        @foreach($ktkythi as $value){
+                          <option value="{{$value->id}}">{{$value->tenkythi}} năm học {{$value->namhoc}} </option>
+                        }
+                        @endforeach
+ 
+                      </select>
+                      @error('kythi_id')
+                      <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                      @enderror
+                    </div>
+					<div class="mb-0">
+						<label for="file_excel" class="form-label">Chọn tập tin Excel</label>
+						<input type="file" class="form-control" id="file_excel" name="file_excel" required />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
+					<button type="submit" class="btn btn-danger"><i class="fal fa-upload"></i> Nhập dữ liệu</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
 
+<form action="{{ route('admin.sapphong.qlcathi.xuat') }}" method="post" enctype="multipart/form-data">
+	@csrf
+	
+	<div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="importModalLabel">Xuất ra Excel</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+                      <label for="MaLoai" class="form-label">Kỳ thi</label>
+                      <select class="form-control" id="kythi_id" name="kythi_id" required>
+                        <option value="">-- Chọn kỳ thi --</option>
+                        @foreach($ktkythi as $value){
+                          <option value="{{$value->id}}">{{$value->tenkythi}} năm học {{$value->namhoc}} </option>
+                        }
+                        @endforeach
+ 
+                      </select>
+                      @error('kythi_id')
+                      <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                      @enderror
+                    </div>
+					
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
+					<button type="submit" class="btn btn-danger"><i class="fal fa-upload"></i> Xuất dữ liệu</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
 @endsection
 @section('javascript')    
 <script type="text/javascript">

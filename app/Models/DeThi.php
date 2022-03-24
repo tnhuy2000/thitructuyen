@@ -9,4 +9,5 @@ class DeThi extends Model
 {
     use HasFactory;
     protected $table = 'dethi';
+    
 }

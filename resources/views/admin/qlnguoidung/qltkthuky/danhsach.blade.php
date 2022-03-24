@@ -23,8 +23,8 @@
 	  <div class="card">
 		<div class="card-body">
 		  <h5 class="card-title">Danh sách tài khoản thư ký</h5>
-		  	<a href="#them" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#myModalThemUser"><i class="bx bxs-plus-square"></i> Thêm mới</a>
-		  	<a href="#nhap" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-in"></i> Nhập từ Excel</a>
+		  	<a href="#them" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModalThemUser"><i class="bx bxs-plus-square"></i> Thêm mới</a>
+		  	<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-out"></i> Nhập từ Excel</a>
 			
             
 		  <!-- Table with stripped rows -->
@@ -95,7 +95,7 @@
     
 <form action="{{ route('admin.qlnguoidung.qltkthuky.nhap') }}" method="post" enctype="multipart/form-data">
 	@csrf
-	<input type="hidden" name="role" value="{{$users->role}}">
+	<input type="hidden" name="role" value="2">
 	<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -121,7 +121,7 @@
   <!--Thêm mới-->
   <form action="{{route('admin.qlnguoidung.qltkthuky.them')}}" method="post">
 		@csrf
-		<input type="hidden" name="role" value="{{$users->role}}">
+		<input type="hidden" name="role" value="2">
 		<div class="modal fade" id="myModalThemUser" role="dialog" tabindex="-1" aria-hidden="true">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">

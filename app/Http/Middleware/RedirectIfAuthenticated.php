@@ -37,7 +37,7 @@ class RedirectIfAuthenticated
             {
                 return redirect(RouteServiceProvider::HOIDONGTHI);
             }
-            elseif(Auth::guard($guard)->check() && Auth::user()->role == 5)
+            elseif(Auth::guard($guard)->check() && Auth::user()->role == 5 && Auth::user()->trangthai == 1)
             {
                 return redirect(RouteServiceProvider::SINHVIEN);
             }

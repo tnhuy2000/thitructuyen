@@ -28,10 +28,10 @@
                     @csrf
                     <div class="col-md-6">
                       <label for="validationCustom02" class="form-label">Kỳ thi</label>
-                      <select class="form-control @error('kythi_id') is-invalid @enderror" onchange="testb(this)" id="" name="kythi_id" required>
+                      <select class="form-control @error('kythi_id') is-invalid @enderror" onchange="testb(this)" id="statesKyThi" name="kythi_id" required>
                         <option value="">-- Chọn kỳ thi --</option>
                         @foreach($ktkythi as $value){ 
-                            <option value="{{$value->id}}">{{$value->tenkythi}} năm học {{$value->namhoc}}</option>
+                            <option value="{{$value->id}}">{{$value->tenkythi}} học kỳ {{$value->hocky}}, năm học {{$value->namhoc}}</option>
                         }
                         @endforeach
                       </select>
@@ -41,7 +41,7 @@
                     </div>
                     <div class="col-md-6">
                     <label for="validationCustom01" class="form-label">Học phần</label>
-                    <select class="form-control @error('mahocphan') is-invalid @enderror" onchange="test(this)" id="sv" name="mahocphan" class="required">
+                    <select class="form-control @error('mahocphan') is-invalid @enderror" onchange="test(this)" id="statesHocPhan" name="mahocphan" class="required">
                         <option value="">-- Chọn học phần --</option>
                         @foreach($kthocphan as $value){ 
                             <option value="{{$value->mahocphan}}">{{$value->tenhocphan}} - {{$value->mahocphan}}</option>
@@ -85,7 +85,7 @@
                     </div>
                    
                     <div class="col-12">
-                      <button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Thêm vào CSDL</button>
+                      <button type="submit" class="btn btn-primary"><i class="bx bxs-plus-square"></i> Thêm mới</button>
                     </div>
                 </form>
               <!-- End Custom Styled Validation -->
@@ -114,5 +114,12 @@
     $('#kythi').val(x);
     $('#tendethi').val("Đề thi "+x+ ' học phần '+ten);
   }
+
+      $(document).ready(function() {
+            $("#statesKyThi").select2();   
+        });
+        $(document).ready(function() {
+            $("#statesHocPhan").select2();   
+        });
 </script>
 @endsection
