@@ -18,12 +18,17 @@ class HoiDongThiController extends Controller
                 ->join('hoidongthi as hdt', 'hdt.macanbo', '=', 'hdtpt.macanbo')
 				->select('hdtpt.id', 'hdt.macanbo','hdt.holot','hdt.ten','hdt.vaitro','hdtpt.ghichu',
                 'p.maphong')->get();
+
+        $dt = Carbon::now();
+        $date=$dt->toDateString();
+
 		$hoidongthi_phongthi = \DB::table('hoidongthi_phongthi as hdtpt')
                 ->join('hoidongthi as hdt', 'hdt.macanbo', '=', 'hdtpt.macanbo')
 				->join('phongthi as p', 'p.id', '=', 'hdtpt.phongthi_id')
                 ->join('cathi as c', 'c.id', '=', 'p.cathi_id')
                 ->join('kythi as kt', 'kt.id', '=', 'c.kythi_id')
                 ->where('hdt.macanbo', '=', Auth::user()->macanbo)
+                ->where('c.ngaythi', '>=', $date)
 				->select('kt.tenkythi','hdtpt.id','hdtpt.ghichu','hdtpt.phongthi_id',
                 'p.maphong', 'p.soluongthisinh','p.ma_meeting','p.ghichu','p.cathi_id',
                 'c.tenca','c.ngaythi','c.giobatdau')

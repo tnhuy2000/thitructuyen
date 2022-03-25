@@ -63,7 +63,7 @@ class LoginController extends Controller
        //Validate Inputs
        $request->validate([
         'username'=>'required|:users',
-        'password'=>'required|min:5|max:30'
+        'password'=>'required|min:4|max:30'
         ]);
         if( auth()->attempt(array('username'=>$input['username'], 'password'=>$input['password'])) ){
             //dd(auth()->user()->trangthai);

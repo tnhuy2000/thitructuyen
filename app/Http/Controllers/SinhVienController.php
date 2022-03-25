@@ -51,17 +51,30 @@ class SinhVienController extends Controller
             $size=$size+$file['size'];
         }
         $baithi_id=$request->baithi_id;
-        $orm = new DuLieuBaiThi();
-		$orm->baithi_id = $baithi_id;
-		$orm->duongdan = $request->ThuMuc;
-        $orm->dungluong = $size;
-		$orm->save();
-       
-        //cap nhật bài thi
-        \DB::table('baithi')->update([
-            'thoigianketthuc' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
+        if(\DB::table('dulieubaithi')->where('baithi_id', $baithi_id)->exists())
+        {
+             //cap nhật bài thi
+            \DB::table('baithi')->where('id', $baithi_id)->update([
+                'thoigianketthuc' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
+        }
+        else
+        {
+            
+            $orm = new DuLieuBaiThi();
+            $orm->baithi_id = $baithi_id;
+            $orm->duongdan = $request->ThuMuc;
+            $orm->dungluong = $size;
+            $orm->save();
+           
+            //cap nhật bài thi
+            \DB::table('baithi')->where('id', $baithi_id)->update([
+                'thoigianketthuc' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
+        }
+        
         $ktphongthi = PhongThi::where('id', $request->phongthi_id)->first();
         $dethi_phongthi = \DB::table('dethi_phongthi as dtpt')
                     ->join('dethi as dt', 'dt.id', '=', 'dtpt.dethi_id')
@@ -130,12 +143,16 @@ class SinhVienController extends Controller
                 ->join('hoidongthi as hdt', 'hdt.macanbo', '=', 'hdtpt.macanbo')
 				->select('hdtpt.id', 'hdt.macanbo','hdt.holot','hdt.ten','hdt.vaitro','hdtpt.ghichu',
                 'p.maphong')->get();
+        $dt = Carbon::now();
+        $date=$dt->toDateString();
+      
 		$sinhvien_phongthi = \DB::table('sinhvien_phongthi as svpt')
                 ->join('sinhvien as sv', 'sv.masinhvien', '=', 'svpt.masinhvien')
 				->join('phongthi as p', 'p.id', '=', 'svpt.phongthi_id')
                 ->join('cathi as c', 'c.id', '=', 'p.cathi_id')
                 ->join('kythi as kt', 'kt.id', '=', 'c.kythi_id')
                 ->where('sv.masinhvien', '=', Auth::user()->masinhvien)
+                ->where('c.ngaythi', '>=', $date)
 				->select('kt.tenkythi','svpt.id','svpt.diemdanh','svpt.ghichu','svpt.phongthi_id',
                 'p.maphong', 'p.soluongthisinh','p.ma_meeting','p.ghichu','p.cathi_id',
                 'c.tenca','c.ngaythi','c.giobatdau')
@@ -271,6 +288,7 @@ class SinhVienController extends Controller
                     ->join('kythi as kt', 'kt.id', '=', 'dt.kythi_id')
                     ->join('hocphan as hp', 'hp.mahocphan', '=', 'dt.mahocphan')
                     ->where('dtpt.phongthi_id', '=', $phongthi_id)->count();
+       
        
         $sinhvien_phongthi = \DB::table('sinhvien_phongthi as svpt')
                 ->join('sinhvien as sv', 'sv.masinhvien', '=', 'svpt.masinhvien')

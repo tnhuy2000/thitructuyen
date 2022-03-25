@@ -309,6 +309,9 @@ Route::group(['prefix'=>'thuky', 'middleware'=>['isThuKy','auth','PreventBackHis
 
     Route::get('ketquabaithi/{phongthi_id}',[BaiThiController::class,'KetQuaBaiThi'])->name('thuky.ketquabaithi');
     Route::post('ajax', [BaiThiController::class,'postHinhAnhAjax'])->name('thuky.hinhanh.ajax');
+
+    Route::post('lambailai', [BaiThiController::class, 'postLamBaiLai'])->name('thuky.lambailai');
+
     Route::post('zip', [ZipController::class,'zipFile_SVBaiThi'])->name('thuky.zipFile');
     Route::post('zipFile_PhongThi', [ZipController::class,'zipFile_PhongThi'])->name('thuky.zipFile_PhongThi');
 

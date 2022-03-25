@@ -49,7 +49,7 @@
 							<form role="form" method="post" action="{{route('sinhvien.nopbai.them')}}" id="form_exam_submit" enctype="multipart/form-data">
 								@csrf
 							
-								<input type="hidden" name="baithi_id" id="baithi_id" value="{{$baithi_id}}">
+								<input type="text" name="baithi_id" id="baithi_id" value="{{$baithi_id}}">
 								<input type="hidden" name="phongthi_id" id="phongthi_id" value="{{$dethi_phongthi->phongthi_id}}">
 								<input type="hidden" name="dethiphongthi_id" id="dethiphongthi_id" value="{{$dethi_phongthi->id}}">
 							
@@ -87,12 +87,10 @@
 			<div class="col-md-4">
 				<div class="card" style="border-width: 5px;border: solid #ff0000;">
 					<div class="card-body">
-						<h5>Thời gian làm bài: {{$dethi_phongthi->thoigianlambai}} phút</h5>
+						<h5>Thời gian làm bài lại: 15 phút</h5>
 						
 						@php 
-						
-						$ngaygiothi=Carbon\Carbon::parse($dethi_phongthi->ngaythi)->setTimeFromTimeString($dethi_phongthi->giobatdau);
-						$ngaygiothi->addMinutes($dethi_phongthi->thoigianlambai);
+						$ngaygiothi= Carbon\Carbon::createFromDate($baithi->thoigiannopbailai);
 						
 						
 						$nam=$ngaygiothi->year;
@@ -194,11 +192,13 @@
 		var thang=document.getElementById('thang').value;
 		var nam=document.getElementById('nam').value;
 		var gio=document.getElementById('gio').value;
-		//var countDownDate = new Date("March 7, 2022 23:15:00").getTime();
+		
+
+		var countDownDate = new Date("March 7, 2022 23:15:00").getTime();
 		var countDownDate = new Date(""+thang+" "+ngay+", "+nam+" "+gio).getTime();
 		// Update the count down every 1 second
 		var x = setInterval(function() {
-
+		
 		// Get today's date and time
 		var now = new Date().getTime();
 			
@@ -227,7 +227,7 @@
 				setTimeout(function () {
 					$('#myModalNopBai').modal('hide');
 					form_submitted.submit();
-				}, 3000);
+				}, 5000);
 				
 			});
 			

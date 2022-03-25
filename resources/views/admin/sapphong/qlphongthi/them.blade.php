@@ -28,7 +28,7 @@
                     @csrf
                     <div class="form-group">
                       <label for="MaLoai" class="form-label">Ca thi</label>
-                      <select class="form-select @error('cathi_id') is-invalid @enderror" id="states" height="40px" name="cathi_id" required>
+                      <select class="form-select @error('cathi_id') is-invalid @enderror" id="statesCaThi" height="40px" name="cathi_id" required>
                         <option value="">-- Chọn ca thi --</option>
                         @foreach($ktcathi as $value){
 
@@ -63,7 +63,7 @@
                       <select class="form-select @error('meeting') is-invalid @enderror" name="meeting" required>
                           <option value="googlemeet">-- Chọn loại phòng họp --</option>
                           <option value="googlemeet">Google Meet</option>
-                          <option value="zoom">Zoom</option>
+                          <option value="zoom" selected="selected">Zoom</option>
                       </select>
                     </div>
                     
@@ -90,4 +90,13 @@
 </section>
 
 </main><!-- End #main -->
+@endsection
+@section('javascript')    
+<script type="text/javascript">
+$(document).ready(function() {
+            $("#statesCaThi").select2();   
+        });
+
+</script>
+
 @endsection

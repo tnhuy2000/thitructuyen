@@ -25,7 +25,7 @@ class RedirectIfAuthenticated
             if (Auth::guard($guard)->check() && Auth::user()->role == 1) {
                 return redirect(RouteServiceProvider::ADMIN);
             }
-            elseif(Auth::guard($guard)->check() && Auth::user()->role == 2)
+            elseif(Auth::guard($guard)->check() && Auth::user()->role == 2 && Auth::user()->trangthai == 1)
             {
                 return redirect(RouteServiceProvider::THUKY);
             }

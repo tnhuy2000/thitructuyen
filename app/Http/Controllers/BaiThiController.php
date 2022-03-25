@@ -16,6 +16,28 @@ use Illuminate\Support\Facades\Hash;
 class BaiThiController extends Controller
 {
     
+    public function postLamBaiLai(Request $request )
+	{
+        $dt = Carbon::now();
+
+        $time= $dt->addMinutes(15);
+       
+        \DB::table('baithi')->where('id', '=', $request->id_lambailai)->update([
+            'thoigianbatdau'=>NULL,
+            'thoigianketthuc'=>NULL,
+            'thoigiannopbailai'=>$time,
+            'trangthai' => 2,
+        ]);
+
+        $ktphongthi = DeThi_PhongThi::where('id', $request->dethiphongthi_id_lambailai)->first();
+      
+		toastr()->success('Cập nhật dữ liệu thành công!');
+        if(Auth::user()->role==3)
+		    return redirect()->route('canbocoithi.ketquabaithi',['phongthi_id'=>$ktphongthi->phongthi_id]);
+        elseif(Auth::user()->role==2)
+            return redirect()->route('thuky.ketquabaithi',['phongthi_id'=>$ktphongthi->phongthi_id]);
+		
+	}
     public function getPhongthi($ngaythi,$cathi)
     {
         $path = storage_path('app/file/baithi/'.$ngaythi.'/'.$cathi);
@@ -66,14 +88,22 @@ class BaiThiController extends Controller
     public function KetQuaBaiThi($phongthi_id)
     {
         $ktphongthi = PhongThi::where('id', $phongthi_id)->first();
+        
         $baithi = \DB::table('baithi as bt')
                     ->join('sinhvien as sv', 'sv.masinhvien', '=', 'bt.masinhvien')
                     ->join('dethi_phongthi as dtpt', 'dtpt.id', '=', 'bt.dethiphongthi_id')
-                    ->join('dulieubaithi as dlbt', 'dlbt.baithi_id', '=', 'bt.id')
+                    
                     ->join('phongthi as pt', 'pt.id', '=', 'dtpt.phongthi_id')
                     ->where('dtpt.phongthi_id', '=', $phongthi_id)
                     ->select('dtpt.phongthi_id','sv.holot','sv.ten','sv.email','bt.id','bt.trangthai','bt.dethiphongthi_id', 'bt.masinhvien','bt.thoigianbatdau','bt.thoigianketthuc',
-                        'bt.trangthai','dlbt.duongdan','bt.ghichu')->get();
+                        'bt.trangthai','bt.ghichu')->get();
+       
+        $dulieubaithi = \DB::table('dulieubaithi as dlbt')
+                    ->select('dlbt.*')->get();
+        
+        $dulieubaithi1 = \DB::table('dulieubaithi as dlbt')
+                    ->select('dlbt.*')->get();
+                   
         $phongthi = \DB::table('phongthi as p')
             ->join('cathi as c', 'p.cathi_id', '=', 'c.id')
             ->where('p.id', '=', $phongthi_id)
@@ -86,7 +116,7 @@ class BaiThiController extends Controller
         if(Auth::user()->role==3)
             return view('canbocoithi.phongthi.ketquabaithi',compact('baithi','ktphongthi'));
         elseif(Auth::user()->role==2)
-            return view('thuky.phongthi.ketquabaithi',compact('ktphongthi','baithi','folder'));
+            return view('thuky.phongthi.ketquabaithi',compact('ktphongthi','baithi','folder','dulieubaithi','dulieubaithi1'));
     }
     public function getHDTXemDeThi($phongthi_id)
     {
@@ -159,8 +189,15 @@ class BaiThiController extends Controller
         $baithi=\DB::table('baithi')->where('dethiphongthi_id',$dethi_phongthi->id )
                                     ->where('masinhvien',Auth::user()->masinhvien)
                                     ->where('trangthai',1)->exists();
+        $baithi_lamlai=\DB::table('baithi')->where('dethiphongthi_id',$dethi_phongthi->id )
+                                    ->where('masinhvien',Auth::user()->masinhvien)
+                                    ->where('trangthai',2)->exists();
         if($baithi){
             return view('sinhvien.phongthi.hoanthanh',compact('dethi_phongthi','ktphongthi'));
+        }
+        elseif($baithi_lamlai)
+        {
+            return view('sinhvien.lambaithi.lambailai',compact('dethi_phongthi','ktphongthi'));
         }
         else
         {
@@ -234,8 +271,9 @@ class BaiThiController extends Controller
                     session_start();
                 }
                 $baithi=\DB::table('baithi')->where('dethiphongthi_id', $dethi_phongthi_id->id)
-                ->where('masinhvien', Auth::user()->masinhvien)
-                ->where('trangthai', 0)->first();
+                    ->where('masinhvien', Auth::user()->masinhvien)
+                    ->where('trangthai', 0)->first();
+                
                 $baithi_id=$baithi->id;
                 
                 //tạo thư mục
@@ -263,6 +301,51 @@ class BaiThiController extends Controller
                 $path_dethi = config('app.url') . '/storage/app/file/dethi/';
                 
                 return view('sinhvien.nopbai.baithi', compact('folder','baithi_id','baithi','ktphongthi','dethi_phongthi','dulieudethi','path_dethi'));
+            }
+           
+            elseif (\DB::table('baithi')->where('dethiphongthi_id', $dethi_phongthi_id->id)
+            ->where('masinhvien', Auth::user()->masinhvien)
+            ->where('trangthai', 2)
+            ->exists()){
+                
+                if(session_status() == PHP_SESSION_NONE)
+                {
+                    session_start();
+                }
+                $baithi=\DB::table('baithi')->where('dethiphongthi_id', $dethi_phongthi_id->id)
+                    ->where('masinhvien', Auth::user()->masinhvien)
+                    ->where('trangthai', 2)->first();
+                
+                $baithi_id=$baithi->id;
+                \DB::table('baithi')->where('id', $baithi_id)->update([
+                    'thoigianbatdau' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+                //tạo thư mục
+                $dt = Carbon::now();
+                
+                $dt->toDateString(); 
+            
+                $ngaythi=Carbon::parse($dt)->format('d-m-Y');
+                
+                Storage::makeDirectory('file/baithi/'.$ngaythi.'/ca-'.$cathi->tenca.'/phong-'.$dethi_phongthi->maphong.'/' . Auth::user()->masinhvien);
+                
+                $path = config('app.url') . '/storage/app/file/baithi/'.$ngaythi.'/ca-'.$cathi->tenca.'/phong-'.$dethi_phongthi->maphong.'/'.Auth::user()->masinhvien  . '/';
+                if(isset($_SESSION['ckAuth'])) unset($_SESSION['ckAuth']);
+                $_SESSION['ckAuth'] = true;
+                if(isset($_SESSION['baseUrl'])) unset($_SESSION['baseUrl']);
+                $_SESSION['baseUrl'] = $path;
+                if(isset($_SESSION['resourceType'])) unset($_SESSION['resourceType']);
+                $_SESSION['resourceType'] = 'Images';
+                
+              
+                $folder = 'file/baithi/'.$ngaythi.'/ca-'.$cathi->tenca.'/phong-'.$dethi_phongthi->maphong.'/'. str_pad(Auth::user()->masinhvien, 7, '0', STR_PAD_LEFT);
+                
+               //$baithi = BaiThi::all();
+
+                $path_dethi = config('app.url') . '/storage/app/file/dethi/';
+                
+                return view('sinhvien.nopbai.lambailai', compact('folder','baithi_id','baithi','ktphongthi','dethi_phongthi','dulieudethi','path_dethi'));
             }
             else
             {
