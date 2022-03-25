@@ -26,6 +26,7 @@ class BaiThiController extends Controller
             'thoigianbatdau'=>NULL,
             'thoigianketthuc'=>NULL,
             'thoigiannopbailai'=>$time,
+            'ghichu'=>'SV làm bài lại',
             'trangthai' => 2,
         ]);
 
@@ -159,10 +160,21 @@ class BaiThiController extends Controller
         
         $phongthi = PhongThi::all();
             
-        //return view('sinhvien.lambaithi.lambai',compact('dethi_phongthi','ktphongthi'));
+     
         $baithi=\DB::table('baithi')->where('dethiphongthi_id',$dethi_phongthi->id )
-        ->where('masinhvien',Auth::user()->masinhvien)
-        ->where('trangthai',1)->exists();
+            ->where('masinhvien',Auth::user()->masinhvien)
+            ->where('trangthai',1)->exists();
+
+        $ngaygiothi=Carbon::parse($dethi_phongthi->ngaythi)->setTimeFromTimeString($dethi_phongthi->giobatdau);
+        $ngaygiothi->addMinutes($dethi_phongthi->thoigianlambai);
+       
+        $ngaygiothi->addMinutes(15);
+   
+        $hientai = Carbon::now();
+       
+        $result= $hientai->greaterThan($ngaygiothi);
+
+
         if($baithi){
         return view('sinhvien.phongthi.hoanthanh',compact('dethi_phongthi','ktphongthi'));
         }

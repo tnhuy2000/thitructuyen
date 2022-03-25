@@ -107,10 +107,24 @@ class SinhVienController extends Controller
 
         $folder = 'file/baithi/'.$ngaythi.'/ca-'.$cathi->tenca.'/phong-'.$dethi_phongthi->maphong.'/'. str_pad(Auth::user()->masinhvien, 7, '0', STR_PAD_LEFT);
         
-        $baithi = BaiThi::all();
+        
 
         $path_dethi = config('app.url') . '/storage/app/file/dethi/';
-                    return view('sinhvien.phongthi.xacnhannopbai',compact('dethi_phongthi','ktphongthi','folder','baithi_id'));
+
+        $baithi=\DB::table('baithi')->where('id',$baithi_id)
+            ->where('masinhvien',Auth::user()->masinhvien)
+            ->where('trangthai',2)->exists();
+        $baithi_new=\DB::table('baithi')->where('id',$baithi_id)
+            ->where('masinhvien',Auth::user()->masinhvien)
+            ->where('trangthai',2)->first();  
+        if($baithi){
+            return view('sinhvien.phongthi.xacnhannopbailai',compact('dethi_phongthi','ktphongthi','folder','baithi_id','baithi_new'));
+        }
+        else
+        {
+            return view('sinhvien.phongthi.xacnhannopbai',compact('dethi_phongthi','ktphongthi','folder','baithi_id'));
+        }
+        
                 
     }
     public function getNopBai()
@@ -156,7 +170,7 @@ class SinhVienController extends Controller
 				->select('kt.tenkythi','svpt.id','svpt.diemdanh','svpt.ghichu','svpt.phongthi_id',
                 'p.maphong', 'p.soluongthisinh','p.ma_meeting','p.ghichu','p.cathi_id',
                 'c.tenca','c.ngaythi','c.giobatdau')
-				->orderBy('c.ngaythi', 'asc')->get();
+				->orderBy('c.giobatdau', 'asc')->get();
 
         return view('sinhvien.index',compact('sinhvien_phongthi','hoidongthi_phongthi'));
 

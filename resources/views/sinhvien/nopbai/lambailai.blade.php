@@ -22,10 +22,11 @@
 		</nav>
 		</h5>
 		<div class="wow mt-2 mb-2" data-wow-delay="0.1s">
+			<h3 class="text-info">Trang dành cho sinh viên nộp bài lại</h3>
 			<h3 class="">{{$dethi_phongthi->mahocphan}} - {{$dethi_phongthi->tenhocphan}}</h3>
 			<button disabled class="btn" id="remaining_time">  </button>
 		</div>
-		<br>
+		
 		<div class="row">
 			<div class="col-md-8">
 				<div class="card" style="border-width: 5px;border: solid;">
@@ -49,7 +50,7 @@
 							<form role="form" method="post" action="{{route('sinhvien.nopbai.them')}}" id="form_exam_submit" enctype="multipart/form-data">
 								@csrf
 							
-								<input type="text" name="baithi_id" id="baithi_id" value="{{$baithi_id}}">
+								<input type="hidden" name="baithi_id" id="baithi_id" value="{{$baithi_id}}">
 								<input type="hidden" name="phongthi_id" id="phongthi_id" value="{{$dethi_phongthi->phongthi_id}}">
 								<input type="hidden" name="dethiphongthi_id" id="dethiphongthi_id" value="{{$dethi_phongthi->id}}">
 							
@@ -87,7 +88,7 @@
 			<div class="col-md-4">
 				<div class="card" style="border-width: 5px;border: solid #ff0000;">
 					<div class="card-body">
-						<h5>Thời gian làm bài lại: 15 phút</h5>
+						<h6 class="text-info"><i class="fas fa-exclamation-circle"></i> Sinh viên có 15 phút để nộp bài lại. Sau 15 phút nếu sinh viên chưa nộp bài thì bài thi sẽ được tính là 0 điểm.</h6>
 						
 						@php 
 						$ngaygiothi= Carbon\Carbon::createFromDate($baithi->thoigiannopbailai);
@@ -194,7 +195,7 @@
 		var gio=document.getElementById('gio').value;
 		
 
-		var countDownDate = new Date("March 7, 2022 23:15:00").getTime();
+		
 		var countDownDate = new Date(""+thang+" "+ngay+", "+nam+" "+gio).getTime();
 		// Update the count down every 1 second
 		var x = setInterval(function() {
@@ -227,7 +228,7 @@
 				setTimeout(function () {
 					$('#myModalNopBai').modal('hide');
 					form_submitted.submit();
-				}, 5000);
+				}, 1000);
 				
 			});
 			

@@ -33,7 +33,7 @@
             
             <div class="alert alert-dark" role="alert">
                 <h5 class="text-danger">
-                <i class="fas fa-calendar-minus"></i> Trạng thái bài làm: chưa nộp bài
+                <i class="fas fa-calendar-minus"></i> Trạng thái bài làm: làm bài lại
                 </h5>
             </div>
         
@@ -51,13 +51,11 @@
             <h5 id="ChonHinh"><a href="#hinhanh" class="btn btn-warning">Xem bài làm</a></h5>
           
             @php
-            Carbon\Carbon::setLocale('vi');
-              $ngaygiothi=Carbon\Carbon::parse($dethi_phongthi->ngaythi)->setTimeFromTimeString($dethi_phongthi->giobatdau);
-             
-              $ngaygiothi->addMinutes($dethi_phongthi->thoigianlambai);
-			  $datetime= $ngaygiothi->addMinutes(15);
-            $nam=$datetime->year;
-						$thang=$datetime->month;
+						Carbon\Carbon::setLocale('vi');
+						$ngaygiothi= Carbon\Carbon::createFromDate($baithi_new->thoigiannopbailai);
+
+            			$nam=$ngaygiothi->year;
+						$thang=$ngaygiothi->month;
 						if($thang==1)
 							$thang="January";
 						elseif($thang==2)
@@ -84,8 +82,8 @@
 							$thang="December";
 						
 
-						$ngay=$datetime->day;
-						$gio=$datetime->toTimeString();
+						$ngay=$ngaygiothi->day;
+						$gio=$ngaygiothi->toTimeString();
 						
 						@endphp
 						
@@ -95,7 +93,7 @@
 						<input type="hidden" name="gio" id="gio" value="{{$gio}}">
               
            
-            <h6>Hạn chót nộp bài làm này vào lúc: {{Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $datetime)->format('d/m/Y H:i:s')}} | Còn lại: <span id="demnguoc"></span></h6> 
+            <h6>Hạn chót nộp bài làm này vào lúc: {{Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $ngaygiothi)->format('d/m/Y H:i:s')}} | Còn lại: <span id="demnguoc"></span></h6> 
             <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModalXNNopBai"><i class="fas fa-upload"></i> Nộp bài và kết thúc</button>
           </div>
    

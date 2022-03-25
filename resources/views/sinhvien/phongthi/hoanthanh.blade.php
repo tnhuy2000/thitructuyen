@@ -34,7 +34,7 @@
             
             <div class="alert alert-dark" role="alert">
                 <h5 class="text-danger">
-                <i class="fas fa-calendar-minus"></i> Trạng thái bài làm: đã hoàn thành
+                <i class="fas fa-calendar-minus"></i> Trạng thái bài làm: đã nộp bài
                 </h5>
             </div>
         

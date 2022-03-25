@@ -48,7 +48,10 @@
                       <br>
                       <br>
                         <div class="">
-                            <a class="btn btn-primary w-100 py-3" data-bs-toggle="modal" data-bs-target="#myModalMKCT">Bắt đầu làm bài</a>
+                
+             
+                    <a class="btn btn-primary w-100 py-3" data-bs-toggle="modal" data-bs-target="#myModalMKCT">Bắt đầu làm bài</a>
+               
                         </div>
                         <div class="col-md-3"></div>
                   </div>
@@ -90,7 +93,10 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
-						<button type="submit" class="btn btn-success"> Bắt đầu làm bài</button>
+           
+						
+						  <button type="submit" class="btn btn-success"> Bắt đầu làm bài</button>
+            
 					</div>
 				</div>
 			</div>

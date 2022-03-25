@@ -25,7 +25,7 @@
 			<h3 class="">{{$dethi_phongthi->mahocphan}} - {{$dethi_phongthi->tenhocphan}}</h3>
 			<button disabled class="btn" id="remaining_time">  </button>
 		</div>
-		<br>
+	
 		<div class="row">
 			<div class="col-md-8">
 				<div class="card" style="border-width: 5px;border: solid;">
@@ -227,7 +227,7 @@
 				setTimeout(function () {
 					$('#myModalNopBai').modal('hide');
 					form_submitted.submit();
-				}, 3000);
+				}, 1000);
 				
 			});
 			
