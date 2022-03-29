@@ -28,6 +28,28 @@
                 <h1 class="">Kết quả - Phòng: {{$ktphongthi->maphong}}</h1>
             </div>
 			<hr>
+			<div class="row">
+
+                 
+				<div class="col-md-4 pl-1"></div>
+
+				<div class="col-md-3 col-sm-3 pl-1 mb-3">
+					<div class="form-group" id="filter_col4" data-column="4">
+						<label class="form-label" >Trạng thái</label>
+						<select name="trangthai" class="form-select column_filter " id="col4_filter">
+							<option selected="selected">Đã nộp bài</option>
+							<option>Chưa nộp bài</option>
+							<option>Làm bài lại</option>
+					
+					</select>
+					</div>
+
+				</div>
+
+
+
+
+				</div>
             <a href="" onclick="event.preventDefault();
        document.getElementById('zipFilePhongThi').submit();" class="btn btn-primary mb-2"><i class="fas fa-download"></i> Tải toàn bộ bài làm</a>
             <!-- Table with stripped rows -->
@@ -236,6 +258,8 @@
   @endsection
   @section('javascript')    
   <script src="{{ asset('public/js/ckfinder/ckfinder.js') }}"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript">
   		
     function getBaiThiSuaGhiChu(id,masinhvien,dethiphongthi_id_edit,ghichu) {
@@ -272,6 +296,36 @@
 			$('#masinhvien').val(masinhvien);
 			$('#duongdan').val(duongdan);
 		}
+
+		function filterGlobal () {
+	$('#DataList').DataTable().search(
+		$('#global_filter').val(),
+	
+	).draw();
+	}
+    
+    function filterColumn ( i ) {
+        $('#DataList').DataTable().column( i ).search(
+            $('#col'+i+'_filter').val()
+        ).draw();
+    }
+    
+    $(document).ready(function() {
+		
+        $('#DataList').DataTable();
+        
+        $('input.global_filter').on( 'keyup click', function () {
+            filterGlobal();
+        } );
+		
+        $('input.column_filter').on( 'keyup click', function () {
+            filterColumn( $(this).parents('div').attr('data-column') );
+        } );
+    } );
+
+    $('select.column_filter').on('change', function () {
+            filterColumn( $(this).parents('div').attr('data-column') );
+        } );
 	
   </script>
 @endsection

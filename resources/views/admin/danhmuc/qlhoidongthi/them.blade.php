@@ -84,7 +84,7 @@
                       <select class="form-control" id="vaitro" name="vaitro" required>
                         <option value="">-- Chọn vai trò --</option>
                         
-                          <option value="giamthi">Giám thị (Cán bộ coi thi)</option>
+                          <option value="canbocoithi">Giám thị (Cán bộ coi thi)</option>
                           <option value="thuky">Thư ký</option>
                           <option value="hoidongthi">Hội đồng thi</option>
  

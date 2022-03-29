@@ -1,7 +1,7 @@
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>Online Exam</span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span> 2022. Trường Đại học An Giang</span></strong>
     </div>
     <div class="credits">
       
@@ -18,6 +18,7 @@
 
  
   <!-- Vendor JS Files -->
+ 
   <script src="{{asset('public/themes/vendor/apexcharts/apexcharts.min.js')}}"></script>
   <script src="{{asset('public/themes/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{asset('public/themes/vendor/chart.js/chart.min.js')}}"></script>

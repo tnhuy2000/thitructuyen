@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
-
+use App\Models\ThongBao;
+use App\Models\VanBan;
 class AdminController extends Controller
 {
     public function __construct()
@@ -16,8 +17,11 @@ class AdminController extends Controller
     }
     public function index(){
     
-        
-        return view('admin.index', array('user'=>Auth::user()));
+        $thongbao = ThongBao::where([['kichhoat', 1]])
+				->orderBy('quantrong', 'desc')
+				->orderBy('created_at', 'desc')
+				->paginate(5);
+        return view('admin.index', compact('thongbao'));
     }
 
     public function getHoiDongThi(){

@@ -34,7 +34,7 @@
 					<th width="2%">#</th>
 					<th width="8%">Mã cán bộ</th>
 					<th width="20%">Thông tin cán bộ</th>
-					<th width="10%">Mã khoa</th>
+				
 					<th width="20%">Tên khoa</th>
 					<th width="15%">Vai trò</th>
 					<th width="6%" class="text-center">Sửa</th>
@@ -59,9 +59,18 @@
 								@endif
 							</span>
 						</td>
-						<td>{{ $value->makhoa }}</td>
-						<td>{{ $value->tenkhoa }}</td>
-						<td>{{ $value->vaitro }}</td>
+						
+						<td class="small">{{ $value->tenkhoa }}</td>
+						<td>
+							@if($value->vaitro=='canbocoithi')
+								<span class="badge bg-primary">Cán bộ coi thi</span>
+							@elseif($value->vaitro=='thuky')
+							<span class="badge bg-success">Thư ký</span>
+							@else
+							<span class="badge bg-danger">Hội đồng thi</span>
+							@endif
+
+						</td>
 						<td class="text-center"><a href="{{ route('admin.danhmuc.qlhoidongthi.sua', ['macanbo' => $value->macanbo]) }}"><i class="bx bxs-pencil"></i> Sửa</a></td>
 						<td class="text-center"><a onclick="return confirm('Bạn có muốn xóa cán bộ {{$value->ten}}?')" href="{{ route('admin.danhmuc.qlhoidongthi.xoa', ['macanbo' => $value->macanbo]) }}" ><i class="bx bxs-trash text-danger"></i> Xoá</a></td>
 		

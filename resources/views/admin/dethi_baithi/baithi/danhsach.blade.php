@@ -23,8 +23,9 @@
 
 	  <div class="card">
 		<div class="card-body">
+
 		  	<h5 class="card-title">Dữ liệu bài thi theo ngày</h5>
-		
+			
              <!-- Table with stripped rows -->
 		  <table class="table datatable table-hover">
 		  	<thead>
@@ -40,21 +41,46 @@
                    
                     @php 
                     $count = 1;
-                    foreach ($folder as $fileInfo){
-                        if($fileInfo->isDot()) continue;
                     @endphp
+
+				@foreach($ngaythi as $value)
 				<tr>
                     
-                    <td>{{ $count++ }}</td>       
-                       
-                    <td>{{$fileInfo->getFilename(), PHP_EOL}}</td>
-                    <td><a href="{{route('admin.dethi_baithi.qlbaithi.zipNgayThi',['ngaythi' => $fileInfo->getFilename()])}}"><i class="bx bxs-download"></i> Tải</a></td>
-                    <td><a href="{{route('admin.dethi_baithi.qlbaithi.cathi',['ngaythi' => $fileInfo->getFilename()])}}"><i class="bx bxs-folder-open text-warning"></i> Mở</a></td>
-						
+                    <td>{{ $count++ }}</td> 
+					@php
+						$ngaythi_format= Carbon\Carbon::parse($value->ngaythi)->format('d-m-Y');
+					@endphp
+                    <td>{{$ngaythi_format}}</td>
+					<td>
+					@php
+				
+					foreach ($folder as $fileInfo){
+                        if($fileInfo->isDot()) continue;
+							
+							if($ngaythi_format==$fileInfo->getFilename()){
+							@endphp
+							<a href="{{route('admin.dethi_baithi.qlbaithi.zipNgayThi',['ngaythi' => $fileInfo->getFilename()])}}"><i class="bx bxs-download"></i> Tải</a>	
+							@php
+							}
+						}
+					@endphp
+					</td>
+					<td>
+						@php
+					foreach ($folder as $fileInfo){
+                        if($fileInfo->isDot()) continue;
+							
+						if($ngaythi_format==$fileInfo->getFilename()){
+						@endphp
+							<a href="{{route('admin.dethi_baithi.qlbaithi.cathi',['ngaythi' => $ngaythi_format])}}"><i class="bx bxs-folder-open text-warning"></i> Mở</a>
+						@php
+						}
+					}
+					@endphp
+					</td>
                 </tr>
-                @php
-                    }
-                @endphp   
+				@endforeach
+                   
 			</tbody>
 		  </table>
 		  <!-- End Table with stripped rows -->
@@ -92,6 +118,7 @@
 	</form>
 @endsection
 @section('javascript')    
+  
 <script type="text/javascript">
   		function getXoa(id,phongthi_id) {
 			$('#id_delete').val(id);
@@ -108,5 +135,9 @@
             $("#states2").select2();   
         });
 		
+
+
+
+
   </script>
 @endsection

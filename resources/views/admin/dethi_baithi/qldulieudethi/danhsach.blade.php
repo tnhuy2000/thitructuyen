@@ -33,8 +33,8 @@
 				<span>Thực hành</span>
 			@endif
 		</h6>
-		<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#myModal"><i class="bx bxs-plus-square"></i> Thêm dữ liệu</button></p>
-		<table class="table table- table-bordered border-primary ">
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal"><i class="bx bxs-plus-square"></i> Thêm dữ liệu</button></p>
+		<table class="table table-hover table-bordered">
 		  	<thead>
 				<tr>
 					<th scope="col" width="2%">#</th>

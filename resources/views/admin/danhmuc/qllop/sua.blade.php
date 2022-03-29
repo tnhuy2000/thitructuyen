@@ -49,9 +49,9 @@
                       @enderror
                      
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-12 ">
                       <label for="makhoa" class="form-label">Khoa</label>
-                      <select class="form-control" id="makhoa" name="makhoa" required>
+                      <select class="form-select" id="statesKhoa" name="makhoa" required>
                         <option value="">-- Chọn Khoa --</option>
                         @foreach($ktkhoa as $value){
                           @if($ktlop->makhoa == $value->makhoa)
@@ -86,4 +86,13 @@
 </section>
 
 </main><!-- End #main -->
+@endsection
+@section('javascript')    
+<script type="text/javascript">
+$(document).ready(function() {
+            $("#statesKhoa").select2();   
+        });
+
+</script>
+
 @endsection

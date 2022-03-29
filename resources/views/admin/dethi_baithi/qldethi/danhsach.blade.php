@@ -21,7 +21,7 @@
 	<div class="col-lg-12">
 	<div class="card">
             <div class="card-body">
-            <form id="clear">
+            
                 <div class="row">
 
                  
@@ -31,7 +31,7 @@
                         <div class="form-group" id="filter_col1" data-column="1">
                             <label class="form-label" >Tìm kiếm theo học phần</label>
                             <select name="hocphan" class="form-select column_filter " id="col1_filter">
-							
+								<option>--Chọn học phần--</option>
 								@foreach($hocphan as $hocphan)
                                     <option value="{{$hocphan->mahocphan}}">{{$hocphan->tenhocphan}} - {{$hocphan->mahocphan}}</option>
 								@endforeach   
@@ -40,15 +40,9 @@
 
                     </div>
                  
-                 
-              
-                </form>
                 
-            </div>
+            	</div>
        
-
-	  
-		  
 			<a href="{{ route('admin.dethi_baithi.qldethi.them') }}" class="btn btn-primary mt-2 mb-2"><i class="bx bxs-plus-square"></i> Thêm mới</a>
 		  <!-- Table with stripped rows -->
 		  <table class="table table-hover" id="ex">
@@ -58,9 +52,9 @@
 								<th width="18%">Học phần</th>
 								<th width="15%">Kỳ thi</th>
 								<th width="20%">Tên đề thi</th>
-								<th width="9%">TG làm bài</th>
+								<th width="13%">TG làm bài</th>
 								<th width="13%">Hình thức</th>
-								<th width="15%">Dữ liệu đề thi</th>
+								<th width="13%">Dữ liệu đề thi</th>
 								<th width="8%" class="text-center">Sửa</th>
 								<th width="8%" class="text-center">Xóa</th>
 							</tr>
@@ -72,6 +66,7 @@
 									<td>{{ $count++ }}</td>
 									<td class="small">
 										<span style="color:#0000ff;font-weight:bold;">{{ $value->tenhocphan }}</span>
+									
 										<span style="font-size:0.9em;">
 											
 											@if(!empty($value->mahocphan))
@@ -103,7 +98,7 @@
 											<span>Tự luận</span>
 										@endif
 										</td>
-									<td><a href="{{ route('admin.dethi_baithi.qldulieudethi.danhsach', ['id' => $value->id]) }}"><span class="badge bg-primary"><i class="bx bx-plus-circle"></i> Thêm</span></a></td>
+									<td><a class="btn btn-primary btn-sm" href="{{ route('admin.dethi_baithi.qldulieudethi.danhsach', ['id' => $value->id]) }}"><i class="bx bx-plus-circle"></i> Thêm</a></td>
 									<td class="text-center"><a href="{{ route('admin.dethi_baithi.qldethi.sua', ['id' => $value->id]) }}"><i class="bx bxs-pencil"></i> Sửa</a></td>
 									<td class="text-center"><a onclick="return confirm('Bạn có muốn xóa đề thi của học phần {{$value->tenhocphan}}?')" href="{{ route('admin.dethi_baithi.qldethi.xoa', ['id' => $value->id]) }}" ><i class="bx bxs-trash text-danger"></i> Xoá</a></td>
 					
@@ -270,7 +265,6 @@
 @section('javascript')  
 
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>  
 <script type="text/javascript">
   		function getXoa(id) {
@@ -286,12 +280,12 @@
 		@endif
 
 
-	function filterGlobal () {
-		$('#ex').DataTable().search(
-			$('#global_filter').val(),
+	// function filterGlobal () {
+	// 	$('#ex').DataTable().search(
+	// 		$('#global_filter').val(),
 		
-		).draw();
-	}
+	// 	).draw();
+	// }
     
     function filterColumn ( i ) {
         $('#ex').DataTable().column( i ).search(
@@ -303,19 +297,6 @@
 		
         $('#ex').DataTable();
         
-        $('input.global_filter').on( 'keyup click', function () {
-            filterGlobal();
-        } );
-		
-        $('input.column_filter').on( 'keyup click', function () {
-            filterColumn( $(this).parents('div').attr('data-column') );
-        } );
-
-		$("#example").on("click", function () { 
-			//$("#ex").DataTable().ajax.reload(); 
-			$('#ex').DataTable().clear().draw();
-        });
-		
     } );
 
 		$('select.column_filter').on('change', function () {

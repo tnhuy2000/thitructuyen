@@ -37,34 +37,108 @@ class BaiThiController extends Controller
 		    return redirect()->route('canbocoithi.ketquabaithi',['phongthi_id'=>$ktphongthi->phongthi_id]);
         elseif(Auth::user()->role==2)
             return redirect()->route('thuky.ketquabaithi',['phongthi_id'=>$ktphongthi->phongthi_id]);
+        elseif(Auth::user()->role==1)
+            return redirect()->route('admin.dethi_baithi.qlbaithi.ketquabaithi',['phongthi'=>$ktphongthi->phongthi_id]);
 		
 	}
-    public function getPhongthi($ngaythi,$cathi)
+
+    
+    public function getKetQuaBaiThi($phongthi_id)
     {
-        $path = storage_path('app/file/baithi/'.$ngaythi.'/'.$cathi);
-        $folder= new DirectoryIterator($path);
+        
+        $baithi = \DB::table('baithi as bt')
+                    ->join('sinhvien as sv', 'sv.masinhvien', '=', 'bt.masinhvien')
+                    ->join('dethi_phongthi as dtpt', 'dtpt.id', '=', 'bt.dethiphongthi_id')
+                    ->join('phongthi as pt', 'pt.id', '=', 'dtpt.phongthi_id')
+                    ->where('dtpt.phongthi_id', '=', $phongthi_id)
+                    ->select('dtpt.phongthi_id','sv.holot','sv.ten','sv.email','bt.id','bt.trangthai','bt.dethiphongthi_id', 'bt.masinhvien','bt.thoigianbatdau','bt.thoigianketthuc',
+                        'bt.trangthai','bt.ghichu')->get();
+       
+        $dulieubaithi = \DB::table('dulieubaithi as dlbt')
+                    ->select('dlbt.*')->get();
+        
+        $dulieubaithi1 = \DB::table('dulieubaithi as dlbt')
+                    ->select('dlbt.*')->get();
+                   
+        $phongthi = \DB::table('phongthi as p')
+            ->join('cathi as c', 'p.cathi_id', '=', 'c.id')
+            ->where('p.id', '=', $phongthi_id)
+            ->select('p.id','p.maphong','p.soluongthisinh','p.cathi_id','p.ma_meeting','p.ghichu','c.tenca','c.ngaythi','c.giobatdau')
+            ->orderBy('c.ngaythi', 'asc')->first();      
+        $ngaythi=Carbon::createFromFormat('Y-m-d', $phongthi->ngaythi)->format('d-m-Y');
+        $folder = 'file/baithi/'.$ngaythi.'/ca-'.$phongthi->tenca.'/phong-'.$phongthi->maphong;
+
+        
         if(Auth::user()->role==1)
-            return view('admin.dethi_baithi.baithi.phongthi',compact('path','folder','ngaythi','cathi'));
+            return view('admin.dethi_baithi.baithi.ketquabaithi',compact('phongthi','baithi','folder','dulieubaithi','dulieubaithi1'));
         elseif(Auth::user()->role==4)
-            return view('hoidongthi.baithi.phongthi',compact('path','folder','ngaythi','cathi'));
+            return view('hoidongthi.baithi.ketquabaithi',compact('phongthi','baithi','folder','dulieubaithi','dulieubaithi1'));
+    }
+    public function getPhongthi($ngaythi,$cathi_id)
+    {
+        $cathi_theongay = \DB::table('cathi as ct') 
+                ->where('id', '=', $cathi_id)->first();
+        $phongthi_theoca = \DB::table('phongthi as pt')
+            ->join('cathi as ct', 'ct.id', '=', 'pt.cathi_id')
+            ->where('ct.id', '=', $cathi_id)
+            ->select('pt.*','ct.tenca','ct.ngaythi','ct.giobatdau')->get();
+     
+       
+        $cathi="ca-".$cathi_theongay->tenca;
+        $path = storage_path('app/file/baithi/'.$ngaythi.'/ca-'.$cathi_theongay->tenca);
+        
+        $folder= new DirectoryIterator($path);
+        
+      
+        
+        if(Auth::user()->role==1)
+            return view('admin.dethi_baithi.baithi.phongthi_theoca',compact('path','folder','phongthi_theoca','cathi_theongay','cathi'));
+        elseif(Auth::user()->role==4)
+            return view('hoidongthi.baithi.phongthi_theoca',compact('path','folder','phongthi_theoca','cathi_theongay'));
     }
     public function getCathi($ngaythi)
     {
+
+        $ngaythi_format=Carbon::parse($ngaythi)->format('Y-m-d');
+      
+        $cathi_theongay = \DB::table('cathi as ct')
+                ->join('kythi as kt', 'kt.id', '=', 'ct.kythi_id')
+                ->where('ct.ngaythi', '=', $ngaythi_format)
+                ->select('ct.*','kt.tenkythi','kt.hocky','kt.namhoc')->get();
+   
         $path = storage_path('app/file/baithi/'.$ngaythi);
+        
+        
         $folder= new DirectoryIterator($path);
+        
+        // if(Auth::user()->role==1)
+        //     return view('admin.dethi_baithi.baithi.cathi',compact('path','folder','ngaythi','cathi_theongay'));
+        // elseif(Auth::user()->role==4)
+        //     return view('hoidongthi.baithi.cathi',compact('path','folder','ngaythi','cathi_theongay'));
+
         if(Auth::user()->role==1)
-            return view('admin.dethi_baithi.baithi.cathi',compact('path','folder','ngaythi'));
+            return view('admin.dethi_baithi.baithi.cathi_theongay',compact('path','folder','ngaythi','cathi_theongay'));
         elseif(Auth::user()->role==4)
-            return view('hoidongthi.baithi.cathi',compact('path','folder','ngaythi'));
+            return view('hoidongthi.baithi.cathi_theongay',compact('path','folder','ngaythi','cathi_theongay'));
     }
+
+
     public function getDanhSach()
     {
+       
+        $ngaythi = \DB::table('cathi')
+                    ->select('ngaythi')
+                    ->distinct()->get();
+        
         $path = storage_path('app/file/baithi/');
+        
         $folder= new DirectoryIterator($path);
+    
+      
         if(Auth::user()->role==1)
-            return view('admin.dethi_baithi.baithi.danhsach',compact('path','folder'));
+            return view('admin.dethi_baithi.baithi.danhsach',compact('path','folder','ngaythi'));
         elseif(Auth::user()->role==4)
-            return view('hoidongthi.baithi.danhsach',compact('path','folder'));
+            return view('hoidongthi.baithi.danhsach',compact('path','folder','ngaythi'));
     }
     public function postBaiThiSuaGhiChu(Request $request)
 	{
@@ -85,6 +159,8 @@ class BaiThiController extends Controller
 		    return redirect()->route('canbocoithi.ketquabaithi',['phongthi_id'=>$ktphongthi->phongthi_id]);
         elseif(Auth::user()->role==2)
             return redirect()->route('thuky.ketquabaithi',['phongthi_id'=>$ktphongthi->phongthi_id]);
+        elseif(Auth::user()->role==1)
+            return redirect()->route('admin.dethi_baithi.qlbaithi.ketquabaithi',['phongthi'=>$ktphongthi->phongthi_id]);
 	}
     public function KetQuaBaiThi($phongthi_id)
     {
@@ -115,7 +191,7 @@ class BaiThiController extends Controller
 
         
         if(Auth::user()->role==3)
-            return view('canbocoithi.phongthi.ketquabaithi',compact('baithi','ktphongthi'));
+            return view('canbocoithi.phongthi.ketquabaithi',compact('baithi','ktphongthi','folder','dulieubaithi','dulieubaithi1'));
         elseif(Auth::user()->role==2)
             return view('thuky.phongthi.ketquabaithi',compact('ktphongthi','baithi','folder','dulieubaithi','dulieubaithi1'));
     }

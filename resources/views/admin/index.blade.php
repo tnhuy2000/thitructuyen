@@ -27,10 +27,11 @@
                       <h6>Quản lý</h6>
                     </li>
 
-                    <li><a class="dropdown-item" href="#">Lớp</a></li>
-                    <li><a class="dropdown-item" href="#">Khoa</a></li>
-                    <li><a class="dropdown-item" href="#">Sinh viên</a></li>
-                    <li><a class="dropdown-item" href="#">Hội đồng thi</a></li>
+                    <li><a class="dropdown-item" href="{{route('admin.danhmuc.qlkhoa.danhsach')}}">Khoa</a></li>
+                    <li><a class="dropdown-item" href="{{route('admin.danhmuc.qllop.danhsach')}}">Lớp</a></li>
+                    <li><a class="dropdown-item" href="{{route('admin.danhmuc.qlsinhvien.danhsach')}}">Sinh viên</a></li>
+                    <li><a class="dropdown-item" href="{{route('admin.danhmuc.qlhoidongthi.danhsach')}}">Hội đồng thi</a></li>
+                    <li><a class="dropdown-item" href="{{route('admin.danhmuc.qlhocphan.danhsach')}}">Học phần</a></li>
                   </ul>
                 </div>
 
@@ -59,9 +60,9 @@
                       <h6>Quản lý</h6>
                     </li>
 
-                    <li><a class="dropdown-item" href="#">Kỳ thi</a></li>
-                    <li><a class="dropdown-item" href="#">Ca thi</a></li>
-                    <li><a class="dropdown-item" href="#">Phòng thi</a></li>
+                    <li><a class="dropdown-item" href="{{route('admin.sapphong.qlkythi.danhsach')}}">Kỳ thi</a></li>
+                    <li><a class="dropdown-item" href="{{route('admin.sapphong.qlcathi.danhsach')}}">Ca thi</a></li>
+                    <li><a class="dropdown-item" href="{{route('admin.sapphong.qlphongthi.danhsach')}}">Phòng thi</a></li>
                   </ul>
                 </div>
 
@@ -91,8 +92,8 @@
                       <h6>Quản lý</h6>
                     </li>
 
-                    <li><a class="dropdown-item" href="#">Đề thi</a></li>
-                    <li><a class="dropdown-item" href="#">Bài thi</a></li>
+                    <li><a class="dropdown-item" href="{{route('admin.dethi_baithi.qldethi.danhsach')}}">Đề thi</a></li>
+                    <li><a class="dropdown-item" href="{{route('admin.dethi_baithi.qlbaithi.danhsach')}}">Bài thi</a></li>
                    
                   </ul>
                 </div>
@@ -347,80 +348,35 @@
 
         <!-- Right side columns -->
         <div class="col-lg-4">
-
-          <!-- Recent Activity -->
-          <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
-
-                <li><a class="dropdown-item" href="#">Today</a></li>
-                <li><a class="dropdown-item" href="#">This Month</a></li>
-                <li><a class="dropdown-item" href="#">This Year</a></li>
-              </ul>
-            </div>
+        <!-- Recent Activity -->
+        <div class="card">
+            
 
             <div class="card-body">
-              <h5 class="card-title">THÔNG BÁO <span>| Hôm nay</span></h5>
+              <h5 class="card-title">THÔNG BÁO <span>| Mới nhất</span></h5>
 
               <div class="activity">
-
+              @foreach($thongbao as $value)
                 <div class="activity-item d-flex">
-                  <div class="activite-label">32 min</div>
+                  <div class="activite-label">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $value->created_at)->format('d/m/Y') }}</div>
                   <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
                   <div class="activity-content">
-                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
+                       <a href="{{ route('admin.dashboard.chitietthongbao', ['id' => $value->id]) }}" class="fw-bold text-dark">  {{ $value->tieude }}</a>
+                      <p><a href="{{ route('admin.dashboard.chitietthongbao', ['id' => $value->id]) }}" class="text-danger">Xem tiếp <i class="bi bi-arrow-right-circle"></i></a></p>
                   </div>
                 </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">56 min</div>
-                  <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-                  <div class="activity-content">
-                    Voluptatem blanditiis blanditiis eveniet
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">2 hrs</div>
-                  <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-                  <div class="activity-content">
-                    Voluptates corrupti molestias voluptatem
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">1 day</div>
-                  <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-                  <div class="activity-content">
-                    Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati voluptatem</a> tempore
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">2 days</div>
-                  <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
-                  <div class="activity-content">
-                    Est sit eum reiciendis exercitationem
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">4 weeks</div>
-                  <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
-                  <div class="activity-content">
-                    Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
-                  </div>
-                </div><!-- End activity item-->
+                @endforeach
 
               </div>
+             
 
+            </div>
+            <div class="card-footer text-muted text-center">
+                <a class="card-link text-center" href="{{ route('admin.dashboard.tatcathongbao') }}"><i class="bi bi-eye-fill"></i> Xem tất cả</a>
             </div>
           </div><!-- End Recent Activity -->
 
+         
           <!-- Budget Report -->
           <div class="card">
             <div class="filter">

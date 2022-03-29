@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ThongBao extends Model
 {
-    use HasFactory;
+    protected $table = 'thongbao';
+	protected $primaryKey = 'id';
 }
