@@ -356,10 +356,13 @@
               <h5 class="card-title">THÔNG BÁO <span>| Mới nhất</span></h5>
 
               <div class="activity">
+              
               @foreach($thongbao as $value)
                 <div class="activity-item d-flex">
                   <div class="activite-label">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $value->created_at)->format('d/m/Y') }}</div>
-                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+              
+                  <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
+                  
                   <div class="activity-content">
                        <a href="{{ route('admin.dashboard.chitietthongbao', ['id' => $value->id]) }}" class="fw-bold text-dark">  {{ $value->tieude }}</a>
                       <p><a href="{{ route('admin.dashboard.chitietthongbao', ['id' => $value->id]) }}" class="text-danger">Xem tiếp <i class="bi bi-arrow-right-circle"></i></a></p>

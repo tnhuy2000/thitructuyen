@@ -70,12 +70,13 @@
 						<label class="custom-control-label" for="quantrong">Ghim thông báo lên trên cùng</label>
 					</div>
 				</div>
-				
+				<div class="col-12">
 				@if($thongbao->loai == 'dinhkem')
 					<button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Lưu và tiếp tục</button>
 				@else
-					<button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Cập nhật bài viết</button>
+					<button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Cập nhật thông báo</button>
 				@endif
+				</div>
 			</form>
             </div>
 	    </div>

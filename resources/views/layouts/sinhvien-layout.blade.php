@@ -54,7 +54,17 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 
-                <a href="about.html" class="nav-item nav-link"><i class="fas fa-bell"></i> Thông báo</a>
+               
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> 
+                    <i class="fas fa-bell"></i> Thông báo
+                    </a>
+                    <div class="dropdown-menu fade-up m-0">
+                        <a href="price.html" class="dropdown-item"> <i class="fas fa-bullhorn"></i> Mới nhất</a>
+                        <a href="feature.html" class="dropdown-item"><i class="fas fa-book-reader"></i> Tất cả</a>
+                        
+                    </div>
+                </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                     <img width="30px" src="{{Auth::user()->picture}}" alt="Profile" class="rounded-circle">
@@ -94,18 +104,37 @@
                   <div class="col-md-6 text-center text-md-end">
                      Bạn đang đăng nhập với tên: <a class="border-bottom">{{Auth::user()->name}}</a>
                       </br>Bạn có muốn thoát? <a class="border-bottom" onclick="event.preventDefault();
-     document.getElementById('logout-form').submit();" href="" target="_blank">Thoát</a>
-              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
+            document.getElementById('logout-form').submit();" href="" target="_blank">Thoát</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                        </form>
                   </div>
+                  
               </div>
+              <br>
+                  <br><br>
           </div>
       </div>
   </div>
-  <!-- Footer End -->
 
-
+ 
+  <div id="popup" class="modal" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                      <h5 class="modal-title">THÔNG BÁO</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                
+                </div>
+                <div class="modal-body">
+               
+                <p style="box-sizing: border-box; padding: 0px; margin: 0px 0px 10px; outline: 0px; font-size: 14px; background-color: rgb(255, 255, 255); line-height: 1.8; caret-color: rgb(255, 0, 0); color: rgb(255, 0, 0); -webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-size-adjust: 100%; font-family: Roboto, Arial, Helvetica, sans-serif; text-align: center;">
+                    <strong>WEB NGƯNG HOẠT ĐỘNG CHUYỂN QUA WEB MỚI <a href="https://trumtheviet.vn/">TRUMTHEVIET.VN</a> MỌI NGƯỜI LẬP TÀI KHOẢN RỒI IB VÀO PAGE ĐỂ ADMIN CỘNG LẠI SỐ DƯ NHA !</strong>
+                </p>
+                </div>
+            </div>
+        </div>
+</div>
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-0 back-to-top"><i class="bi bi-arrow-up"></i></a>
@@ -124,9 +153,35 @@
     <!-- Template Javascript -->
     <script src="{{asset('public/themes_user/js/main.js')}}"></script>
     
-
+    @jquery
     <script type="text/javascript">
-  @jquery
+        
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
+        };
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1);
+                if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+            }
+            return "";
+        };
+        jQuery(document).ready(function () {
+            if (getCookie('test_status') != '5') {
+                $('#popup').modal('show');
+                setCookie('test_status', '5', 0.1);
+            }
+        });
+       
+    
+        </script>
+ 
   @toastr_js
   @toastr_render
   @yield('javascript')

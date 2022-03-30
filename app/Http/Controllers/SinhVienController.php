@@ -172,7 +172,11 @@ class SinhVienController extends Controller
                 'c.tenca','c.ngaythi','c.giobatdau')
 				->orderBy('c.giobatdau', 'asc')->get();
 
-        return view('sinhvien.index',compact('sinhvien_phongthi','hoidongthi_phongthi'));
+        
+        $thongbao = \DB::table('thongbao')->where('kichhoat','=','1')->orderBy('created_at', 'desc')
+                                        ->orderBy('quantrong', 'desc')->get();
+        
+        return view('sinhvien.index',compact('sinhvien_phongthi','hoidongthi_phongthi','thongbao'));
 
     }
     public function getDanhSach()
