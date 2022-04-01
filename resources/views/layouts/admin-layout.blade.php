@@ -35,8 +35,8 @@
         
         <li class="nav-item dropdown pe-3">  
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="{{Auth::user()->picture}}" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->name }}</span>
+            <img src="{{Auth::user()->picture}}" alt="Profile" class="rounded-circle profile-user-img user_picture">
+            <span class="d-none d-md-block dropdown-toggle ps-2 user_name">{{ Auth::user()->name }}</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -55,7 +55,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.profile')}}">
                 <i class="bi bi-person"></i>
                 <span>Hồ sơ cá nhân</span>
               </a>
@@ -64,24 +64,23 @@
               <hr class="dropdown-divider">
             </li>
 
-            <li>
+            {{-- <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                 <i class="bi bi-gear"></i>
                 <span>Đổi mật khẩu</span>
               </a>
-            </li>
+            </li> --}}
             <li>
               <hr class="dropdown-divider">
             </li>
 
-            
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
            
-              <a class="dropdown-item d-flex align-items-center" href="{{route('logout')}}" onclick="event.preventDefault();
+              <a class="dropdown-item d-flex align-items-center" href="#dangxuat" onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Đăng xuất</span>
@@ -105,14 +104,14 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="{{route('admin.dashboard')}}">
+        <a class="nav-link {{ request()->is('*/dashboard*') ? '' : 'collapsed' }}" href="{{route('admin.dashboard')}}">
           <i class="bi bi-grid"></i>
           <span>Bảng điều khiển</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link {{ request()->is('*/danhmuc*') ? '' : 'collapsed' }}" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>Danh mục</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse  {{ request()->is('*/danhmuc*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
@@ -147,7 +146,7 @@
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link {{ request()->is('*/sapphong*') ? '' : 'collapsed' }}" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-journal-text"></i><span>Sắp phòng thi</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="forms-nav" class="nav-content collapse {{ request()->is('*/sapphong*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
@@ -172,7 +171,7 @@
       </li><!-- End Forms Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link {{ request()->is('*/dethi_baithi*') ? '' : 'collapsed' }}" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-layout-text-window-reverse"></i><span>Đề thi & bài thi</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="tables-nav" class="nav-content collapse {{ request()->is('*/dethi_baithi*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
@@ -190,7 +189,7 @@
       </li><!-- End Tables Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#user-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link {{ request()->is('*/qlnguoidung*') ? '' : 'collapsed' }}" data-bs-target="#user-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-people"></i><span>Quản lý người dùng</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="user-nav" class="nav-content collapse {{ request()->is('*/qlnguoidung*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
@@ -218,7 +217,7 @@
       </li><!-- End Tables Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#thongbao-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link {{ request()->is('*/thongbao*') ? '' : 'collapsed' }}" data-bs-target="#thongbao-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-envelope"></i><span>Thông báo</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="thongbao-nav" class="nav-content collapse {{ request()->is('*/thongbao*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
@@ -237,52 +236,43 @@
       </li><!-- End thongbao Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link {{ request()->is('*/thongke*') ? '' : 'collapsed' }}" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-bar-chart"></i><span>Thống kê</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="charts-nav" class="nav-content collapse {{ request()->is('*/thongke*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="charts-chartjs.html">
-              <i class="bi bi-circle"></i><span>Chart.js</span>
+            <a href="{{route('admin.thongke.diemdanhsinhvien')}}" class="{{ request()->is('*/thongke/diemdanhsv*') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Thống kê điểm danh Sinh viên</span>
             </a>
           </li>
           <li>
-            <a href="charts-apexcharts.html">
-              <i class="bi bi-circle"></i><span>ApexCharts</span>
+            <a href="{{route('admin.thongke.bailamsinhvien')}}" class="{{ request()->is('*/thongke/bailamsinhvien*') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Thống kê bài làm Sinh viên</span>
             </a>
           </li>
-          <li>
-            <a href="charts-echarts.html">
-              <i class="bi bi-circle"></i><span>ECharts</span>
-            </a>
-          </li>
+          
         </ul>
       </li><!-- End Charts Nav -->
 
     
-     
+<!--      
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-register.html">
           <i class="bi bi-card-list"></i>
           <span>Biểu mẫu</span>
         </a>
-      </li><!-- End Register Page Nav -->
+      </li> -->
 
       <li class="nav-heading">Hồ sơ</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link {{ request()->is('*/profile') ? '' : 'collapsed' }}" href="{{ route('admin.profile')}}">
           <i class="bi bi-person"></i>
-          <span>Profile</span>
+          <span>Hồ sơ cá nhân</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-faq.html">
-          <i class="bi bi-question-circle"></i>
-          <span>F.A.Q</span>
-        </a>
-      </li><!-- End F.A.Q Page Nav -->
+     
 
      
 

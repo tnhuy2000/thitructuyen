@@ -17,8 +17,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
 
-    <!-- Icon Font Stylesheet -->
-    <link rel="stylesheet" href="{{ asset('public/vendor/datatables/datatables-1.10.22/css/dataTables.bootstrap4.min.css') }}" />
+    {{-- <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="{{ asset('public/vendor/datatables/datatables-1.10.22/css/dataTables.bootstrap4.min.css') }}" /> --}}
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -60,9 +66,8 @@
                     <i class="fas fa-bell"></i> Thông báo
                     </a>
                     <div class="dropdown-menu fade-up m-0">
-                        <a href="price.html" class="dropdown-item"> <i class="fas fa-bullhorn"></i> Mới nhất</a>
-                        <a href="feature.html" class="dropdown-item"><i class="fas fa-book-reader"></i> Tất cả</a>
-                        
+                        <a href="{{route('sinhvien.thongbao.moinhat')}}" class="dropdown-item"> <i class="fas fa-bullhorn"></i> Mới nhất</a>
+                        <a href="{{route('sinhvien.thongbao.tatca')}}" class="dropdown-item"><i class="fas fa-book-reader"></i> Tất cả</a>    
                     </div>
                 </div>
                 <div class="nav-item dropdown">
@@ -72,7 +77,7 @@
                     </a>
                     <div class="dropdown-menu fade-up m-0">
                         <a href="price.html" class="dropdown-item"> <i class="fas fa-user-cog"></i> Hồ sơ cá nhân</a>
-                        <a href="feature.html" class="dropdown-item"> <i class="fas fa-bell"></i> Thông báo</a>
+                        
                         <a href="{{route('logout')}}" onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();" class="dropdown-item"> <i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
                         
@@ -118,23 +123,7 @@
   </div>
 
  
-  <div id="popup" class="modal" tabindex="-1" role="dialog" >
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                      <h5 class="modal-title">THÔNG BÁO</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                
-                </div>
-                <div class="modal-body">
-               
-                <p style="box-sizing: border-box; padding: 0px; margin: 0px 0px 10px; outline: 0px; font-size: 14px; background-color: rgb(255, 255, 255); line-height: 1.8; caret-color: rgb(255, 0, 0); color: rgb(255, 0, 0); -webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-size-adjust: 100%; font-family: Roboto, Arial, Helvetica, sans-serif; text-align: center;">
-                    <strong>WEB NGƯNG HOẠT ĐỘNG CHUYỂN QUA WEB MỚI <a href="https://trumtheviet.vn/">TRUMTHEVIET.VN</a> MỌI NGƯỜI LẬP TÀI KHOẢN RỒI IB VÀO PAGE ĐỂ ADMIN CỘNG LẠI SỐ DƯ NHA !</strong>
-                </p>
-                </div>
-            </div>
-        </div>
-</div>
+  
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-0 back-to-top"><i class="bi bi-arrow-up"></i></a>

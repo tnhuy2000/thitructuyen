@@ -18,7 +18,7 @@
 
  
   <!-- Vendor JS Files -->
- 
+
   <script src="{{asset('public/themes/vendor/apexcharts/apexcharts.min.js')}}"></script>
   <script src="{{asset('public/themes/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{asset('public/themes/vendor/chart.js/chart.min.js')}}"></script>
@@ -27,12 +27,15 @@
   <script src="{{asset('public/themes/vendor/simple-datatables/simple-datatables.js')}}"></script>
   <script src="{{asset('public/themes/vendor/tinymce/tinymce.min.js')}}"></script>
   <script src="{{asset('public/themes/vendor/php-email-form/validate.js')}}"></script>
-  
+ 
   <script src="{{ asset('public/vendor/popper.js/1.16.1/popper.min.js') }}"></script>
   <!-- Template Main JS File -->
   <script src="{{asset('public/themes/js/main.js')}}"></script>
 
+
   <script type="text/javascript">
+ 
+</script>
   @jquery
   @toastr_js
   @toastr_render

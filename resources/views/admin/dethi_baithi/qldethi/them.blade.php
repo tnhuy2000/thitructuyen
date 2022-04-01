@@ -25,13 +25,13 @@
               <h5 class="card-title">Thêm mới</h5>
               
               <form action="{{ route('admin.dethi_baithi.qldethi.them') }}" method="post" class="row g-3 needs-validation" novalidate>
-                    @csrf
+                 @csrf   
                     <div class="col-md-6">
                       <label for="validationCustom02" class="form-label">Kỳ thi</label>
                       <select class="form-control @error('kythi_id') is-invalid @enderror" onchange="testb(this)" id="statesKyThi" name="kythi_id" required>
                         <option value="">-- Chọn kỳ thi --</option>
                         @foreach($ktkythi as $value){ 
-                            <option value="{{$value->id}}">{{$value->tenkythi}} học kỳ {{$value->hocky}}, năm học {{$value->namhoc}}</option>
+                            <option value="{{$value->id}}" {{(old('kythi_id')==$value->id)?'selected':''}}>{{$value->tenkythi}} học kỳ {{$value->hocky}}, năm học {{$value->namhoc}}</option>
                         }
                         @endforeach
                       </select>

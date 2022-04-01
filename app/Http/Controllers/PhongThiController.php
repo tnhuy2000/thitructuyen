@@ -37,7 +37,7 @@ class PhongThiController extends Controller
     public function getDanhSach()
     {
         $today = Carbon::today();
-
+       
         $phongthi = \DB::table('phongthi')->get();
 		$kythi = \DB::table('cathi')->get();
 	

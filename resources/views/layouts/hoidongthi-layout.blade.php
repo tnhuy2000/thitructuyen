@@ -55,15 +55,37 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 
-                <a href="about.html" class="nav-item nav-link"><i class="fas fa-bell"></i> Thông báo</a>
+            <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> 
+                    <i class="fas fa-bell"></i> Thông báo
+                    </a>
+                    @if(Auth::user()->role==2)
+                    <div class="dropdown-menu fade-up m-0">
+                        <a href="{{route('thuky.thongbao.moinhat')}}" class="dropdown-item"> <i class="fas fa-bullhorn"></i> Mới nhất</a>
+                        <a href="{{route('thuky.thongbao.tatca')}}" class="dropdown-item"><i class="fas fa-book-reader"></i> Tất cả</a>    
+                    </div>
+                    @else
+                    <div class="dropdown-menu fade-up m-0">
+                        <a href="{{route('canbocoithi.thongbao.moinhat')}}" class="dropdown-item"> <i class="fas fa-bullhorn"></i> Mới nhất</a>
+                        <a href="{{route('canbocoithi.thongbao.tatca')}}" class="dropdown-item"><i class="fas fa-book-reader"></i> Tất cả</a>    
+                    </div>
+                    @endif
+                </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                     <img width="30px" src="{{Auth::user()->picture}}" alt="Profile" class="rounded-circle">
                     {{ Auth::user()->name }}
                     </a>
                     <div class="dropdown-menu fade-up m-0">
+                        <h6 class="dropdown-item">Quyền: 
+                            @if(Auth::user()->role==2)  
+                                Thư ký
+                            @else
+                                Cán bộ coi thi
+                            @endif
+                        </h6 >
                         <a href="price.html" class="dropdown-item"><i class="fas fa-user-cog"></i> Hồ sơ cá nhân</a>
-                        <a href="feature.html" class="dropdown-item"><i class="fas fa-bell"></i> Thông báo</a>
+                   
                         <a href="{{route('logout')}}" onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();" class="dropdown-item"> <i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
                         

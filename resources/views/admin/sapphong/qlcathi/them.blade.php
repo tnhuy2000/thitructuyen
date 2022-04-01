@@ -28,7 +28,7 @@
                     @csrf
                     <div class="form-group">
                       <label for="MaLoai" class="form-label">Kỳ thi</label>
-                      <select class="form-control" id="kythi_id" name="kythi_id">
+                      <select class="form-select" id="kythi_id" name="kythi_id">
                         <option value="">-- Chọn kỳ thi --</option>
                         @foreach($ktkythi as $value){
                           <option value="{{$value->id}}">{{$value->tenkythi}} - học kỳ {{$value->hocky}} - năm học {{$value->namhoc}} </option>

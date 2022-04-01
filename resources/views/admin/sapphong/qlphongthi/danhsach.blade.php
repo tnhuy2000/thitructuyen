@@ -23,9 +23,10 @@
 
 	  <div class="card">
 		<div class="card-body">
-		 
-		<a href="{{ route('admin.sapphong.qlphongthi.them') }}" class="btn btn-primary mt-3 "><i class="bx bxs-plus-square"></i> Thêm mới</a>
-		<a href="#nhap" class="btn btn-warning mt-3 " data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-out"></i> Nhập từ Excel</a>
+		<h5 class="card-title">Danh sách phòng thi</h5>
+		<a href="{{ route('admin.sapphong.qlphongthi.them') }}" class="btn btn-primary  "><i class="bx bxs-plus-square"></i> Thêm mới</a>
+		<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-out"></i> Nhập từ Excel</a>
+		<a href="#nhap" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-in"></i> Xuất ra Excel</a>
 			
             <!-- Bordered Tabs Justified -->
 			<ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">

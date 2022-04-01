@@ -26,6 +26,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'picture',
     ];
 
     /**
@@ -54,4 +55,8 @@ class User extends Authenticatable
             return asset('public/users/images/no-image.png');
         }
     }
+    // public function SinhVien()
+	// {
+	// 	return $this->belongsTo('App\Models\SinhVien', 'masinhvien', 'masinhvien');
+	// }
 }

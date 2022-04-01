@@ -5,6 +5,7 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Models\ThongBao;
 use App\Models\VanBan;
+use App\Models\User;
 class AdminController extends Controller
 {
     public function __construct()
@@ -31,7 +32,17 @@ class AdminController extends Controller
     }
 
     function profile(){
-        return view('admin.profile');
+       
+        if(Auth::user()->role!=1){
+            $hoidongthi = \DB::table('hoidongthi as hdt')
+				->join('khoa as k', 'hdt.makhoa', '=', 'k.makhoa')
+                ->where('hdt.macanbo','=',Auth::user()->macanbo)
+				->select('hdt.macanbo', 'hdt.holot','hdt.ten','hdt.email','hdt.dienthoai','k.makhoa', 'k.tenkhoa','hdt.vaitro')
+				->orderBy('k.makhoa', 'asc')->first();
+            return view('admin.hosocanhan.hoso',compact('hoidongthi'));
+        }
+        
+        return view('admin.hosocanhan.hoso');
     }
     function settings(){
         return view('admin.settings');
@@ -50,14 +61,17 @@ class AdminController extends Controller
         }else{
             $query = User::find(Auth::user()->id)->update([
                     'name'=>$request->name,
-                    'email'=>$request->email,
+                    
                     
             ]);
 
             if(!$query){
-                return response()->json(['status'=>0,'msg'=>'Something went wrong.']);
+               
+                return response()->json(['status'=>0,'msg'=>'Có lỗi xảy ra, cập nhật hồ sơ không thành công.']);
+
             }else{
-                return response()->json(['status'=>1,'msg'=>'Your profile info has been update successfuly.']);
+               
+                return response()->json(['status'=>1,'msg'=>'Cập nhật hồ sơ thành công']);
             }
         }
     }
@@ -68,10 +82,11 @@ class AdminController extends Controller
         $new_name = 'UIMG_'.date('Ymd').uniqid().'.jpg';
 
         //Upload new image
+        
         $upload = $file->move(public_path($path), $new_name);
         
         if( !$upload ){
-            return response()->json(['status'=>0,'msg'=>'Something went wrong, upload new picture failed.']);
+            return response()->json(['status'=>0,'msg'=>'Có lỗi xảy ra, cập nhật ảnh không thành công.']);
         }else{
             //Get Old picture
             $oldPicture = User::find(Auth::user()->id)->getAttributes()['picture'];
@@ -86,10 +101,11 @@ class AdminController extends Controller
             $update = User::find(Auth::user()->id)->update(['picture'=>$new_name]);
 
             if( !$upload ){
-                return response()->json(['status'=>0,'msg'=>'Something went wrong, updating picture in db failed.']);
+                return response()->json(['status'=>0,'msg'=>'Có lỗi xảy ra, cập nhật ảnh không thành công.']);
             }else{
-                return response()->json(['status'=>1,'msg'=>'Your profile picture has been updated successfully']);
+                return response()->json(['status'=>1,'msg'=>'Cập nhật ảnh thành công']);
             }
         }
     }
+  
 }

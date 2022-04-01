@@ -37,7 +37,8 @@
 					<div class="form-group" id="filter_col4" data-column="4">
 						<label class="form-label" >Trạng thái</label>
 						<select name="trangthai" class="form-select column_filter " id="col4_filter">
-							<option selected="selected">Đã nộp bài</option>
+							<option value="">Tất cả</option>
+							<option >Đã nộp bài</option>
 							<option>Chưa nộp bài</option>
 							<option>Làm bài lại</option>
 					
@@ -54,7 +55,7 @@
        document.getElementById('zipFilePhongThi').submit();" class="btn btn-primary mb-2"><i class="fas fa-download"></i> Tải toàn bộ bài làm</a>
             <!-- Table with stripped rows -->
 			<div class="table-responsive-lg">
-		 	 <table id="DataList" class="table table-hover table-sm ">
+		 	 <table id="DataList" class="table table-hover table-striped table-sm " >
 		  	<thead>
 				<tr>
 					<th width="2%">#</th>
@@ -176,7 +177,9 @@
 							<br><a href="#suaghichu" data-bs-toggle="modal" data-bs-target="#ModalSuaGhiChu" onclick="getBaiThiSuaGhiChu({{ $value->id }},'{{ $value->masinhvien }}','{{ $value->dethiphongthi_id }}', '{{ $value->ghichu }}'); return false;">[Sửa]</a>
 						</td>	
 						<td class="small text-center">
+						@if($value->trangthai==1)
 						<a href="#lambailai" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#ModalXacNhanLamBaiLai" onclick="getLamBaiLai({{ $value->id }},'{{ $value->dethiphongthi_id }}'); return false;"><i class="fas fa-redo"></i></a>
+						@endif
 						</td>
 								
 					</tr>
@@ -258,8 +261,12 @@
   @endsection
   @section('javascript')    
   <script src="{{ asset('public/js/ckfinder/ckfinder.js') }}"></script>
-  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+  {{-- <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script> --}}
+
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 <script type="text/javascript">
   		
     function getBaiThiSuaGhiChu(id,masinhvien,dethiphongthi_id_edit,ghichu) {
@@ -311,8 +318,9 @@
     }
     
     $(document).ready(function() {
-		
+
         $('#DataList').DataTable();
+	
         
         $('input.global_filter').on( 'keyup click', function () {
             filterGlobal();

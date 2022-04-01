@@ -22,7 +22,7 @@
 
 	  <div class="card">
 		<div class="card-body">
-		  <h5 class="card-title">Bs lọc ds</h5>
+		  <h5 class="card-title">Danh sách sinh viên</h5>
 		  	<a href="{{ route('admin.danhmuc.qlsinhvien.them') }}" class="btn btn-outline-primary"><i class="bx bxs-plus-square"></i> Thêm mới</a>
 		  	<a href="#nhap" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-in"></i> Nhập từ Excel</a>
 			<a href="{{ route('admin.danhmuc.qlsinhvien.xuat') }}" class="btn btn-outline-success"><i class="bx bxs-archive-out"></i> Xuất ra Excel</a>

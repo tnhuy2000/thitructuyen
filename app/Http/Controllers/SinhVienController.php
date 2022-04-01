@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\ThongBao;
+use App\Models\VanBan;
 use App\Models\SinhVien;
 use App\Models\DuLieuBaiThi;
 use App\Models\PhongThi;
@@ -33,6 +34,7 @@ class SinhVienController extends Controller
 
         return $file;
     }
+    
     public function postThemBaiThi(Request $request)
     {
         
@@ -152,6 +154,7 @@ class SinhVienController extends Controller
 
     }
     public function index(){
+       
         $hoidongthi_phongthi= \DB::table('hoidongthi_phongthi as hdtpt')
                 ->join('phongthi as p', 'p.id', '=', 'hdtpt.phongthi_id')
                 ->join('hoidongthi as hdt', 'hdt.macanbo', '=', 'hdtpt.macanbo')
@@ -173,8 +176,10 @@ class SinhVienController extends Controller
 				->orderBy('c.giobatdau', 'asc')->get();
 
         
-        $thongbao = \DB::table('thongbao')->where('kichhoat','=','1')->orderBy('created_at', 'desc')
-                                        ->orderBy('quantrong', 'desc')->get();
+        $thongbao = \DB::table('thongbao')->where('kichhoat','=','1')
+                                            ->where('quantrong','=','1')
+                                            ->orderBy('created_at', 'desc')
+                                        ->orderBy('quantrong', 'desc')->first();
         
         return view('sinhvien.index',compact('sinhvien_phongthi','hoidongthi_phongthi','thongbao'));
 
@@ -182,7 +187,7 @@ class SinhVienController extends Controller
     public function getDanhSach()
     {
         $sinhvien = \DB::table('sinhvien')->get();
-		$lop = \DB::table('lop')->get();
+		
 	
 		$sinhvien = \DB::table('sinhvien as sv')
 				->join('lop as l', 'sv.malop', '=', 'l.malop')

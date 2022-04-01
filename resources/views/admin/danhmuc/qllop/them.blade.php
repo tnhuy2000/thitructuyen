@@ -56,7 +56,7 @@
                       <select class="form-select" id="statesKhoa" name="makhoa" required>
                         <option value="">-- Chọn Khoa --</option>
                         @foreach($ktkhoa as $value){
-                          <option value="{{$value->makhoa}}">{{$value->tenkhoa}}</option>
+                          <option  value="{{$value->makhoa}}" {{(old('makhoa')==$value->makhoa)?'selected':''}}>{{$value->tenkhoa}}</option>
                         }
                         @endforeach
                         

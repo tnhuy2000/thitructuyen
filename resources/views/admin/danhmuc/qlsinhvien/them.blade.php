@@ -24,8 +24,9 @@
               <h5 class="card-title">Thêm mới</h5>
               
               <form action="{{ route('admin.danhmuc.qlsinhvien.them') }}" method="post" class="row g-3 needs-validation" novalidate>
-                    @csrf
-                    <div class="col-md-4">
+                    @csrf 
+                  
+                   <div class="col-md-4">
                     <label for="validationCustom01" class="form-label">Mã sinh viên</label>
                       <input type="text" placeholder="Vd: DTH185437" class="form-control @error('masinhvien') is-invalid @enderror" id="masinhvien" name="masinhvien" value="{{ old('masinhvien') }}" required>
                       
@@ -73,7 +74,7 @@
                         <optgroup label="{{$value1->tenkhoa}}">
                           @foreach($ktlop as $value2){
                             @if($value2->makhoa==$value1->makhoa)
-                            <option value="{{$value2->malop}}">{{$value2->malop}}</option>
+                            <option value="{{$value2->malop}}" {{(old('malop')==$value2->malop)?'selected':''}}>{{$value2->malop}}</option>
                             @endif
                             }
                           @endforeach

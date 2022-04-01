@@ -17,4 +17,8 @@ class SinhVien extends Model
         'dienthoai',
         'malop',
         ];
+    // public function User()
+    // {
+    //     return $this->hasMany('App\Models\User', 'masinhvien', 'masinhvien');
+    // }
 }

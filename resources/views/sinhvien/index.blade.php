@@ -14,6 +14,12 @@
                 <h1 class="">Phòng thi của tôi</h1>
             </div>
             <div class="row g-4">
+            <!-- <iframe src="{{asset('public/uploads/QĐ ban hanh quy dinh tam thoi thi truc tuyen 2021.pdf')}}" frameBorder="0"
+    scrolling="auto" width="100%" height="1100px">
+            </iframe> -->
+            </div>
+            <br>
+            <div class="row g-4">
                 <!--start-->
                 @php $count=0; @endphp
               @foreach($sinhvien_phongthi as $value)
@@ -70,5 +76,58 @@
         </div>
     </div>
     <!-- Pricing End -->
-
+    <div id="popup" class="modal" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                      <h5 class="modal-title">THÔNG BÁO MỚI</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>            
+                </div>
+                <div class="modal-body">
+                  <h5 class="text-danger fw-bold">{{$thongbao->tieude}}</strong></h5>
+                  <h6 class="text-muted"><i class="fas fa-calendar-alt"></i> {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $thongbao->created_at)->format('d/m/Y') }}</h6>
+                  <p style="box-sizing: border-box; padding: 0px; margin: 0px 0px 10px; outline: 0px; font-size: 14px; background-color: rgb(255, 255, 255); line-height: 1.8; caret-color: rgb(255, 0, 0); color: rgb(255, 0, 0); -webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-size-adjust: 100%; font-family: Roboto, Arial, Helvetica, sans-serif; text-align: center;">
+                    {!!$thongbao->noidung !!}
+                  </p>
+                  @if($thongbao->loai=='dinhkem')
+                    <p class="text-danger" >Thông báo có đính kèm văn bản. Vui lòng bấm xem tiếp để xem toàn bộ nội dung.</p>
+                    <p><a class="btn btn-primary" href="{{route('sinhvien.thongbao.chitiet',['id'=>$thongbao->id])}}">Xem tiếp <i class="bi bi-arrow-right-circle"></i></a></p>
+                  @endif
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-bs-dismiss="modal"> Close</button>
+                </div>
+            </div>
+        </div>
+</div>
   @endsection
+
+  @section('javascript')
+  <script type="text/javascript">
+        
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
+        };
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1);
+                if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+            }
+            return "";
+        };
+        jQuery(document).ready(function () {
+            if (getCookie('test_status') != '5') {
+                $('#popup').modal('show');
+                setCookie('test_status', '5', 0.1);
+            }
+        });
+       
+    
+        </script>
+@endsection

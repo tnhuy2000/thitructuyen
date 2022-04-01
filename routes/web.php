@@ -21,6 +21,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ZipController;
 use App\Http\Controllers\ThongBaoController;
 use App\Http\Controllers\VanBanController;
+use App\Http\Controllers\ThongKeController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -57,14 +58,7 @@ Route::prefix('admin')->name('admin.')->middleware(['isAdmin','auth','PreventBac
         Route::get('/', [AdminController::class, 'index'])->name('dashboard');
 
         Route::get('dashboard',[AdminController::class,'index'])->name('dashboard');
-        /*
-        Route::get('profile',[AdminController::class,'profile'])->name('profile');
-        Route::get('settings',[AdminController::class,'settings'])->name('settings');
-
-        Route::post('update-profile-info',[AdminController::class,'updateInfo'])->name('adminUpdateInfo');
-        Route::post('change-profile-picture',[AdminController::class,'updatePicture'])->name('adminPictureUpdate');
-        Route::post('change-password',[AdminController::class,'changePassword'])->name('adminChangePassword');
-        */
+       
         Route::get('/dashboard/chitietthongbao/{id}',  [ThongBaoController::class, 'getChiTietThongBao'])->name('dashboard.chitietthongbao');
         Route::get('/dashboard/tatcathongbao',  [ThongBaoController::class, 'getTatCaThongBao'])->name('dashboard.tatcathongbao');
         Route::get('/dashboard/taivanban/{id}',  [VanBanController::class, 'getTaiVanBan'])->name('dashboard.taivanban');
@@ -80,7 +74,6 @@ Route::prefix('admin')->name('admin.')->middleware(['isAdmin','auth','PreventBac
           Route::get('/kichhoat/{id}',  [ThongBaoConTroller::class, 'getKichHoat'])->name('kichhoat');
           
           
-          
           Route::get('/quanly/vanban/{id}',  [VanBanController::class, 'getDanhSach'])->name('vanban');
           Route::post('/quanly/vanban/them',  [VanBanController::class, 'postThem'])->name('vanban.them');
           Route::post('/quanly/vanban/sua',  [VanBanController::class, 'postSua'])->name('vanban.sua');
@@ -89,6 +82,15 @@ Route::prefix('admin')->name('admin.')->middleware(['isAdmin','auth','PreventBac
           Route::post('/vanban/ajax',  [VanBanController::class, 'postVanBanAjax'])->name('vanban.ajax');
           
          
+          
+        });
+        Route::prefix('thongke')->name('thongke.')->group(function() {
+          
+          Route::get('/diemdanhsv', [ThongKeController::class, 'getTKDiemDanh'])->name('diemdanhsinhvien');
+          Route::get('/bailamsinhvien',  [ThongKeController::class, 'getTKBaiLam'])->name('bailamsinhvien');
+          Route::get('/xuat', [ThongKeController::class, 'getXuatTKBaiLam'])->name('xuat');
+          Route::post('/timkiem', [ThongKeController::class, 'postTKBaiLamTimKiem'])->name('tkbailamtimkiem');
+          
           
         });
         Route::prefix('danhmuc')->name('danhmuc.')->group(function() {
@@ -218,10 +220,10 @@ Route::prefix('admin')->name('admin.')->middleware(['isAdmin','auth','PreventBac
           Route::post('qldulieudethi/ajax', [DuLieuDeThiController::class, 'postHinhAnhAjax'])->name('qldulieudethi.ajax');
 
         //ql đề thi-phong thi
-          Route::get('qldt_pt/{id}', [DeThiPhongThiController::class, 'getDanhSach'])->name('qldethi_phongthi.danhsach');
-          Route::post('qldt_pt/xoa', [DeThiPhongThiController::class, 'postXoa'])->name('qldethi_phongthi.xoa');
-          Route::post('qldt_pt/them/{phongthi_id}', [DeThiPhongThiController::class, 'postThem'])->name('qldethi_phongthi.them');
-          Route::post('qldt_pt/sua', [DeThiPhongThiController::class, 'postSua'])->name('qldethi_phongthi.sua');
+          Route::get('qldethi/qldt_pt/{id}', [DeThiPhongThiController::class, 'getDanhSach'])->name('qldethi_phongthi.danhsach');
+          Route::post('qldethi/qldt_pt/xoa', [DeThiPhongThiController::class, 'postXoa'])->name('qldethi_phongthi.xoa');
+          Route::post('qldethi/qldt_pt/them/{phongthi_id}', [DeThiPhongThiController::class, 'postThem'])->name('qldethi_phongthi.them');
+          Route::post('qldethi/qldt_pt/sua', [DeThiPhongThiController::class, 'postSua'])->name('qldethi_phongthi.sua');
         
          // Quản lý bài thi
       
@@ -275,16 +277,23 @@ Route::prefix('admin')->name('admin.')->middleware(['isAdmin','auth','PreventBac
 
         });
           
-          /*
+        
+        Route::get('profile',[AdminController::class,'profile'])->name('profile');
+    
+
         Route::post('update-profile-info',[AdminController::class,'updateInfo'])->name('adminUpdateInfo');
         Route::post('change-profile-picture',[AdminController::class,'updatePicture'])->name('adminPictureUpdate');
-        Route::post('change-password',[AdminController::class,'changePassword'])->name('adminChangePassword');
-       */
+        
+       
 });
 
 Route::group(['prefix'=>'sinhvien', 'middleware'=>['isSinhVien','auth','PreventBackHistory']], function(){
     Route::get('/', [SinhVienController::class, 'index'])->name('sinhvien.dashboard');
    
+    Route::get('thongbao/moinhat',[ThongBaoController::class,'getThongBaoMoiNhat'])->name('sinhvien.thongbao.moinhat');
+    Route::get('thongbao/tatca',[ThongBaoController::class,'TatCaThongBao'])->name('sinhvien.thongbao.tatca');
+    Route::get('thongbao/chitiet/{id}',[ThongBaoController::class,'ChiTietThongBao'])->name('sinhvien.thongbao.chitiet');
+    Route::get('thongbao/taivanban/{id}',  [VanBanController::class, 'getTaiVanBan'])->name('sinhvien.thongbao.taivanban');
     Route::get('dashboard',[SinhVienController::class,'index'])->name('dashboard');
     Route::get('nopbai',[SinhVienController::class,'getNopBai'])->name('sinhvien.nopbai');
     Route::post('nopbai/them',[SinhVienController::class,'postThemBaiThi'])->name('sinhvien.nopbai.them');
@@ -310,7 +319,10 @@ Route::group(['prefix'=>'canbocoithi', 'middleware'=>['isCanBoCoiThi','auth','Pr
     Route::get('/', [HoiDongThiController::class, 'index'])->name('canbocoithi.dashboard');
    
     Route::get('dashboard',[HoiDongThiController::class,'index'])->name('dashboard');
-
+    Route::get('thongbao/moinhat',[ThongBaoController::class,'getThongBaoMoiNhat'])->name('canbocoithi.thongbao.moinhat');
+    Route::get('thongbao/tatca',[ThongBaoController::class,'TatCaThongBao'])->name('canbocoithi.thongbao.tatca');
+    Route::get('thongbao/chitiet/{id}',[ThongBaoController::class,'ChiTietThongBao'])->name('canbocoithi.thongbao.chitiet');
+    Route::get('thongbao/taivanban/{id}',  [VanBanController::class, 'getTaiVanBan'])->name('canbocoithi.thongbao.taivanban');
 
     Route::post('suaghichu', [BaiThiController::class, 'postBaiThiSuaGhiChu'])->name('canbocoithi.suaghichu');
 
@@ -334,6 +346,10 @@ Route::group(['prefix'=>'thuky', 'middleware'=>['isThuKy','auth','PreventBackHis
    
     Route::get('dashboard',[HoiDongThiController::class,'index'])->name('dashboard');
 
+    Route::get('thongbao/moinhat',[ThongBaoController::class,'getThongBaoMoiNhat'])->name('thuky.thongbao.moinhat');
+    Route::get('thongbao/tatca',[ThongBaoController::class,'TatCaThongBao'])->name('thuky.thongbao.tatca');
+    Route::get('thongbao/chitiet/{id}',[ThongBaoController::class,'ChiTietThongBao'])->name('thuky.thongbao.chitiet');
+    Route::get('thongbao/taivanban/{id}',  [VanBanController::class, 'getTaiVanBan'])->name('thuky.thongbao.taivanban');
 
     Route::post('suaghichu', [BaiThiController::class, 'postBaiThiSuaGhiChu'])->name('thuky.suaghichu');
 

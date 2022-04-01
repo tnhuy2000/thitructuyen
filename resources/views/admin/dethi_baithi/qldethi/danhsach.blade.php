@@ -31,7 +31,7 @@
                         <div class="form-group" id="filter_col1" data-column="1">
                             <label class="form-label" >Tìm kiếm theo học phần</label>
                             <select name="hocphan" class="form-select column_filter " id="col1_filter">
-								<option>--Chọn học phần--</option>
+								<option value="">--Tất cả--</option>
 								@foreach($hocphan as $hocphan)
                                     <option value="{{$hocphan->mahocphan}}">{{$hocphan->tenhocphan}} - {{$hocphan->mahocphan}}</option>
 								@endforeach   
@@ -265,7 +265,8 @@
 @section('javascript')  
 
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>  
+
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script> 
 <script type="text/javascript">
   		function getXoa(id) {
 			$('#id').val(id);
@@ -293,11 +294,7 @@
         ).draw();
     }
     
-    $(document).ready(function() {
-		
-        $('#ex').DataTable();
-        
-    } );
+   
 
 		$('select.column_filter').on('change', function () {
             filterColumn( $(this).parents('div').attr('data-column') );

@@ -5,7 +5,7 @@ use App\Models\DeThi;
 use App\Models\PhongThi;
 use App\Models\DeThi_PhongThi;
 use Illuminate\Http\Request;
-
+use Carbon\Carbon;
 class DeThiPhongThiController extends Controller
 {
     public function getDanhSach($phongthi_id)
@@ -21,13 +21,20 @@ class DeThiPhongThiController extends Controller
                     ->select('dtpt.dethi_id','dt.tendethi','pt.maphong', 'dtpt.phongthi_id',
                         'hp.mahocphan','hp.tenhocphan','hp.sotinchi','kt.tenkythi','kt.hocky',
                         'kt.namhoc','dtpt.ghichu','dtpt.id')->get();
+        $today = Carbon::today();
+        $year= $today->year;
+        $cu= $today->subYears(2);
+        $namcu=$cu->year();
+
+
 		$ktdethi = \DB::table('dethi as d')
                         ->join('hocphan as hp', 'd.mahocphan', '=', 'hp.mahocphan')
                         ->join('kythi as kt', 'd.kythi_id', '=', 'kt.id')
                         ->select('d.id', 'd.tendethi','d.mahocphan','hp.tenhocphan','hp.sotinchi', 'd.kythi_id','kt.tenkythi','kt.hocky','kt.namhoc','d.thoigianlambai','d.hinhthuc')
                         ->orderBy('d.mahocphan', 'asc')->get();
+        
         //$phongthi = PhongThi::all();
-		return view('admin.dethi_baithi.qldethi_phongthi.danhsach',compact('dethi_phongthi','ktphongthi','ktdethi'));
+		return view('admin.dethi_baithi.qldethi_phongthi.danhsach',compact('dethi_phongthi','ktphongthi','ktdethi','cu'));
     }
     public function postXoa(Request $request)
     {

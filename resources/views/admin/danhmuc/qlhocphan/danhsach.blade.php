@@ -6,7 +6,7 @@
 <main id="main" class="main">
 
 <div class="pagetitle">
-  <h1>Quản lý khoa</h1>
+  <h1>Quản lý học phần</h1>
   <nav>
 	<ol class="breadcrumb">
 	  <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Bảng điều khiển</a></li>

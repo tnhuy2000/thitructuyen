@@ -8,10 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-
+use Auth;
 class ThongBaoController extends Controller
 {
-	
 	
 	public function getTatCaThongBao()
     {
@@ -313,4 +312,48 @@ class ThongBaoController extends Controller
 		
 		return view('admin.thongbao-chitiet', compact('thongbao', 'thongbao_truoc', 'thongbao_sau', 'thongbao_vanban', 'thongbao_nhanvien', 'loai_thongke', 'thongbao_lq', 'thongbao_lq_first_file'));
 	}
+
+	public function ChiTietThongBao($id)
+    {
+		$thongbao = ThongBao::where('id', $id)->first();
+		$vanban = VanBan::where('thongbao_id', $id)->get();
+        $thongbao_cu = ThongBao::where([['kichhoat', 1]])
+                    ->orderBy('quantrong', 'desc')
+                    ->orderBy('created_at', 'desc')->get();
+		if(Auth::user()->role==5){
+			return view('sinhvien.thongbao.chitiet',compact('thongbao','vanban','thongbao_cu'));}
+		elseif(Auth::user()->role==3){
+			return view('canbocoithi.thongbao.chitiet',compact('thongbao','vanban','thongbao_cu'));}
+		elseif(Auth::user()->role==2){
+			return view('thuky.thongbao.chitiet',compact('thongbao','vanban','thongbao_cu'));}
+    }
+    public function getThongBaoMoiNhat(){
+        $thongbao = ThongBao::where([['kichhoat', 1],['quantrong',1]])
+                    ->orderBy('quantrong', 'desc')
+                    ->orderBy('created_at', 'desc')->first();
+
+        $thongbao_cu = ThongBao::where([['kichhoat', 1]])
+                    ->orderBy('quantrong', 'desc')
+                    ->orderBy('created_at', 'desc')->get();
+        $vanban = VanBan::where('thongbao_id', $thongbao->id)->get();
+		if(Auth::user()->role==5){
+			return view('sinhvien.thongbao.moinhat',compact('thongbao','vanban','thongbao_cu'));}
+		elseif(Auth::user()->role==3){
+			return view('canbocoithi.thongbao.moinhat',compact('thongbao','vanban','thongbao_cu'));}
+		elseif(Auth::user()->role==2){
+			return view('thuky.thongbao.moinhat',compact('thongbao','vanban','thongbao_cu'));}
+    }
+    public function TatCaThongBao(){
+        $thongbao = ThongBao::where([['kichhoat', 1]])
+                    ->orderBy('quantrong', 'desc')
+                    ->orderBy('created_at', 'desc')->get();
+      
+		if(Auth::user()->role==5){
+			return view('sinhvien.thongbao.tatca',compact('thongbao'));}
+		elseif(Auth::user()->role==3){
+			return view('canbocoithi.thongbao.tatca',compact('thongbao'));}
+		elseif(Auth::user()->role==2){
+			return view('thuky.thongbao.tatca',compact('thongbao'));}
+    
+    }
 }

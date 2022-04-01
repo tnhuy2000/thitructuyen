@@ -38,7 +38,8 @@
                         <div class="form-group" id="filter_col4" data-column="4">
                             <label class="form-label" >Trạng thái</label>
                             <select name="trangthai" class="form-select column_filter " id="col4_filter">
-                                <option selected="selected">--Chọn trạng thái--</option>
+                                <option value="">--Tất cả--</option>
+								
                                 <option>Đã nộp bài</option>
                                 <option>Chưa nộp bài</option>
                                 <option>Làm bài lại</option>

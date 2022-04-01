@@ -32,7 +32,7 @@
 						<div class="form-group" id="filter_col3" data-column="3">
 							<label class="form-label" >Tìm kiếm theo Khoa</label>
 							<select name="khoa" class="form-select column_filter " id="col3_filter">
-							
+							<option value="">--Tất cả--</option>
 								@foreach($khoa as $khoa1)
 									<option value="{{$khoa1->tenkhoa}}">{{$khoa1->tenkhoa}}</option>
 								@endforeach   
@@ -45,11 +45,11 @@
              
                 
             	</div>
-		  	<h5 class="card-title">Danh sách lớp</h5>
-		  	<a href="{{ route('admin.danhmuc.qllop.them') }}" class="btn btn-outline-primary"><i class="bx bxs-plus-square"></i> Thêm mới</a>
-		  	<a href="#nhap" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-in"></i> Nhập từ Excel</a>
-			<a href="{{ route('admin.danhmuc.qllop.xuat') }}" class="btn btn-outline-success"><i class="bx bxs-archive-out"></i> Xuất ra Excel</a>
-            
+				<br>
+		  	<a href="{{ route('admin.danhmuc.qllop.them') }}" class="btn btn-primary"><i class="bx bxs-plus-square"></i> Thêm mới</a>
+		  	<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-in"></i> Nhập từ Excel</a>
+			<a href="{{ route('admin.danhmuc.qllop.xuat') }}" class="btn btn-success"><i class="bx bxs-archive-out"></i> Xuất ra Excel</a>
+            <br><br>
 		  <!-- Table with stripped rows -->
 		  <table class="table table-hover" id="ex">
 		  	<thead>
