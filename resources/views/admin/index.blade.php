@@ -142,12 +142,11 @@
                 @endforeach
 
               </div>
-             
-
+              <div class="text-center mt-1">
+                <a class="card-link " href="{{ route('admin.dashboard.tatcathongbao') }}"><i class="bi bi-eye-fill"></i> Xem tất cả</a>
+               </div>
             </div>
-            <div class="card-footer text-muted text-center">
-                <a class="card-link text-center" href="{{ route('admin.dashboard.tatcathongbao') }}"><i class="bi bi-eye-fill"></i> Xem tất cả</a>
-            </div>
+            
           </div><!-- End Recent Activity -->
         
 

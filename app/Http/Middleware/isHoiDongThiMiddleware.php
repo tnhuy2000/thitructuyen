@@ -17,7 +17,7 @@ class isHoiDongThiMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if( Auth::check() && Auth::user()->role == 4){
+        if( Auth::check() && Auth::user()->role == 4 && Auth::user()->trangthai == 1){
             return $next($request);
         }else{
             return redirect()->route('login');

@@ -26,7 +26,7 @@
               
               <form action="{{ route('admin.sapphong.qlkythi.them') }}" method="post" class="row g-3 needs-validation" novalidate>
                     @csrf
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                     <label for="validationCustom01" class="form-label">Tên kỳ thi</label>
                       <input type="text" class="form-control @error('tenkythi') is-invalid @enderror" id="tenkythi" name="tenkythi" value="{{ old('tenkythi') }}" required>
                       
@@ -35,7 +35,7 @@
                       @enderror
 
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <label for="validationCustom02" class="form-label">Học kỳ</label>
                       <select class="form-control" id="hocky" name="hocky" required>
                         <option value="">-- Chọn học kỳ --</option>
@@ -47,9 +47,18 @@
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                       @enderror
                     </div>
-                    <div class="col-md-4">
-                      <label for="validationCustom02" class="form-label">Năm học</label>
-                      <input type="text" placeholder="vd: 2021-2022" class="form-control @error('namhoc') is-invalid @enderror" id="namhoc" name="namhoc" value="{{ old('namhoc') }}" required>
+                    <div class="col-md-6">
+                      <label for="validationCustom02" class="form-label">Năm học bắt đầu</label>
+                      <input type="number" placeholder="vd: 2022" class="form-control @error('namhoc') is-invalid @enderror" id="namhoc" name="namhoc" value="{{ old('namhoc') }}" required>
+                     
+                      @error('namhoc')
+                      <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                      @enderror
+                    </div>
+                   
+                    <div class="col-md-6">
+                      <label for="validationCustom02" class="form-label">Năm học kết thúc</label>
+                      <input type="number" placeholder="vd: 2023" class="form-control @error('namhoc') is-invalid @enderror" id="namhoc" name="namhoc" value="{{ old('namhoc') }}" required>
                      
                       @error('namhoc')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>

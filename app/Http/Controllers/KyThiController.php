@@ -42,10 +42,13 @@ class KyThiController extends Controller
     }
     public function postThem(Request $request)
     {
+        $namhoc=explode('-',$request->namhoc);
+        $min=$namhoc[0];
+        $max=$namhoc[0]+1;
         $this->validate($request, [
 			'tenkythi' => 'required|max:255|unique:kythi,tenkythi',
             'hocky' => 'required|max:255:kythi,hocky',
-            'namhoc' => 'required|max:255:kythi,namhoc'
+            'namhoc' => 'required|numeric|min:'.$min.'|max:'.$max,
 		],
         [
             'tenkythi.unique'=>'Tên kỳ thi '.$request->tenkythi.' đã tồn tại',

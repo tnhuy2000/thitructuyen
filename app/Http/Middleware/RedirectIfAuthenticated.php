@@ -29,11 +29,11 @@ class RedirectIfAuthenticated
             {
                 return redirect(RouteServiceProvider::THUKY);
             }
-            elseif(Auth::guard($guard)->check() && Auth::user()->role == 3)
+            elseif(Auth::guard($guard)->check() && Auth::user()->role == 3  && Auth::user()->trangthai == 1)
             {
                 return redirect(RouteServiceProvider::CANBOCOITHI);
             }
-            elseif(Auth::guard($guard)->check() && Auth::user()->role == 4)
+            elseif(Auth::guard($guard)->check() && Auth::user()->role == 4  && Auth::user()->trangthai == 1)
             {
                 return redirect(RouteServiceProvider::HOIDONGTHI);
             }

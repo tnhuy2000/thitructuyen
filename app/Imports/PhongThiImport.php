@@ -23,11 +23,10 @@ class PhongThiImport implements ToModel, WithHeadingRow
 
 
           //zoom
-          $user = Zoom::user()->first();
+        $user = Zoom::user()->first();
         $cathi = CaThi::where('id', $cathi->id)->first();
         $ngaygiothi=Carbon::parse($cathi->ngaythi)->setTimeFromTimeString($cathi->giobatdau);
         $ngaygiothi->subMinutes(15);
-
       
         $meetingData = [
             'topic' => 'Điểm danh - '.$row['phong_thi'],
@@ -40,7 +39,7 @@ class PhongThiImport implements ToModel, WithHeadingRow
 
         $meeting->settings()->make([
             'join_before_host' => true,
-            'host_video' => false,
+            'host_video' => true,
             'participant_video' => false,
             'mute_upon_entry' => true,
             'waiting_room' => false,
@@ -67,9 +66,9 @@ class PhongThiImport implements ToModel, WithHeadingRow
         $data->ma_meeting = $meeting->id;
         $data->join_url =  $meeting->join_url;
         $data->ghichu = $row['ghi_chu'];
-    
         $data->save();
         
+
         $dethi = DeThi::where('tendethi', $row['de_thi'])->first();
        
         $dethi_phongthi= new DeThi_PhongThi;
@@ -77,8 +76,7 @@ class PhongThiImport implements ToModel, WithHeadingRow
         $dethi_phongthi->phongthi_id = $data->id;
         $dethi_phongthi->ghichu = $row['ghi_chu'];
         $dethi_phongthi->save();
-
-        
+ 
     }
     public function headingRow(): int
     {

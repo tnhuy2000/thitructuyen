@@ -21,7 +21,7 @@ class AdminController extends Controller
         $thongbao = ThongBao::where([['kichhoat', 1]])
 				->orderBy('quantrong', 'desc')
 				->orderBy('created_at', 'desc')
-				->paginate(5);
+				->paginate(3);
         return view('admin.index', compact('thongbao'));
     }
 
