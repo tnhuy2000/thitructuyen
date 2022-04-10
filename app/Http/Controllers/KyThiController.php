@@ -12,10 +12,9 @@ class KyThiController extends Controller
     public function getDanhSach()
     {
         $kythi = KyThi::all();
-        if(Auth::user()->role==1)
+        
             return view('admin.sapphong.qlkythi.danhsach',compact('kythi'));
-        elseif(Auth::user()->role==4)
-            return view('hoidongthi.sapphong.qlkythi.danhsach',compact('kythi'));
+       
     }
     public function getXoa(Request $request)
     {
@@ -25,19 +24,17 @@ class KyThiController extends Controller
             return redirect()->route('admin.sapphong.qlkythi.danhsach');
         } catch (\Illuminate\Database\QueryException $e) {
             toastr()->warning('Cảnh báo! Dữ liệu này không thể xoá vì để tránh mất dữ liệu.');
-            if(Auth::user()->role==1)
+            
                 return redirect()->route('admin.sapphong.qlkythi.danhsach');
-            elseif(Auth::user()->role==4)
-                return redirect()->route('admin.sapphong.qlkythi.danhsach');
+          
             
         }
     }
     public function getThem()
     {
-        if(Auth::user()->role==1)
+      
             return view('admin.sapphong.qlkythi.them');
-        elseif(Auth::user()->role==4)
-            return view('admin.sapphong.qlkythi.them');
+       
         
     }
     public function postThem(Request $request)
@@ -61,11 +58,8 @@ class KyThiController extends Controller
             'namhoc' => $request->namhoc,
             'updated_at' => Carbon::now()
 		]);
-        toastr()->success('Thêm dữ liệu thành công');
-        if(Auth::user()->role==1)
-            return redirect()->route('admin.sapphong.qlkythi.danhsach');
-        elseif(Auth::user()->role==4)
-            return view('hoidongthi.sapphong.qlkythi.danhsach',compact('kythi'));
+        toastr()->success('Thêm dữ liệu thành công');     
+        return redirect()->route('admin.sapphong.qlkythi.danhsach');
         
     }
     public function getSua($id)
@@ -90,10 +84,9 @@ class KyThiController extends Controller
             'namhoc' => $request->namhoc
         ]);
         toastr()->success('Cập nhật dữ liệu thành công!');
-        if(Auth::user()->role==1)
+       
             return redirect()->route('admin.sapphong.qlkythi.danhsach');
-        elseif(Auth::user()->role==4)
-            return view('hoidongthi.sapphong.qlkythi.danhsach',compact('kythi'));
+      
         
     }
 }

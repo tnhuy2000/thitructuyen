@@ -1,4 +1,4 @@
-@extends('layouts.hoidongthi-layout')
+@extends('layouts.giamthi-layout')
 @section('title','Thông báo mới nhất')
 
 @section('css')
@@ -12,17 +12,15 @@
       <h5>
         <nav aria-label="breadcrumb animated slideInDown">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a class="text-primary" href="{{route('canbocoithi.dashboard')}}"><i class="fas fa-home"></i> Trang chủ</a></li>
-                <li class="breadcrumb-item text-danger active" aria-current="page">Thông báo mới nhất</li>
+                <li class="breadcrumb-item"><a class="text-primary" href="{{route('giamthi.dashboard')}}"><i class="fas fa-home"></i> Trang chủ</a></li>
+                <li class="breadcrumb-item text-danger active" aria-current="page">Chi tiết thông báo</li>
             </ol>
         </nav>
       </h5>  
       <div class="row g-4">
         <div class="col-lg-9">
-          <div class="row">
-
-     
-        <h6 class="text-secondary text-uppercase"><i class="fas fa-star"></i> Thông báo mới nhất</h6>
+        <div class="row">
+        <h6 class="text-secondary text-uppercase"><i class="fas fa-star"></i> Chi tiết thông báo</h6>
           <div class="card">
             <div class="card-body">
               <div class="alert alert-primary alert-dismissible fade show mt-3" role="alert">
@@ -57,7 +55,7 @@
                                 <span class="font-weight-bold text-primary">{{ $value->tenvanban }}</span>
                             </td>
                             <td>{{ $value->luotdownload }}</td>
-                            <td ><a class="btn btn-primary btn-sm" target="_blank" href="{{route('canbocoithi.thongbao.taivanban',['id'=>$value->id])}}"><i class="fas fa-download"></i></a></td>
+                            <td ><a class="btn btn-primary btn-sm" target="_blank" href="{{route('giamthi.thongbao.taivanban',['id'=>$value->id])}}"><i class="fas fa-download"></i></a></td>
                             
                         </tr>
               @endforeach
@@ -69,35 +67,33 @@
             </div>
           </div>
             
-        </div>  
-      </div>    
-      <div class="col-lg-3">
+        </div>    
+    </div>
+        <div class="col-lg-3">
         <h6 class="text-secondary text-uppercase"><i class="fas fa-bullhorn"></i> Thông báo khác</h6>
         <marquee direction="down" height="500px" onmouseover="stop()" onmouseout="start()">
         @foreach($thongbao_cu as $value)
             @if($value->id !=$thongbao->id)
-            <div class="card mb-3 bg-light h-100">
-            
-                <div class="card-body">
-                  <h5 class="card-title"><a href="{{ route('canbocoithi.thongbao.chitiet', ['id' => $value->id]) }}">{{ $value->tieude }}</a></h5>
-                  @if($value->loai=='dinhkem')
+          <div class="card mb-3 bg-light">
+           
+              <div class="card-body">
+                <h5 class="card-title"><a href="{{ route('giamthi.thongbao.chitiet', ['id' => $value->id]) }}">{{ $value->tieude }}  </a></h5>
+                @if($value->loai=='dinhkem')
                     <h6 class="card-text small"><span class="badge bg-info">Văn bản - đính kèm</span></h6>
                 @endif
-                  <h6 class="card-text small">Ngày đăng: {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $value->created_at)->format('d/m/Y') }}</h6>
-                  
+                <h6 class="card-text small">Ngày đăng: {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $value->created_at)->format('d/m/Y') }}</h6>
+                
                 </div>
                 <div class="card-footer">
-                <a href="{{ route('canbocoithi.thongbao.chitiet', ['id' => $value->id]) }}" class="btn btn-primary">Xem tiếp <i class="bi bi-arrow-right-circle"></i></a>
+                <a href="{{ route('giamthi.thongbao.chitiet', ['id' => $value->id]) }}" class="btn btn-primary">Xem tiếp <i class="bi bi-arrow-right-circle"></i></a>
                 </div>
-            
-            </div>
-            @endif
+          
+          </div>
+          @endif
           @endforeach
           </marquee>
         </div>
-        
       </div>
-
     <!-- Pricing End -->
     </div>
     </div>

@@ -41,19 +41,16 @@ class BaiThiController extends Controller
         $ktphongthi = DeThi_PhongThi::where('id', $request->dethiphongthi_id_lambailai)->first();
       
 		toastr()->success('Cập nhật dữ liệu thành công!');
-        if(Auth::user()->role==3)
-		    return redirect()->route('canbocoithi.ketquabaithi',['phongthi_id'=>$ktphongthi->phongthi_id]);
-        elseif(Auth::user()->role==2)
-            return redirect()->route('thuky.ketquabaithi',['phongthi_id'=>$ktphongthi->phongthi_id]);
-        elseif(Auth::user()->role==1)
+        if(Auth::user()->role==2|| Auth::user()->role==3)
+            return redirect()->route('giamthi.ketquabaithi',['phongthi_id'=>$ktphongthi->phongthi_id]);
+        else
             return redirect()->route('admin.dethi_baithi.qlbaithi.ketquabaithi',['phongthi'=>$ktphongthi->phongthi_id]);
 		
 	}
 
     
     public function getKetQuaBaiThi($phongthi_id)
-    {
-        
+    {      
         $baithi = \DB::table('baithi as bt')
                     ->join('sinhvien as sv', 'sv.masinhvien', '=', 'bt.masinhvien')
                     ->join('dethi_phongthi as dtpt', 'dtpt.id', '=', 'bt.dethiphongthi_id')
@@ -76,11 +73,8 @@ class BaiThiController extends Controller
         $ngaythi=Carbon::createFromFormat('Y-m-d', $phongthi->ngaythi)->format('d-m-Y');
         $folder = 'file/baithi/'.$ngaythi.'/ca-'.$phongthi->tenca.'/phong-'.$phongthi->maphong;
 
+        return view('admin.dethi_baithi.baithi.ketquabaithi',compact('phongthi','baithi','folder','dulieubaithi','dulieubaithi1'));
         
-        if(Auth::user()->role==1)
-            return view('admin.dethi_baithi.baithi.ketquabaithi',compact('phongthi','baithi','folder','dulieubaithi','dulieubaithi1'));
-        elseif(Auth::user()->role==4)
-            return view('hoidongthi.baithi.ketquabaithi',compact('phongthi','baithi','folder','dulieubaithi','dulieubaithi1'));
     }
     public function getPhongthi($ngaythi,$cathi_id)
     {
@@ -97,12 +91,8 @@ class BaiThiController extends Controller
         
         $folder= new DirectoryIterator($path);
         
-      
-        
-        if(Auth::user()->role==1)
             return view('admin.dethi_baithi.baithi.phongthi_theoca',compact('path','folder','phongthi_theoca','cathi_theongay','cathi'));
-        elseif(Auth::user()->role==4)
-            return view('hoidongthi.baithi.phongthi_theoca',compact('path','folder','phongthi_theoca','cathi_theongay'));
+        
     }
     public function getCathi($ngaythi)
     {
@@ -119,15 +109,9 @@ class BaiThiController extends Controller
         
         $folder= new DirectoryIterator($path);
         
-        // if(Auth::user()->role==1)
-        //     return view('admin.dethi_baithi.baithi.cathi',compact('path','folder','ngaythi','cathi_theongay'));
-        // elseif(Auth::user()->role==4)
-        //     return view('hoidongthi.baithi.cathi',compact('path','folder','ngaythi','cathi_theongay'));
 
-        if(Auth::user()->role==1)
             return view('admin.dethi_baithi.baithi.cathi_theongay',compact('path','folder','ngaythi','cathi_theongay'));
-        elseif(Auth::user()->role==4)
-            return view('hoidongthi.baithi.cathi_theongay',compact('path','folder','ngaythi','cathi_theongay'));
+       
     }
 
 
@@ -142,32 +126,26 @@ class BaiThiController extends Controller
         
         $folder= new DirectoryIterator($path);
     
-      
-        if(Auth::user()->role==1)
             return view('admin.dethi_baithi.baithi.danhsach',compact('path','folder','ngaythi'));
-        elseif(Auth::user()->role==4)
-            return view('hoidongthi.baithi.danhsach',compact('path','folder','ngaythi'));
+       
     }
+    
     public function postBaiThiSuaGhiChu(Request $request)
 	{
+        
 		$this->validate($request, [
-			'masinhvien_edit' => 'required|max:10:baithi,masinhvien,',
-			'dethiphongthi_id_edit' => 'required|max:255:baithi,dethiphongthi_id_edit,'
+            'id_edit'=>'required',
+			'dethiphongthi_id_edit' => 'required|max:255:baithi,dethiphongthi_id_edit,',
 		]);
 		
 		\DB::table('baithi')->where('id', $request->id_edit)->update([
-            'masinhvien' => $request->masinhvien_edit,
-			'dethiphongthi_id' => $request->dethiphongthi_id_edit,
-            'ghichu' => $request->ghichu_edit,
-            
+            'ghichu' => $request->ghichu_edit,       
         ]);
         $ktphongthi = DeThi_PhongThi::where('id', $request->dethiphongthi_id_edit)->first();
 		toastr()->success('Cập nhật dữ liệu thành công!');
-        if(Auth::user()->role==3)
-		    return redirect()->route('canbocoithi.ketquabaithi',['phongthi_id'=>$ktphongthi->phongthi_id]);
-        elseif(Auth::user()->role==2)
-            return redirect()->route('thuky.ketquabaithi',['phongthi_id'=>$ktphongthi->phongthi_id]);
-        elseif(Auth::user()->role==1)
+        if(Auth::user()->role==2 || Auth::user()->role==3 )
+            return redirect()->route('giamthi.ketquabaithi',['phongthi_id'=>$ktphongthi->phongthi_id]);
+        else
             return redirect()->route('admin.dethi_baithi.qlbaithi.ketquabaithi',['phongthi'=>$ktphongthi->phongthi_id]);
 	}
     public function KetQuaBaiThi($phongthi_id)
@@ -197,11 +175,8 @@ class BaiThiController extends Controller
         $ngaythi=Carbon::createFromFormat('Y-m-d', $phongthi->ngaythi)->format('d-m-Y');
         $folder = 'file/baithi/'.$ngaythi.'/ca-'.$phongthi->tenca.'/phong-'.$phongthi->maphong;
 
-        
-        if(Auth::user()->role==3)
-            return view('canbocoithi.phongthi.ketquabaithi',compact('baithi','ktphongthi','folder','dulieubaithi','dulieubaithi1'));
-        elseif(Auth::user()->role==2)
-            return view('thuky.phongthi.ketquabaithi',compact('ktphongthi','baithi','folder','dulieubaithi','dulieubaithi1'));
+
+        return view('giamthi.phongthi.ketquabaithi',compact('ktphongthi','baithi','folder','dulieubaithi','dulieubaithi1'));
     }
     public function getHDTXemDeThi($phongthi_id)
     {
@@ -219,11 +194,8 @@ class BaiThiController extends Controller
                         'kt.namhoc','dtpt.ghichu','dtpt.id')->first();
         
         $phongthi = PhongThi::all();
-            
-        if(Auth::user()->role==3)
-            return view('canbocoithi.phongthi.dethi',compact('dethi_phongthi','ktphongthi'));
-        elseif(Auth::user()->role==2)
-            return view('thuky.phongthi.dethi',compact('dethi_phongthi','ktphongthi'));
+      
+        return view('giamthi.phongthi.dethi',compact('dethi_phongthi','ktphongthi'));
     } 
 
     public function getLamBaiThi($phongthi_id)
@@ -260,11 +232,11 @@ class BaiThiController extends Controller
 
 
         if($baithi){
-        return view('sinhvien.phongthi.hoanthanh',compact('dethi_phongthi','ktphongthi'));
+            return view('sinhvien.phongthi.hoanthanh',compact('dethi_phongthi','ktphongthi'));
         }
         else
         {
-        return view('sinhvien.lambaithi.lambai',compact('dethi_phongthi','ktphongthi'));
+            return view('sinhvien.lambaithi.lambai',compact('dethi_phongthi','ktphongthi'));
         }
     } 
     public function ChonDeThi(Request $request)
@@ -317,10 +289,8 @@ class BaiThiController extends Controller
            
         
      
-        if(Auth::user()->role==3)    
-            return view('canbocoithi.phongthi.dethi',compact('dethi_phongthi','ktphongthi'));
-        elseif(Auth::user()->role==2)                 
-            return view('thuky.phongthi.dethi',compact('dethi_phongthi','ktphongthi'));
+                       
+        return view('giamthi.phongthi.dethi',compact('dethi_phongthi','ktphongthi'));
       
     }
     public function MatKhauCaThi(Request $request)
@@ -526,22 +496,13 @@ class BaiThiController extends Controller
         if(Hash::check($request->matkhaucathi, $cathi->matkhaucathi))
         {
             $path_dethi = config('app.url') . '/storage/app/file/dethi/';
-            if(Auth::user()->role==3)
-                return view('canbocoithi.phongthi.xemdethi', compact('ktphongthi','dethi_phongthi','path_dethi','dulieudethi'));
-            elseif(Auth::user()->role==2)
-                return view('thuky.phongthi.xemdethi', compact('ktphongthi','dethi_phongthi','path_dethi','dulieudethi'));
+            
+            return view('giamthi.phongthi.xemdethi', compact('ktphongthi','dethi_phongthi','path_dethi','dulieudethi'));
         }
         else
-        {
-            if(Auth::user()->role==3){
-            
-                toastr()->error('Mật khẩu ca thi không chính xác');
-                return view('canbocoithi.phongthi.dethi',compact('dethi_phongthi','ktphongthi'));
-            }
-            elseif(Auth::user()->role==2){
-                toastr()->error('Mật khẩu ca thi không chính xác');
-                return view('thuky.phongthi.dethi',compact('dethi_phongthi','ktphongthi'));
-            }
+        {           
+            toastr()->error('Mật khẩu ca thi không chính xác');
+            return view('giamthi.phongthi.dethi',compact('dethi_phongthi','ktphongthi'));
         }
     }
     public function KetThuc(Request $request)

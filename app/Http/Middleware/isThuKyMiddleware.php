@@ -19,8 +19,7 @@ class isThuKyMiddleware
     {
         if( Auth::check() && Auth::user()->role == 2 && Auth::user()->trangthai == 1){
             return $next($request);
-        }else{
-            return redirect()->route('login');
         }
+        //return redirect()->route('thuky.forbidden')->with('error_message', 'Người dùng không đủ quyền hạn để thao tác chức năng này!');
     }
 }

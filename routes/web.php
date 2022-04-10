@@ -35,9 +35,9 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::middleware(['middleware'=>'PreventBackHistory'])->group(function () {
     Auth::routes();
@@ -52,11 +52,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/login/google', [HomeController::class, 'getGoogleLogin'])->name('google.login');
 Route::get('/login/google/callback', [HomeController::class, 'getGoogleCallback'])->name('google.callback');
 
-Route::prefix('admin')->name('admin.')->middleware(['isAdmin','auth','PreventBackHistory'])->group(function() {
+Route::prefix('admin')->name('admin.')->middleware(['isHoiDongThi','auth','PreventBackHistory'])->group(function() {
 // Route::group(['prefix'=>'admin','name'=>'admin.', 'middleware'=>['isAdmin','auth','PreventBackHistory']], function(){
     
-        Route::get('/', [AdminController::class, 'index'])->name('dashboard');
-
+        Route::get('/', [AdminController::class, 'getDashboard'])->name('getdashboard');
+        Route::get('/403', [AdminController::class,'getForbidden'])->name('forbidden');
         Route::get('dashboard',[AdminController::class,'index'])->name('dashboard');
        
         Route::get('/dashboard/chitietthongbao/{id}',  [ThongBaoController::class, 'getChiTietThongBao'])->name('dashboard.chitietthongbao');
@@ -245,8 +245,8 @@ Route::prefix('admin')->name('admin.')->middleware(['isAdmin','auth','PreventBac
         });
 
        
-
-        Route::prefix('qlnguoidung')->name('qlnguoidung.')->group(function() {
+    
+        Route::prefix('qlnguoidung')->name('qlnguoidung.')->middleware(['isAdmin','auth','PreventBackHistory'])->group(function() {
           // Quản lý người dùng sinh viên
           Route::get('qltksinhvien', [UserController::class, 'getDanhSachSV'])->name('qltksinhvien.danhsach');
           Route::get('qltksinhvien/{id}/trangthai/{trangthai}', [UserController::class, 'getTrangThai'])->name('qltksinhvien.trangthai');
@@ -280,7 +280,7 @@ Route::prefix('admin')->name('admin.')->middleware(['isAdmin','auth','PreventBac
         
         Route::get('profile',[AdminController::class,'profile'])->name('profile');
     
-
+        Route::post('change-password',[AdminController::class,'changePassword'])->name('adminChangePassword');
         Route::post('update-profile-info',[AdminController::class,'updateInfo'])->name('adminUpdateInfo');
         Route::post('change-profile-picture',[AdminController::class,'updatePicture'])->name('adminPictureUpdate');
         
@@ -294,7 +294,7 @@ Route::group(['prefix'=>'sinhvien', 'middleware'=>['isSinhVien','auth','PreventB
     Route::get('thongbao/tatca',[ThongBaoController::class,'TatCaThongBao'])->name('sinhvien.thongbao.tatca');
     Route::get('thongbao/chitiet/{id}',[ThongBaoController::class,'ChiTietThongBao'])->name('sinhvien.thongbao.chitiet');
     Route::get('thongbao/taivanban/{id}',  [VanBanController::class, 'getTaiVanBan'])->name('sinhvien.thongbao.taivanban');
-    Route::get('dashboard',[SinhVienController::class,'index'])->name('dashboard');
+  
     Route::get('nopbai',[SinhVienController::class,'getNopBai'])->name('sinhvien.nopbai');
     Route::post('nopbai/them',[SinhVienController::class,'postThemBaiThi'])->name('sinhvien.nopbai.them');
 
@@ -314,148 +314,38 @@ Route::group(['prefix'=>'sinhvien', 'middleware'=>['isSinhVien','auth','PreventB
     //Route::post('change-profile-picture',[UserController::class,'updatePicture'])->name('userPictureUpdate');
    // Route::post('change-password',[UserController::class,'changePassword'])->name('userChangePassword');
 });
-   //hội đồng thi(giám thị)
-Route::group(['prefix'=>'canbocoithi', 'middleware'=>['isCanBoCoiThi','auth','PreventBackHistory']], function(){
-    Route::get('/', [HoiDongThiController::class, 'index'])->name('canbocoithi.dashboard');
+
+//giám thị(thư ký + cán bộ coi thi)
+
+Route::group(['prefix'=>'giamthi', 'middleware'=>['isCanBoCoiThi','auth','PreventBackHistory']], function(){
+    Route::get('/', [HoiDongThiController::class, 'index'])->name('giamthi.dashboard');
    
-    Route::get('dashboard',[HoiDongThiController::class,'index'])->name('dashboard');
-    Route::get('thongbao/moinhat',[ThongBaoController::class,'getThongBaoMoiNhat'])->name('canbocoithi.thongbao.moinhat');
-    Route::get('thongbao/tatca',[ThongBaoController::class,'TatCaThongBao'])->name('canbocoithi.thongbao.tatca');
-    Route::get('thongbao/chitiet/{id}',[ThongBaoController::class,'ChiTietThongBao'])->name('canbocoithi.thongbao.chitiet');
-    Route::get('thongbao/taivanban/{id}',  [VanBanController::class, 'getTaiVanBan'])->name('canbocoithi.thongbao.taivanban');
+    Route::get('thongbao/moinhat',[ThongBaoController::class,'getThongBaoMoiNhat'])->name('giamthi.thongbao.moinhat');
+    Route::get('thongbao/tatca',[ThongBaoController::class,'TatCaThongBao'])->name('giamthi.thongbao.tatca');
+    Route::get('thongbao/chitiet/{id}',[ThongBaoController::class,'ChiTietThongBao'])->name('giamthi.thongbao.chitiet');
+    Route::get('thongbao/taivanban/{id}',  [VanBanController::class, 'getTaiVanBan'])->name('giamthi.thongbao.taivanban');
+    Route::post('ghichudiemdanh', [SinhVienPhongThiController::class, 'postGhiChuDiemDanh'])->name('giamthi.ghichudiemdanh');
+    Route::post('suaghichu', [BaiThiController::class, 'postBaiThiSuaGhiChu'])->name('giamthi.suaghichu');
 
-    Route::post('suaghichu', [BaiThiController::class, 'postBaiThiSuaGhiChu'])->name('canbocoithi.suaghichu');
-
-    Route::get('diemdanh/{id}/{phongthi_id}', [SinhVienPhongThiController::class, 'getCanBoDiemDanh'])->name('canbocoithi.diemdanh');
-    Route::get('danhsachthisinh/{phongthi_id}',[SinhVienPhongThiController::class,'DanhSachThiSinh'])->name('canbocoithi.danhsachthisinh');
+    Route::get('thamgiadiemdanh/{phongthi_id}',[PhongThiController::class,'getPhongThiGiamThiDiemDanh'])->name('giamthi.thamgiadiemdanh');
+    Route::get('diemdanh/{id}/{phongthi_id}', [SinhVienPhongThiController::class, 'getCanBoDiemDanh'])->name('giamthi.diemdanh');
+    Route::get('danhsachthisinh/{phongthi_id}',[SinhVienPhongThiController::class,'DanhSachThiSinh'])->name('giamthi.danhsachthisinh');
     
-    Route::get('phongthi/{phongthi_id}',[HoiDongThiController::class,'getPhongThi'])->name('canbocoithi.phongthi');
-    Route::post('dethi',[BaiThiController::class,'HDTChonDeThi'])->name('canbocoithi.chondethi');
-    Route::post('xemdethi',[BaiThiController::class,'HDTMatKhauCaThi'])->name('canbocoithi.matkhaucathi');
-    Route::get('dethi/{phongthi_id}',[BaiThiController::class,'getHDTXemDeThi'])->name('canbocoithi.dethi');
+    Route::get('phongthi/{phongthi_id}',[HoiDongThiController::class,'getPhongThi'])->name('giamthi.phongthi');
+    Route::post('dethi',[BaiThiController::class,'HDTChonDeThi'])->name('giamthi.chondethi');
+    Route::post('xemdethi',[BaiThiController::class,'HDTMatKhauCaThi'])->name('giamthi.matkhaucathi');
+    Route::get('dethi/{phongthi_id}',[BaiThiController::class,'getHDTXemDeThi'])->name('giamthi.dethi');
 
+    Route::get('ketquabaithi/{phongthi_id}',[BaiThiController::class,'KetQuaBaiThi'])->name('giamthi.ketquabaithi');
 
-    Route::get('ketquabaithi/{phongthi_id}',[BaiThiController::class,'KetQuaBaiThi'])->name('canbocoithi.ketquabaithi');
-    Route::post('ajax', [BaiThiController::class,'postHinhAnhAjax'])->name('canbocoithi.hinhanh.ajax');
-    Route::post('lambailai', [BaiThiController::class, 'postLamBaiLai'])->name('canbocoithi.lambailai');
+    Route::post('ajax', [BaiThiController::class,'postHinhAnhAjax'])->name('giamthi.hinhanh.ajax');
+    
+    Route::post('lambailai', [BaiThiController::class, 'postLamBaiLai'])->name('giamthi.lambailai');
+    Route::post('zip', [ZipController::class,'zipFile_SVBaiThi'])->name('giamthi.zipFile');
+    Route::post('zipFile_PhongThi', [ZipController::class,'zipFile_PhongThi'])->name('giamthi.zipFile_PhongThi');
 
 });
 
-Route::group(['prefix'=>'thuky', 'middleware'=>['isThuKy','auth','PreventBackHistory']], function(){
-    Route::get('/', [HoiDongThiController::class, 'index'])->name('thuky.dashboard');
-   
-    Route::get('dashboard',[HoiDongThiController::class,'index'])->name('dashboard');
 
-    Route::get('thongbao/moinhat',[ThongBaoController::class,'getThongBaoMoiNhat'])->name('thuky.thongbao.moinhat');
-    Route::get('thongbao/tatca',[ThongBaoController::class,'TatCaThongBao'])->name('thuky.thongbao.tatca');
-    Route::get('thongbao/chitiet/{id}',[ThongBaoController::class,'ChiTietThongBao'])->name('thuky.thongbao.chitiet');
-    Route::get('thongbao/taivanban/{id}',  [VanBanController::class, 'getTaiVanBan'])->name('thuky.thongbao.taivanban');
-
-    Route::post('suaghichu', [BaiThiController::class, 'postBaiThiSuaGhiChu'])->name('thuky.suaghichu');
-
-    Route::get('diemdanh/{id}/{phongthi_id}', [SinhVienPhongThiController::class, 'getCanBoDiemDanh'])->name('thuky.diemdanh');
-    Route::get('danhsachthisinh/{phongthi_id}',[SinhVienPhongThiController::class,'DanhSachThiSinh'])->name('thuky.danhsachthisinh');
-    
-    Route::get('phongthi/{phongthi_id}',[HoiDongThiController::class,'getPhongThi'])->name('thuky.phongthi');
-    Route::post('dethi',[BaiThiController::class,'HDTChonDeThi'])->name('thuky.chondethi');
-    Route::post('xemdethi',[BaiThiController::class,'HDTMatKhauCaThi'])->name('thuky.matkhaucathi');
-    Route::get('dethi/{phongthi_id}',[BaiThiController::class,'getHDTXemDeThi'])->name('thuky.dethi');
-
-    Route::get('ketquabaithi/{phongthi_id}',[BaiThiController::class,'KetQuaBaiThi'])->name('thuky.ketquabaithi');
-    Route::post('ajax', [BaiThiController::class,'postHinhAnhAjax'])->name('thuky.hinhanh.ajax');
-
-    Route::post('lambailai', [BaiThiController::class, 'postLamBaiLai'])->name('thuky.lambailai');
-
-    Route::post('zip', [ZipController::class,'zipFile_SVBaiThi'])->name('thuky.zipFile');
-    Route::post('zipFile_PhongThi', [ZipController::class,'zipFile_PhongThi'])->name('thuky.zipFile_PhongThi');
-
-
-});
-
-Route::group(['prefix'=>'hoidongthi', 'middleware'=>['isHoiDongThi','auth','PreventBackHistory']], function(){
-    
-    Route::get('/', [AdminController::class, 'getHoiDongThi'])->name('hoidongthi.dashboard');
-
-    Route::get('dashboard',[AdminController::class,'getHoiDongThi'])->name('hoidongthi.dashboard');
-    
-    //Sắp phòng
-
-    // Quản lý kỳ thi
-    Route::get('qlkythi', [KyThiController::class, 'getDanhSach'])->name('hoidongthi.qlkythi.danhsach');
-    Route::get('qlkythi/them', [KyThiController::class, 'getThem'])->name('hoidongthi.qlkythi.them');
-    Route::post('qlkythi/them', [KyThiController::class, 'postThem'])->name('hoidongthi.qlkythi.them');
-    Route::get('qlkythi/sua/{id}', [KyThiController::class, 'getSua'])->name('hoidongthi.qlkythi.sua');
-    Route::post('qlkythi/sua/{id}', [KyThiController::class, 'postSua'])->name('hoidongthi.qlkythi.sua');       
-    Route::get('qlkythi/xoa/{id}', [KyThiController::class, 'getXoa'])->name('hoidongthi.qlkythi.xoa');
-    
-     // Quản lý ca thi
-     Route::get('qlcathi', [CaThiController::class, 'getDanhSach'])->name('hoidongthi.qlcathi.danhsach');
-     Route::get('qlcathi/them', [CaThiController::class, 'getThem'])->name('hoidongthi.qlcathi.them');
-     Route::post('qlcathi/them', [CaThiController::class, 'postThem'])->name('hoidongthi.qlcathi.them');
-     Route::get('qlcathi/sua/{id}', [CaThiController::class, 'getSua'])->name('hoidongthi.qlcathi.sua');
-     Route::post('qlcathi/sua/{id}', [CaThiController::class, 'postSua'])->name('hoidongthi.qlcathi.sua');       
-     Route::get('qlcathi/xoa/{id}', [CaThiController::class, 'getXoa'])->name('hoidongthi.qlcathi.xoa');
-     
-
-      // Quản lý phòng thi
-      Route::get('qlphongthi', [PhongThiController::class, 'getDanhSach'])->name('hoidongthi.qlphongthi.danhsach');
-      Route::get('qlphongthi/them', [PhongThiController::class, 'getThem'])->name('hoidongthi.qlphongthi.them');
-      Route::post('qlphongthi/them', [PhongThiController::class, 'postThem'])->name('hoidongthi.qlphongthi.them');
-      Route::get('qlphongthi/sua/{id}', [PhongThiController::class, 'getSua'])->name('hoidongthi.qlphongthi.sua');
-      Route::post('qlphongthi/sua/{id}', [PhongThiController::class, 'postSua'])->name('hoidongthi.qlphongthi.sua');       
-      Route::get('qlphongthi/xoa/{id}', [PhongThiController::class, 'getXoa'])->name('v.qlphongthi.xoa');
-
-      //sinh vien phong thi
-      Route::get('qlsv_pt/{id}', [SinhVienPhongThiController::class, 'getDanhSach'])->name('hoidongthi.qlsv_pt.danhsach');
-      Route::post('qlsv_pt/xoa', [SinhVienPhongThiController::class, 'postXoa'])->name('v.qlsv_pt.xoa');
-      Route::post('qlsv_pt/them/{phongthi_id}', [SinhVienPhongThiController::class, 'postThem'])->name('hoidongthi.qlsv_pt.them');
-      Route::post('qlsv_pt/suaghichu', [SinhVienPhongThiController::class, 'postSuaGhiChu'])->name('hoidongthi.qlsv_pt.suaghichu');
-
-      Route::get('qlsv_pt/diemdanh/{id}/{phongthi_id}', [SinhVienPhongThiController::class, 'getDiemDanh'])->name('hoidongthi.qlsv_pt.diemdanh');
-
-      Route::post('qlsv_pt/nhap/{phongthi_id}', [SinhVienPhongThiController::class, 'postNhap'])->name('hoidongthi.qlsv_pt.nhap');
-      Route::get('qlsv_pt/xuat/{phongthi_id}', [SinhVienPhongThiController::class, 'getXuat'])->name('hoidongthi.qlsv_pt.xuat');
-
-
-      //hoi dong thi phong thi
-      Route::get('qlhdt_pt/{id}', [HoiDongThiPhongThiController::class, 'getDanhSach'])->name('hoidongthi.qlhdt_pt.danhsach');
-
-      Route::post('qlhdt_pt/xoa', [HoiDongThiPhongThiController::class, 'postXoa'])->name('hoidongthi.qlhdt_pt.xoa');
-      Route::post('qlhdt_pt/them/{phongthi_id}', [HoiDongThiPhongThiController::class, 'postThem'])->name('hoidongthi.qlhdt_pt.them');
-      Route::post('qlhdt_pt/suaghichu', [HoiDongThiPhongThiController::class, 'postSuaGhiChu'])->name('hoidongthi.qlhdt_pt.suaghichu');
-
-      //Route::get('qlhdt_pt/diemdanh/{id}/{phongthi_id}', [HoiDongThiPhongThiController::class, 'getDiemDanh'])->name('qlhdt_pt.diemdanh');
-
-      Route::post('qlhdt_pt/nhap/{phongthi_id}', [HoiDongThiPhongThiController::class, 'postNhap'])->name('hoidongthi.qlhdt_pt.nhap');
-      Route::get('qlhdt_pt/xuat/{phongthi_id}', [HoiDongThiPhongThiController::class, 'getXuat'])->name('hoidongthi.qlhdt_pt.xuat');
-
-
-
-      // Quản lý đề thi
-      Route::get('qldethi', [DeThiController::class, 'getDanhSach'])->name('hoidongthi.qldethi.danhsach');
-      Route::get('qldethi/them', [DeThiController::class, 'getThem'])->name('hoidongthi.qldethi.them');
-      Route::post('qldethi/them', [DeThiController::class, 'postThem'])->name('hoidongthi.qldethi.them');
-      Route::get('qldethi/sua/{id}', [DeThiController::class, 'getSua'])->name('hoidongthi.qldethi.sua');
-      Route::post('qldethi/sua/{id}', [DeThiController::class, 'postSua'])->name('hoidongthi.qldethi.sua');       
-      Route::get('qldethi/xoa/{id}', [DeThiController::class, 'getXoa'])->name('hoidongthi.qldethi.xoa');
-
-     
-    //mới
-      Route::get('qldulieudethi/{id}', [DuLieuDeThiController::class, 'getDanhSachDuLieu'])->name('hoidongthi.qldulieudethi.danhsach');
-      Route::post('qldulieudethi/themmoi/{dethi_id}', [DuLieuDeThiController::class, 'postThemMoi'])->name('hoidongthi.qldulieudethi.themmoi');
-      Route::post('qldulieudethi/sua', [DuLieuDeThiController::class, 'postSua'])->name('hoidongthi.qldulieudethi.sua');
-      Route::post('qldulieudethi/xoa', [DuLieuDeThiController::class, 'postXoa'])->name('hoidongthi.qldulieudethi.xoa');
-      Route::post('qldulieudethi/ajax', [DuLieuDeThiController::class, 'postHinhAnhAjax'])->name('hoidongthi.qldulieudethi.ajax');
-
-    //ql đề thi-phong thi
-      Route::get('qldethi_phongthi/{id}', [DeThiPhongThiController::class, 'getDanhSach'])->name('hoidongthi.qldethi_phongthi.danhsach');
-      Route::post('qldethi_phongthi/xoa', [DeThiPhongThiController::class, 'postXoa'])->name('hoidongthi.qldethi_phongthi.xoa');
-      Route::post('qldethi_phongthi/them/{phongthi_id}', [DeThiPhongThiController::class, 'postThem'])->name('hoidongthi.qldethi_phongthi.them');
-      Route::post('qldethi_phongthi/sua', [DeThiPhongThiController::class, 'postSua'])->name('hoidongthi.qldethi_phongthi.sua');
-
-
-      
-
-});
 
 

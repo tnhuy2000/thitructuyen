@@ -1,4 +1,4 @@
-@extends('layouts.hoidongthi-layout')
+@extends('layouts.giamthi-layout')
 @section('title','Dashboard')
 
 @section('css')
@@ -51,7 +51,7 @@
                               </p>
                               @endif
                             @endforeach
-                            <a class="btn-slide mt-2" href="{{ route('canbocoithi.phongthi',['phongthi_id'=>$value->phongthi_id]) }}" class="btn btn-primary"><i class="fa fa-arrow-right"></i><span >Vào phòng</span></a>
+                            <a class="btn-slide mt-2" href="{{ route('giamthi.phongthi',['phongthi_id'=>$value->phongthi_id]) }}" class="btn btn-primary"><i class="fa fa-arrow-right"></i><span >Vào phòng</span></a>
                             </a>
                               
                         </div>

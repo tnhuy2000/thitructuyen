@@ -18,6 +18,9 @@
 
  
   <!-- Vendor JS Files -->
+  @jquery
+  <script src="{{asset('public/select/jquery-1.8.0.min.js')}}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>  
 
   <script src="{{asset('public/themes/vendor/apexcharts/apexcharts.min.js')}}"></script>
   <script src="{{asset('public/themes/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
@@ -36,7 +39,7 @@
   <script type="text/javascript">
  
 </script>
-  @jquery
+
   @toastr_js
   @toastr_render
   @yield('javascript')

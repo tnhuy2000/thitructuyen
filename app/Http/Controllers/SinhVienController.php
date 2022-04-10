@@ -153,6 +153,10 @@ class SinhVienController extends Controller
         return view('sinhvien.nopbai.baithi', compact('folder','baithi'));
 
     }
+    public function getDashboard(){
+       
+        return redirect()->route('sinhvien.dashboard');
+    }
     public function index(){
        
         $hoidongthi_phongthi= \DB::table('hoidongthi_phongthi as hdtpt')

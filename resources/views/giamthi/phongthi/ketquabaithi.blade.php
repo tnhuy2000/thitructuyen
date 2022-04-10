@@ -1,6 +1,6 @@
-@extends('layouts.hoidongthi-layout')
+@extends('layouts.giamthi-layout')
 @section('pagetitle')
-	Phòng thi
+	Phòng thi - Kết quả
 @endsection
 
 @section('css')
@@ -16,8 +16,8 @@
             <h5>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a class="text-primary" href="{{route('thuky.dashboard')}}"><i class="fas fa-home"></i> Trang chủ</a></li>
-                    <li class="breadcrumb-item"><a class="text-primary" href="{{route('thuky.phongthi',['phongthi_id'=>$ktphongthi->id])}}">Phòng thi của tôi</a></li>
+                    <li class="breadcrumb-item"><a class="text-primary" href="{{route('giamthi.dashboard')}}"><i class="fas fa-home"></i> Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a class="text-primary" href="{{route('giamthi.phongthi',['phongthi_id'=>$ktphongthi->id])}}">Phòng thi của tôi</a></li>
                     <li class="breadcrumb-item text-primary" aria-current="page">{{$ktphongthi->maphong}}</li>
                     <li class="breadcrumb-item text-danger active" aria-current="page">Kết quả</li>
                 </ol>
@@ -48,12 +48,12 @@
 				</div>
 
 
-
-
 				</div>
+			@if(Auth::user()->role==2)
             <a href="" onclick="event.preventDefault();
        document.getElementById('zipFilePhongThi').submit();" class="btn btn-primary mb-2"><i class="fas fa-download"></i> Tải toàn bộ bài làm</a>
-            <!-- Table with stripped rows -->
+            @endif
+			<!-- Table with stripped rows -->
 			<div class="table-responsive-lg">
 		 	 <table id="DataList" class="table table-hover table-striped table-sm " >
 		  	<thead>
@@ -84,9 +84,11 @@
 								<br />
 								@foreach($dulieubaithi as $dulieubaithi2)
 									@if($dulieubaithi2->baithi_id== $value->id)
-								<a href="#hinhanh" class="fw-bold" onclick="getXemHinh('{{ $dulieubaithi2->duongdan }}')"><i class="fas fa-eye"></i> Xem lại bài làm</a><br>
-								<a href="#taiZip" class="fw-bold" onclick="event.preventDefault();getZip('{{$value->masinhvien}}','{{$dulieubaithi2->duongdan}}');
-       document.getElementById('zipFile').submit();" ><i class="fas fa-download"></i>Tải bài làm</a>
+										<a href="#hinhanh" class="fw-bold" onclick="getXemHinh('{{ $dulieubaithi2->duongdan }}')"><i class="fas fa-eye"></i> Xem lại bài làm</a><br>
+										@if(Auth::user()->role==2)
+										<a href="#taiZip" class="fw-bold" onclick="event.preventDefault();getZip('{{$value->masinhvien}}','{{$dulieubaithi2->duongdan}}');
+												document.getElementById('zipFile').submit();" ><i class="fas fa-download"></i>Tải bài làm</a>
+										@endif
 	   								@endif
 	   							@endforeach
 							</span>
@@ -174,11 +176,13 @@
 
 						</td>
 						<td class="small text-center">{{ $value->ghichu }}
-							<br><a href="#suaghichu" data-bs-toggle="modal" data-bs-target="#ModalSuaGhiChu" onclick="getBaiThiSuaGhiChu({{ $value->id }},'{{ $value->masinhvien }}','{{ $value->dethiphongthi_id }}', '{{ $value->ghichu }}'); return false;">[Sửa]</a>
+							<br><a href="#suaghichu" data-bs-toggle="modal" data-bs-target="#ModalSuaGhiChu" onclick="getBaiThiSuaGhiChu({{ $value->id }},{{$value->dethiphongthi_id}},'{{ $value->ghichu }}'); return false;">[Sửa]</a>
 						</td>	
 						<td class="small text-center">
-						@if($value->trangthai==1)
-						<a href="#lambailai" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#ModalXacNhanLamBaiLai" onclick="getLamBaiLai({{ $value->id }},'{{ $value->dethiphongthi_id }}'); return false;"><i class="fas fa-redo"></i></a>
+						@if(Auth::user()->role==2)
+							@if($value->trangthai==1)
+							<a href="#lambailai" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#ModalXacNhanLamBaiLai" onclick="getLamBaiLai({{ $value->id }},'{{ $value->dethiphongthi_id }}'); return false;"><i class="fas fa-redo"></i></a>
+							@endif
 						@endif
 						</td>
 								
@@ -195,22 +199,22 @@
 
     <!-- Pricing End -->
 	
-	<form action="{{route('thuky.zipFile')}}" method="post" id="zipFile">
+	<form action="{{route('giamthi.zipFile')}}" method="post" id="zipFile">
 		@csrf
 		<input type="hidden" id="masinhvien" name="masinhvien" value="" />
 		<input type="hidden" id="duongdan" name="duongdan" value="" />
 	</form>
-	<form action="{{route('thuky.zipFile_PhongThi')}}" method="post" id="zipFilePhongThi">
+	<form action="{{route('giamthi.zipFile_PhongThi')}}" method="post" id="zipFilePhongThi">
 		@csrf
 		
 		<input type="hidden" id="duongdan" name="duongdan" value="{{$folder}}" />
 		<input type="hidden" id="maphong" name="maphong" value="{{$ktphongthi->maphong}}" />
 	</form>
-	<form action="{{route('thuky.suaghichu')}}" method="post">
+	<form action="{{route('giamthi.suaghichu')}}" method="post">
 		@csrf
 		<input type="hidden" id="id_edit" name="id_edit" value="" />
 		<input type="hidden" id="dethiphongthi_id_edit" name="dethiphongthi_id_edit" value="" />
-		<input type="hidden" id="masinhvien_edit" name="masinhvien_edit" value="" />
+		
 		<div class="modal fade" id="ModalSuaGhiChu" role="dialog" >
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -235,7 +239,7 @@
 			</div>
 		</div>
 	</form>
-	<form action="{{route('thuky.lambailai')}}" method="post">
+	<form action="{{route('giamthi.lambailai')}}" method="post">
 		@csrf
 		<input type="hidden" id="id_lambailai" name="id_lambailai" value="" />
 		<input type="hidden" id="dethiphongthi_id_lambailai" name="dethiphongthi_id_lambailai" value="" />
@@ -261,17 +265,15 @@
   @endsection
   @section('javascript')    
   <script src="{{ asset('public/js/ckfinder/ckfinder.js') }}"></script>
-  {{-- <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script> --}}
+ 
 
 	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 <script type="text/javascript">
   		
-    function getBaiThiSuaGhiChu(id,masinhvien,dethiphongthi_id_edit,ghichu) {
+    function getBaiThiSuaGhiChu(id,dethiphongthi_id_edit,ghichu) {
         $('#id_edit').val(id);
-        $('#masinhvien_edit').val(masinhvien);
         $('#dethiphongthi_id_edit').val(dethiphongthi_id_edit);
         $('#ghichu_edit').val(ghichu);
     }
@@ -282,7 +284,7 @@
     }
 	function getXemHinh(duongdan) {
 			$.ajax({
-				url: '{{ route("thuky.hinhanh.ajax") }}',
+				url: '{{ route("giamthi.hinhanh.ajax") }}',
 				method: 'POST',
 				data: { _token: '{{ csrf_token() }}', duongdan: duongdan },
 				dataType: 'text',
@@ -290,6 +292,9 @@
 					CKFinder.modal(
 					{
 						readOnly: true,
+						@if(Auth::user()->role==3)
+							removeModules: 'FileDownload',
+						@endif
 						displayFoldersPanel: false,
 						width: 800,
 						height: 500

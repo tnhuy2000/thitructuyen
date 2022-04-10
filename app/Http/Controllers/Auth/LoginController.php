@@ -68,20 +68,11 @@ class LoginController extends Controller
         if( auth()->attempt(array('username'=>$input['username'], 'password'=>$input['password'])) ){
             //dd(auth()->user()->trangthai);
             if(auth()->user()->trangthai==1){
-
-        
-                if( auth()->user()->role == 1 ){
+                if( auth()->user()->role == 1 || auth()->user()->role == 4){
                     return redirect()->route('admin.dashboard');
                 }
-                
-                elseif( auth()->user()->role == 2 ){
-                    return redirect()->route('thuky.dashboard');
-                }
-                elseif( auth()->user()->role == 3 ){
-                    return redirect()->route('canbocoithi.dashboard');
-                }
-                elseif( auth()->user()->role == 4 ){
-                    return redirect()->route('hoidongthi.dashboard');
+                elseif( auth()->user()->role == 2 || auth()->user()->role == 3){
+                    return redirect()->route('giamthi.dashboard');
                 }
                 elseif( auth()->user()->role == 5 ){
                     return redirect()->route('sinhvien.dashboard');
@@ -91,7 +82,7 @@ class LoginController extends Controller
             }
 
         }else{
-            return redirect()->route('login')->with('fail','Tài khoản hoặc mật khẩu không chính xác');
+            return redirect()->route('login')->with('fail','Tài khoản hoặc mật khẩu không đúng');
         }
     }
 }

@@ -187,7 +187,7 @@
           </li>
         </ul>
       </li><!-- End Tables Nav -->
-
+      @if(Auth::user()->role==1)
       <li class="nav-item">
         <a class="nav-link {{ request()->is('*/qlnguoidung*') ? '' : 'collapsed' }}" data-bs-target="#user-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-people"></i><span>Quản lý người dùng</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -215,7 +215,7 @@
           </li>
         </ul>
       </li><!-- End Tables Nav -->
-
+      @endif
       <li class="nav-item">
         <a class="nav-link {{ request()->is('*/thongbao*') ? '' : 'collapsed' }}" data-bs-target="#thongbao-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-envelope"></i><span>Thông báo</span><i class="bi bi-chevron-down ms-auto"></i>

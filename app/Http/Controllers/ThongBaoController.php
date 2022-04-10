@@ -322,10 +322,8 @@ class ThongBaoController extends Controller
                     ->orderBy('created_at', 'desc')->get();
 		if(Auth::user()->role==5){
 			return view('sinhvien.thongbao.chitiet',compact('thongbao','vanban','thongbao_cu'));}
-		elseif(Auth::user()->role==3){
-			return view('canbocoithi.thongbao.chitiet',compact('thongbao','vanban','thongbao_cu'));}
-		elseif(Auth::user()->role==2){
-			return view('thuky.thongbao.chitiet',compact('thongbao','vanban','thongbao_cu'));}
+		else{
+			return view('giamthi.thongbao.chitiet',compact('thongbao','vanban','thongbao_cu'));}
     }
     public function getThongBaoMoiNhat(){
         $thongbao = ThongBao::where([['kichhoat', 1],['quantrong',1]])
@@ -338,10 +336,8 @@ class ThongBaoController extends Controller
         $vanban = VanBan::where('thongbao_id', $thongbao->id)->get();
 		if(Auth::user()->role==5){
 			return view('sinhvien.thongbao.moinhat',compact('thongbao','vanban','thongbao_cu'));}
-		elseif(Auth::user()->role==3){
-			return view('canbocoithi.thongbao.moinhat',compact('thongbao','vanban','thongbao_cu'));}
-		elseif(Auth::user()->role==2){
-			return view('thuky.thongbao.moinhat',compact('thongbao','vanban','thongbao_cu'));}
+		else{
+			return view('giamthi.thongbao.moinhat',compact('thongbao','vanban','thongbao_cu'));}
     }
     public function TatCaThongBao(){
         $thongbao = ThongBao::where([['kichhoat', 1]])
@@ -350,10 +346,8 @@ class ThongBaoController extends Controller
       
 		if(Auth::user()->role==5){
 			return view('sinhvien.thongbao.tatca',compact('thongbao'));}
-		elseif(Auth::user()->role==3){
-			return view('canbocoithi.thongbao.tatca',compact('thongbao'));}
-		elseif(Auth::user()->role==2){
-			return view('thuky.thongbao.tatca',compact('thongbao'));}
+		else{
+			return view('giamthi.thongbao.tatca',compact('thongbao'));}
     
     }
 }

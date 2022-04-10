@@ -1,6 +1,6 @@
-@extends('layouts.hoidongthi-layout')
+@extends('layouts.giamthi-layout')
 @section('pagetitle')
-	Phòng thi
+	Danh sách thí sinh
 @endsection
 
 @section('css')
@@ -16,8 +16,8 @@
             <h5>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a class="text-primary" href="{{route('thuky.dashboard')}}"><i class="fas fa-home"></i> Trang chủ</a></li>
-                    <li class="breadcrumb-item"><a class="text-primary" href="{{route('thuky.phongthi',['phongthi_id'=>$ktphongthi->id])}}">Phòng thi của tôi</a></li>
+                    <li class="breadcrumb-item"><a class="text-primary" href="{{route('giamthi.dashboard')}}"><i class="fas fa-home"></i> Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a class="text-primary" href="{{route('giamthi.phongthi',['phongthi_id'=>$ktphongthi->id])}}">Phòng thi của tôi</a></li>
                     <li class="breadcrumb-item text-primary" aria-current="page">{{$ktphongthi->maphong}}</li>
                     <li class="breadcrumb-item text-danger active" aria-current="page">3. Giám thị điểm danh thí sinh</li>
                 </ol>
@@ -72,13 +72,13 @@
                         <td>{{ $value->malop }}</td>
 						<td class="text-center">
 							@if($value->diemdanh==1)
-								<h2><a href="{{ route('thuky.diemdanh', ['id' => $value->id,'phongthi_id'=>$value->phongthi_id]) }}"><i class="fas fa-check-circle text-success"></i></a></h2>
+								<h2><a href="{{ route('giamthi.diemdanh', ['id' => $value->id,'phongthi_id'=>$value->phongthi_id]) }}"><i class="fas fa-check-circle text-success"></i></a></h2>
 							@else
-								<h2><a href="{{ route('thuky.diemdanh', ['id' => $value->id,'phongthi_id'=>$value->phongthi_id]) }}"><i class="fas fa-times text-danger"></i></a></h2>
+								<h2><a href="{{ route('giamthi.diemdanh', ['id' => $value->id,'phongthi_id'=>$value->phongthi_id]) }}"><i class="fas fa-times text-danger"></i></a></h2>
 							@endif
 							
 						<td class="small text-center">{{ $value->ghichu }}
-							<br><a href="#suaghichu" data-bs-toggle="modal" data-bs-target="#ModalSuaGhiChu" onclick="getDiemDanhSuaGhiChu({{ $value->id }},'{{ $value->masinhvien }}','{{ $value->phongthi_id }}', '{{ $value->ghichu }}'); return false;">[Sửa ghi chú]</a>
+							<br><a href="#suaghichu" data-bs-toggle="modal" data-bs-target="#ModalSuaGhiChu" onclick="getDiemDanhSuaGhiChu({{ $value->id }},'{{ $value->ghichu }}'); return false;">[Sửa ghi chú]</a>
 						</td>
 						
 					</tr>
@@ -94,11 +94,11 @@
     <!-- Pricing End -->
 
 
-	<form action="{{route('thuky.suaghichu')}}" method="post">
+	<form action="{{route('giamthi.ghichudiemdanh')}}" method="post">
 		@csrf
 		<input type="hidden" id="id_edit" name="id_edit" value="" />
-		<input type="hidden" id="phongthi_id_edit" name="phongthi_id_edit" value="" />
-		<input type="hidden" id="masinhvien_edit" name="masinhvien_edit" value="" />
+		
+		<input type="hidden" id="phongthi_id_edit" name="phongthi_id_edit" value="{{$ktphongthi->id}}" />
 		<div class="modal fade" id="ModalSuaGhiChu" role="dialog" >
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -126,12 +126,13 @@
 	
   @endsection
   @section('javascript')    
+	
+	<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 <script type="text/javascript">
   		
-    function getDiemDanhSuaGhiChu(id,masinhvien,phongthi_id,ghichu) {
+    function getDiemDanhSuaGhiChu(id,ghichu) {
         $('#id_edit').val(id);
-        $('#masinhvien_edit').val(masinhvien);
-        $('#phongthi_id_edit').val(phongthi_id);
         $('#ghichu_edit').val(ghichu);
     }
 	

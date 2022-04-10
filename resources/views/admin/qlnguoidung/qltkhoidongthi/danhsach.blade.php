@@ -138,7 +138,7 @@
 								<select class="form-select  @error('macanbo') is-invalid @enderror"  style="width: 100%" id="statesCB" name="macanbo" required>
 									
 									@foreach($kthoidongthi as $value)
-										<option class="@error('macanbo') is-invalid @enderror" value="{{$value->macanbo}}">{{$value->macanbo}} - {{$value->holot}} {{$value->ten}} </option>
+										<option class="@error('macanbo') is-invalid @enderror" {{(old('macanbo')==$value->macanbo)?'selected':''}} value="{{$value->macanbo}}">{{$value->macanbo}} - {{$value->holot}} {{$value->ten}} </option>
 									@endforeach
 								</select>
 								@error('macanbo')

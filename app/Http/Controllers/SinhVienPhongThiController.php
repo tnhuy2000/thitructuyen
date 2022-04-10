@@ -47,20 +47,16 @@ class SinhVienPhongThiController extends Controller
 				    ->orderBy('sv.masinhvien', 'asc') ->get();
 		$ktsinhvien = SinhVien::all();
         $phongthi = PhongThi::all();
-        if(Auth::user()->role==3)
-		    return view('canbocoithi.phongthi.danhsachthisinh',compact('ktsinhvien','sinhvien_phongthi','ktphongthi'));
-        elseif(Auth::user()->role==2)
-            return view('thuky.phongthi.danhsachthisinh',compact('ktsinhvien','sinhvien_phongthi','ktphongthi'));
+        
+        return view('giamthi.phongthi.danhsachthisinh',compact('ktsinhvien','sinhvien_phongthi','ktphongthi'));
     }
     public function getCanBoDiemDanh($id,$phongthi_id)
 	{
 		$orm = SinhVien_PhongThi::find($id);
 		$orm->diemdanh = 1 -$orm->diemdanh;
 		$orm->save();
-		if(Auth::user()->role==3)
-		    return redirect()->route('canbocoithi.danhsachthisinh',['phongthi_id'=>$phongthi_id]);
-        elseif(Auth::user()->role==2)
-            return redirect()->route('thuky.danhsachthisinh',['phongthi_id'=>$phongthi_id]);
+		
+        return redirect()->route('giamthi.danhsachthisinh',['phongthi_id'=>$phongthi_id]);
 	}
     public function postXoa(Request $request)
     {
@@ -103,8 +99,6 @@ class SinhVienPhongThiController extends Controller
         
     }
  
-    
-
         // Nhập từ Excel
     public function postNhap(Request $request,$id)
     {
@@ -144,23 +138,19 @@ class SinhVienPhongThiController extends Controller
         
 		return redirect()->route('admin.sapphong.qlsv_pt.danhsach',['id'=>$request->phongthi_id_edit]);
 	}
-    public function postDiemDanhSuaGhiChu(Request $request)
+    public function postGhiChuDiemDanh(Request $request)
 	{
+      
 		$this->validate($request, [
-			'masinhvien_edit' => 'required|max:10:sinhvien_phongthi,masinhvien,',
-			'phongthi_id_edit' => 'required|max:255:sinhvien_phongthi,phongthi_id,'
+			'phongthi_id_edit' => 'required|max:255:sinhvien_phongthi,phongthi_id,',
 		]);
 		
 		\DB::table('sinhvien_phongthi')->where('id', $request->id_edit)->update([
-            'masinhvien' => $request->masinhvien_edit,
-			'phongthi_id' => $request->phongthi_id_edit,
             'ghichu' => $request->ghichu_edit,
             
         ]);
 		toastr()->success('Cập nhật dữ liệu thành công!');
-        if(Auth::user()->role==3)
-		    return redirect()->route('canbocoithi.danhsachthisinh',['phongthi_id'=>$request->phongthi_id_edit]);
-        elseif(Auth::user()->role==2)
-            return redirect()->route('thuky.danhsachthisinh',['phongthi_id'=>$request->phongthi_id_edit]);
+  
+        return redirect()->route('giamthi.danhsachthisinh',['phongthi_id'=>$request->phongthi_id_edit]);
 	}
 }

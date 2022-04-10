@@ -36,20 +36,20 @@ class HomeController extends Controller
         {
             // Nếu người dùng đã tồn tại thì đăng nhập
             Auth::login($existingUser, true);
-            if( $existingUser->role == 1){
-                return redirect()->route('admin.dashboard');
+            if($existingUser->trangthai==1){
+                if( $existingUser->role == 1 || $existingUser->role == 4){
+                    return redirect()->route('admin.dashboard');
+                }
+                elseif( $existingUser->role == 2 || $existingUser->role == 3){
+                    return redirect()->route('thuky.dashboard');
+                }
+                elseif( $existingUser->role == 5){
+                    return redirect()->route('sinhvien.dashboard');
+                }
             }
-            elseif( $existingUser->role == 2){
-                return redirect()->route('thuky.dashboard');
-            }
-            elseif( $existingUser->role == 3){
-                return redirect()->route('canbocoithi.dashboard');
-            }
-            elseif( $existingUser->role == 4){
-                return redirect()->route('hoidongthi.dashboard');
-            }
-            elseif( $existingUser->role == 5){
-                return redirect()->route('sinhvien.dashboard');
+            else
+            {
+                return redirect()->route('login')->with('fail', 'Tài khoản đã bị khoá');
             }
            
         }
@@ -64,6 +64,6 @@ class HomeController extends Controller
     }
     public function getHome()
     {
-        return view('auth.login');
+        return redirect()->route('login');
     }
 }

@@ -46,7 +46,7 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow border-top border-5 border-primary sticky-top p-0">
-        <a href="{{route('sinhvien.dashboard')}}" class="navbar-brand bg-primary d-flex align-items-center px-4 px-lg-5">
+        <a href="{{route('giamthi.dashboard')}}" class="navbar-brand bg-primary d-flex align-items-center px-4 px-lg-5">
             <h2 class="mb-2 text-white">Online Exams</h2>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -59,17 +59,12 @@
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> 
                     <i class="fas fa-bell"></i> Thông báo
                     </a>
-                    @if(Auth::user()->role==2)
+                  
                     <div class="dropdown-menu fade-up m-0">
-                        <a href="{{route('thuky.thongbao.moinhat')}}" class="dropdown-item"> <i class="fas fa-bullhorn"></i> Mới nhất</a>
-                        <a href="{{route('thuky.thongbao.tatca')}}" class="dropdown-item"><i class="fas fa-book-reader"></i> Tất cả</a>    
+                        <a href="{{route('giamthi.thongbao.moinhat')}}" class="dropdown-item"> <i class="fas fa-bullhorn"></i> Mới nhất</a>
+                        <a href="{{route('giamthi.thongbao.tatca')}}" class="dropdown-item"><i class="fas fa-book-reader"></i> Tất cả</a>    
                     </div>
-                    @else
-                    <div class="dropdown-menu fade-up m-0">
-                        <a href="{{route('canbocoithi.thongbao.moinhat')}}" class="dropdown-item"> <i class="fas fa-bullhorn"></i> Mới nhất</a>
-                        <a href="{{route('canbocoithi.thongbao.tatca')}}" class="dropdown-item"><i class="fas fa-book-reader"></i> Tất cả</a>    
-                    </div>
-                    @endif
+                    
                 </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">

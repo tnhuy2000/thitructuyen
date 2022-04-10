@@ -33,26 +33,6 @@ class ThongKeController extends Controller
               ->select('ct.tenca','ct.id',DB::raw('count(pt.id) as slphong'))
               ->groupBy('ct.tenca','ct.id')->get();
       
-              // $tenphong='';
-              // $id='';
-              // foreach($baithi as $value){
-              //   if($value->cathi_id!=$id){
-              //   foreach($baithi as $value1){
-              //         if($value1->cathi_id==$value->cathi_id && $value1->phongthi_id !=$value->phongthi_id)
-              //         {
-              //           foreach($dem as $item)
-              //           {
-              //             if($item->id==$value->cathi_id){
-              //                 $value->soluong=$item->slphong;
-              //                 $value->maphong.='-'.$value1->maphong;
-              //                 $value->soluongthisinh.='-'.$value1->soluongthisinh;
-              //                 $value->slbaithi.='-'.$value1->slbaithi;
-              //             }
-              //           }
-              //           $id=$value1->cathi_id;
-              //         }
-              //   } 
-              // }
         $cathi_phongthi = \DB::table('baithi as bt')
               ->join('dethi_phongthi as dtpt', 'dtpt.id', '=', 'bt.dethiphongthi_id')
               ->join('phongthi as pt', 'pt.id', '=', 'dtpt.phongthi_id')
@@ -65,10 +45,9 @@ class ThongKeController extends Controller
     
       $ngaythi=$request->ngaythi;
       $tenca=$request->tenca;
-      if(Auth::user()->role==1)
+     
           return view('admin.thongke.bailamsinhvien',compact('baithi','cathi','dem','phongthi','cathi_phongthi','ngaythi','tenca'));
-      elseif(Auth::user()->role==4)
-          return view('hoidongthi.thongke.bailamsinhvien',compact('baithi','cathi','dem','phongthi','cathi_phongthi','ngaythi','tenca'));
+      
   }
   public function getTKBaiLam()
     {
@@ -98,33 +77,8 @@ class ThongKeController extends Controller
                   ->where('bt.trangthai', 1)
                   ->groupBy('pt.cathi_id','ct.tenca','ct.ngaythi','ct.giobatdau')->get();
      
-                // $tenphong='';
-                // $id='';
-                // foreach($baithi as $value){
-                //   if($value->cathi_id!=$id){
-                //   foreach($baithi as $value1){
-                //         if($value1->cathi_id==$value->cathi_id && $value1->phongthi_id !=$value->phongthi_id)
-                //         {
-                //           foreach($dem as $item)
-                //           {
-                //             if($item->id==$value->cathi_id){
-                //                 $value->soluong=$item->slphong;
-                //                 $value->maphong.='-'.$value1->maphong;
-                //                 $value->soluongthisinh.='-'.$value1->soluongthisinh;
-                //                 $value->slbaithi.='-'.$value1->slbaithi;
-                //             }
-                //           }
-                //           $id=$value1->cathi_id;
-                //         }
-                //   } 
-                // }
-                // }  
-                
-                
-        if(Auth::user()->role==1)
             return view('admin.thongke.bailamsinhvien',compact('baithi','cathi','dem','phongthi','cathi_phongthi'));
-        elseif(Auth::user()->role==4)
-            return view('hoidongthi.thongke.bailamsinhvien',compact('baithi','cathi','dem','phongthi','cathi_phongthi'));
+        
     }
 
 
@@ -136,13 +90,24 @@ class ThongKeController extends Controller
 				->orderBy('p.id', 'desc')->get();
         $cathi = \DB::table('cathi')->get();
        
-        $sinhvien_phongthi_comat =DB::table('sinhvien_phongthi as svpt')
+        $sinhvien_phongthi_comat1 =DB::table('sinhvien_phongthi as svpt')
                     ->join('sinhvien as sv', 'sv.masinhvien', '=', 'svpt.masinhvien')
-                    ->join('phongthi as pt', 'pt.id', '=', 'svpt.phongthi_id')
+                    ->leftjoin('phongthi as pt', 'pt.id', '=', 'svpt.phongthi_id')
                     ->select('pt.maphong','svpt.phongthi_id',DB::raw('count(svpt.masinhvien) as slsvcomat'))
                     ->where('svpt.diemdanh', 1)
                     ->groupBy('pt.maphong','svpt.phongthi_id')
                     ->get();
+
+
+                    $sinhvien_phongthi_comat = DB::table('sinhvien_phongthi as svpt')
+                    
+                    ->leftjoin('phongthi as pt', 'pt.id', '=', 'svpt.phongthi_id')
+                     
+                      ->select(DB::raw('svpt.phongthi_id,pt.maphong,count(svpt.masinhvien) as slsvvang'))
+                      ->groupBy('svpt.phongthi_id','pt.maphong')
+                     ->get();
+      
+                    //dd($sinhvien_phongthi_comat1);
         $sinhvien_phongthi_vang =DB::table('sinhvien_phongthi as svpt')
                     ->join('sinhvien as sv', 'sv.masinhvien', '=', 'svpt.masinhvien')
                     ->join('phongthi as pt', 'pt.id', '=', 'svpt.phongthi_id')
@@ -150,7 +115,7 @@ class ThongKeController extends Controller
                     ->where('svpt.diemdanh', 0)
                     ->groupBy('pt.maphong','svpt.phongthi_id')
                     ->get();
-       
+      
         return view('admin.thongke.diemdanhsinhvien',compact('sinhvien_phongthi_comat','sinhvien_phongthi_vang','cathi','phongthi'));
     }
 

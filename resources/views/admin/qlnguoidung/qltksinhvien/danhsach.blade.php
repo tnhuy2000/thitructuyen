@@ -133,12 +133,12 @@
 						<form>
 							
 							<div class="mb-3">
-								<label for="message-text" class="col-form-label">Nhập mã số sinh viên:</label>
+								<label for="message-text" class="col-form-label">Mã số sinh viên:</label>
 								<br>
 								<select class="form-select  @error('masinhvien') is-invalid @enderror"  style="width: 100%" id="statesSV" name="masinhvien" required>
 									
 									@foreach($ktsinhvien as $value)
-										<option class="@error('masinhvien') is-invalid @enderror" value="{{$value->masinhvien}}">{{$value->masinhvien}} - {{$value->holot}} {{$value->ten}} </option>
+										<option class="@error('masinhvien') is-invalid @enderror" {{(old('masinhvien')==$value->masinhvien)?'selected':''}} value="{{$value->masinhvien}}">{{$value->masinhvien}} - {{$value->holot}} {{$value->ten}} </option>
 									@endforeach
 								</select>
 								@error('masinhvien')
@@ -169,7 +169,7 @@
     		allowClear: true
 		});
 	
-		@if($errors->has('masinhvien') )
+		@if($errors->has('masinhvien'))
 	
 		var myModal = new bootstrap.Modal(document.getElementById("myModalThemUser"), {});
 		document.onreadystatechange = function () {

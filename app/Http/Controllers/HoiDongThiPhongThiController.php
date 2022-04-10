@@ -9,14 +9,10 @@ use Carbon\Carbon;
 use App\Imports\HoiDongThiPhongThiImport;
 use App\Exports\HoiDongThiPhongThiExport;
 use Excel;
-use Input;
+
 class HoiDongThiPhongThiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function getDanhSach($phongthi_id)
     {
         //$hoidongthi = \DB::table('hoidongthi')->get();
@@ -83,7 +79,7 @@ class HoiDongThiPhongThiController extends Controller
     public function getXuat(Request $request)
     {
         
-        return Excel::download(new hoidongthiPhongThiExport($request->phongthi_id),'danh-sach-sinh-vien-theo-phong.xlsx');
+        return Excel::download(new HoiDongThiPhongThiExport($request->phongthi_id),'danh-sach-sinh-vien-theo-phong.xlsx');
 
     }
     public function getDiemDanh($id,$phongthi_id)

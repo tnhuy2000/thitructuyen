@@ -33,10 +33,9 @@ class HoiDongThiController extends Controller
                 'p.maphong', 'p.soluongthisinh','p.ma_meeting','p.ghichu','p.cathi_id',
                 'c.tenca','c.ngaythi','c.giobatdau')
 				->orderBy('c.ngaythi', 'asc')->get();
-        if((Auth::user()->role==3)==true)
-            return view('canbocoithi.index',compact('hoidongthi_phongthi','hoidongthi_phongthi_ds'));
-        elseif((Auth::user()->role==2)===true)
-            return view('thuky.index',compact('hoidongthi_phongthi','hoidongthi_phongthi_ds'));
+       
+        
+            return view('giamthi.index',compact('hoidongthi_phongthi','hoidongthi_phongthi_ds'));
     }
     public function getPhongThi($phongthi_id)
     {
@@ -70,10 +69,8 @@ class HoiDongThiController extends Controller
                 'p.maphong', 'p.soluongthisinh','p.ma_meeting','p.ghichu','p.cathi_id',
                 'c.tenca','c.ngaythi','c.giobatdau')->first();
          
-        if(Auth::user()->role==3)
-            return view('canbocoithi.phongthi.index',compact('ktphongthi','hoidongthi_phongthi','dethi_phongthi','dem'));
-        elseif(Auth::user()->role==2)
-            return view('thuky.phongthi.index',compact('ktphongthi','hoidongthi_phongthi','dethi_phongthi','dem'));
+       
+            return view('giamthi.phongthi.index',compact('ktphongthi','hoidongthi_phongthi','dethi_phongthi','dem'));
    
     }
     public function getDanhSach()

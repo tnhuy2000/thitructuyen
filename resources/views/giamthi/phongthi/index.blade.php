@@ -1,4 +1,4 @@
-@extends('layouts.hoidongthi-layout')
+@extends('layouts.giamthi-layout')
 @section('pagetitle')
 	Phòng thi
 @endsection
@@ -16,7 +16,7 @@
             <h5>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a class="text-primary" href="{{route('thuky.dashboard')}}"><i class="fas fa-home"></i> Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a class="text-primary" href="{{route('giamthi.dashboard')}}"><i class="fas fa-home"></i> Trang chủ</a></li>
                     <li class="breadcrumb-item"><a class="text-primary" href="#">Phòng thi của tôi</a></li>
                     <li class="breadcrumb-item text-danger active" aria-current="page">{{$hoidongthi_phongthi->maphong}}</li>
                 </ol>
@@ -31,29 +31,35 @@
             <div class="row">
                 <div class="col-sm-3"></div>
                 <div class="col-lg-12 col-sm-9 col-md-6 text-center">
-            <h5><img src="{{asset('public/img/ggmeet.png')}}" width="50px" alt="">
-                <a href="" > 1. Tham gia phòng điểm danh <i class="fas fa-chevron-circle-right"></i></a>
-            </h5>
+            @if(is_numeric($hoidongthi_phongthi->ma_meeting))
+                <h5><img src="{{asset('public/img/icon_zoom.png')}}" width="50px" alt="">
+                    <a href="{{route('giamthi.thamgiadiemdanh',['phongthi_id'=>$hoidongthi_phongthi->phongthi_id])}}" >1. Tham gia phòng điểm danh</a>  
+                </h5>
+            @else
+                <h5><img src="{{asset('public/img/ggmeet.png')}}" width="50px" alt="">
+                     <a href="{{route('giamthi.thamgiadiemdanh',['phongthi_id'=>$hoidongthi_phongthi->phongthi_id])}}" >1. Tham gia phòng điểm danh</a>
+                </h5>
+            @endif
             <h5><img src="{{asset('public/img/lambai.png')}}" width="50px" alt="">
                 @if($dem==1)
-                <a href="{{route('thuky.dethi',['phongthi_id'=>$hoidongthi_phongthi->phongthi_id])}}" > 2. Làm bài thi <i class="fas fa-chevron-circle-right"></i></a>
+                <a href="{{route('giamthi.dethi',['phongthi_id'=>$hoidongthi_phongthi->phongthi_id])}}" > 2. Làm bài thi <i class="fas fa-chevron-circle-right"></i></a>
                 @else
                 <a href="#chondethi" data-bs-toggle="modal" data-bs-target="#myModalChonDeThi"> 2. Làm bài thi <i class="fas fa-chevron-circle-right"></i></a>
                 @endif
             </h5>
             <h5>
                 <img src="{{asset('public/img/check.png')}}" width="50px" alt="">
-                <a  href="{{route('thuky.danhsachthisinh',['phongthi_id'=>$hoidongthi_phongthi->phongthi_id])}}" > 3. Giám thị điểm danh thí sinh <i class="fas fa-chevron-circle-right"></i></a>
+                <a  href="{{route('giamthi.danhsachthisinh',['phongthi_id'=>$hoidongthi_phongthi->phongthi_id])}}" > 3. Giám thị điểm danh thí sinh <i class="fas fa-chevron-circle-right"></i></a>
                
             </h5>
-            <h5><a href="{{route('thuky.ketquabaithi',['phongthi_id'=>$hoidongthi_phongthi->phongthi_id])}}" class="btn btn-primary col-sm-12 col-md-4"> <i class="fas fa-clipboard-list"></i> Kết quả làm bài</a></h5>
+            <h5><a href="{{route('giamthi.ketquabaithi',['phongthi_id'=>$hoidongthi_phongthi->phongthi_id])}}" class="btn btn-primary col-sm-12 col-md-4"> <i class="fas fa-clipboard-list"></i> Kết quả làm bài</a></h5>
             </div>
             <div class="col-sm-3"></div>
             </div>
           
             
 
-    <form action="{{route('thuky.chondethi')}}" method="post">
+    <form action="{{route('giamthi.chondethi')}}" method="post">
 		@csrf
 	
 		<input type="hidden" id="phongthi_id" name="phongthi_id" value="{{$ktphongthi->id}}" />

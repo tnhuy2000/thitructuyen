@@ -12,10 +12,19 @@ class AdminController extends Controller
 	{
 		$this->middleware('auth');
 	}
+    public function getForbidden()
+	{
+		return view('errors.403');
+	}
     public function getAdmin(){
        
         return view('admin.index', array('user'=>Auth::user()));
     }
+    public function getDashboard(){
+       
+        return redirect()->route('admin.dashboard');
+    }
+    
     public function index(){
     
         $thongbao = ThongBao::where([['kichhoat', 1]])
@@ -61,8 +70,7 @@ class AdminController extends Controller
         }else{
             $query = User::find(Auth::user()->id)->update([
                     'name'=>$request->name,
-                    
-                    
+                          
             ]);
 
             if(!$query){
@@ -105,6 +113,45 @@ class AdminController extends Controller
             }else{
                 return response()->json(['status'=>1,'msg'=>'Cập nhật ảnh thành công']);
             }
+        }
+    }
+    function changePassword(Request $request){
+        //Validate form
+        $validator = \Validator::make($request->all(),[
+            'oldpassword'=>[
+                'required', function($attribute, $value, $fail){
+                    if( !\Hash::check($value, Auth::user()->password) ){
+                        return $fail(__('Mật khẩu hiện tại không chính xác'));
+                    }
+                },
+                'min:8',
+                'max:30'
+             ],
+             'newpassword'=>'required|min:8|max:30',
+             'cnewpassword'=>'required|same:newpassword'
+         ],[
+             'oldpassword.required'=>'Nhập mật khẩu hiện tại',
+             'oldpassword.min'=>'Mật khẩu cũ phải ít nhất 8 ký tự',
+             'oldpassword.max'=>'Mật khẩu cũ không được quá 30 kí tự',
+             'newpassword.required'=>'Nhập mật khẩu mới',
+             'newpassword.min'=>'Mật khẩu mới phải ít nhất 8 ký tự',
+             'newpassword.max'=>'Mật khẩu mới không được quá 30 kí tự',
+             'cnewpassword.required'=>'Nhập lại mật khẩu mới',
+             'cnewpassword.same'=>'Mật khẩu mới và mật khẩu cũ không khớp'
+         ]);
+
+        if( !$validator->passes() ){
+            return response()->json(['status'=>0,'error'=>$validator->errors()->toArray()]);
+        }else{
+             
+         $update = User::find(Auth::user()->id)->update(['password'=>\Hash::make($request->newpassword)]);
+
+         if( !$update ){
+             return response()->json(['status'=>0,'msg'=>'Có lỗi xảy ra, đổi mật khẩu không thành công']);
+         }else{
+             return response()->json(['status'=>1,'msg'=>'Đổi mật khẩu thành công']);
+             //return redirect()->route('admin.profile')->with('success','Your password has been changed successfully');
+         }
         }
     }
   

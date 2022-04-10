@@ -17,7 +17,7 @@
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a class="text-primary" href="{{route('sinhvien.dashboard')}}"><i class="fas fa-home"></i> Trang chủ</a></li>
-                    <li class="breadcrumb-item"><a class="text-primary" href="#">Phòng thi của tôi</a></li>
+                    <li class="breadcrumb-item"><a class="text-primary" href="{{route('sinhvien.phongthi',['phongthi_id'=>$dethi_phongthi->phongthi_id])}}">Phòng thi của tôi</a></li>
                     <li class="breadcrumb-item text-danger active" aria-current="page">{{$dethi_phongthi->maphong}}</li>
                 </ol>
             </nav>

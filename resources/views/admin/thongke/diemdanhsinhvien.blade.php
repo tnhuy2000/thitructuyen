@@ -89,21 +89,20 @@
                             <td class="small">
                                 {{$phongthi->soluongthisinh}}
                             </td>
-                        @foreach($sinhvien_phongthi_comat as $svpt_comat)
+                         @foreach($sinhvien_phongthi_comat as $svpt_comat)
                             @if($svpt_comat->phongthi_id==$phongthi->id)
-
-                            <td> {{$svpt_comat->slsvcomat}}</td>
-                            @endif
-                        @endforeach
-                        @foreach($sinhvien_phongthi_vang as $svpt_vang)
-                            @if($svpt_vang->phongthi_id==$phongthi->id)
-
-                            <td> {{$svpt_vang->slsvvang}}</td>
-                            @else
+                                @if($svpt_comat->slsvvang!=null)
+                                    <td> {{$svpt_comat->slsvvang}}</td>
+                                    <td>{{$phongthi->soluongthisinh-$svpt_comat->slsvvang}}</td>
+                                @else
+                                    <td>0</td>
+                                    <td>{{$phongthi->soluongthisinh-0</td>
+                                @endif
                             
-                            <td> 0</td>
                             @endif
+
                         @endforeach
+                        
                       
 						
 					</tr>
@@ -129,7 +128,7 @@
 @endsection
 @section('javascript')    
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script> 
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript">
   	
             function filterGlobal () {

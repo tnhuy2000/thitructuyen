@@ -1,4 +1,4 @@
-@extends('layouts.hoidongthi-layout')
+@extends('layouts.giamthi-layout')
 @section('title','Thông báo mới nhất')
 
 @section('css')
@@ -12,7 +12,7 @@
       <h5>
         <nav aria-label="breadcrumb animated slideInDown">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a class="text-primary" href="{{route('thuky.dashboard')}}"><i class="fas fa-home"></i> Trang chủ</a></li>
+                <li class="breadcrumb-item"><a class="text-primary" href="{{route('giamthi.dashboard')}}"><i class="fas fa-home"></i> Trang chủ</a></li>
                 <li class="breadcrumb-item text-danger active" aria-current="page">Thông báo mới nhất</li>
             </ol>
         </nav>
@@ -57,7 +57,7 @@
                                 <span class="font-weight-bold text-primary">{{ $value->tenvanban }}</span>
                             </td>
                             <td>{{ $value->luotdownload }}</td>
-                            <td ><a class="btn btn-primary btn-sm" target="_blank" href="{{route('thuky.thongbao.taivanban',['id'=>$value->id])}}"><i class="fas fa-download"></i></a></td>
+                            <td ><a class="btn btn-primary btn-sm" target="_blank" href="{{route('giamthi.thongbao.taivanban',['id'=>$value->id])}}"><i class="fas fa-download"></i></a></td>
                             
                         </tr>
               @endforeach
@@ -79,7 +79,7 @@
             <div class="card mb-3 bg-light h-100">
             
                 <div class="card-body">
-                  <h5 class="card-title"><a href="{{ route('thuky.thongbao.chitiet', ['id' => $value->id]) }}">{{ $value->tieude }}</a></h5>
+                  <h5 class="card-title"><a href="{{ route('giamthi.thongbao.chitiet', ['id' => $value->id]) }}">{{ $value->tieude }}</a></h5>
                   @if($value->loai=='dinhkem')
                     <h6 class="card-text small"><span class="badge bg-info">Văn bản - đính kèm</span></h6>
                 @endif
@@ -87,7 +87,7 @@
                   
                 </div>
                 <div class="card-footer">
-                <a href="{{ route('thuky.thongbao.chitiet', ['id' => $value->id]) }}" class="btn btn-primary">Xem tiếp <i class="bi bi-arrow-right-circle"></i></a>
+                <a href="{{ route('giamthi.thongbao.chitiet', ['id' => $value->id]) }}" class="btn btn-primary">Xem tiếp <i class="bi bi-arrow-right-circle"></i></a>
                 </div>
             
             </div>

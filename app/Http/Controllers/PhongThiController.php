@@ -30,8 +30,17 @@ class PhongThiController extends Controller
 				->select('svpt.phongthi_id','kt.tenkythi','svpt.id','svpt.diemdanh','svpt.ghichu',
                 'p.maphong', 'p.soluongthisinh','p.ma_meeting','p.join_url','p.ghichu','p.cathi_id',
                 'c.tenca','c.ngaythi','c.giobatdau')->first();
-             
+      
         return view('sinhvien.phongthi.phongthidiemdanh',compact('ktphongthi','sinhvien_phongthi'));
+   
+    }
+    public function getPhongThiGiamThiDiemDanh($phongthi_id)
+    {  
+        $ktphongthi = \DB::table('phongthi as pt')
+                ->where('pt.id', '=', $phongthi_id)
+				->select('pt.id','pt.maphong','pt.ma_meeting','pt.join_url')->first();
+      
+        return view('giamthi.phongthi.phongthidiemdanh',compact('ktphongthi'));
    
     }
     public function getDanhSach()

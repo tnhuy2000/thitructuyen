@@ -25,7 +25,7 @@
                 <form class="my-login-validation"  method="POST" action="{{ route('login') }}">
                     @if (Session::get('fail'))
                         <div class="alert alert-danger">
-                        <i class="bi bi-shield-x"></i> {{ Session::get('fail') }}
+                       {{ Session::get('fail') }}
                         </div>
                     @endif
                     @if (Session::get('info'))

@@ -1,4 +1,4 @@
-@extends('layouts.hoidongthi-layout')
+@extends('layouts.giamthi-layout')
 @section('pagetitle')
 	Xem đề thi
 @endsection
@@ -14,8 +14,8 @@
 		<h5>
 		<nav aria-label="breadcrumb animated slideInDown">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a class="text-primary" href="{{route('thuky.dashboard')}}"><i class="fas fa-home"></i> Trang chủ</a></li>
-				<li class="breadcrumb-item"><a class="text-primary" href="{{route('thuky.phongthi',['phongthi_id'=>$ktphongthi->id])}}">Phòng thi của tôi</a></li>
+				<li class="breadcrumb-item"><a class="text-primary" href="{{route('giamthi.dashboard')}}"><i class="fas fa-home"></i> Trang chủ</a></li>
+				<li class="breadcrumb-item"><a class="text-primary" href="{{route('giamthi.phongthi',['phongthi_id'=>$ktphongthi->id])}}">Phòng thi của tôi</a></li>
 				<li class="breadcrumb-item text-primary" aria-current="page">{{$dethi_phongthi->maphong}}</li>
 				<li class="breadcrumb-item text-danger active" aria-current="page">2. Làm bài thi</li>
 			</ol>
