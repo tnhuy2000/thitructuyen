@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý ca thi')
+@section('pagetitle')
+Quản lý ca thi | Thêm
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -28,10 +30,10 @@
                     @csrf
                     <div class="form-group">
                       <label for="MaLoai" class="form-label">Kỳ thi</label>
-                      <select class="form-select" id="kythi_id" name="kythi_id">
+                      <select class="form-select @error('kythi_id') is-invalid @enderror" id="kythi_id" name="kythi_id">
                         <option value="">-- Chọn kỳ thi --</option>
                         @foreach($ktkythi as $value){
-                          <option value="{{$value->id}}">{{$value->tenkythi}} - học kỳ {{$value->hocky}} - năm học {{$value->namhoc}} </option>
+                          <option value="{{$value->id}}" {{(old('kythi_id')==$value->id)?'selected':''}}>{{$value->tenkythi}} - học kỳ {{$value->hocky}} - năm học {{$value->namhoc}} </option>
                         }
                         @endforeach
  
@@ -77,7 +79,7 @@
                    
                     
                     <div class="col-12">
-                      <button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Thêm mới</button>
+                      <button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Thực hiện</button>
                     </div>
                 </form>
               <!-- End Custom Styled Validation -->
@@ -101,7 +103,9 @@
         x.type = "password";
       }
     }
-
+    $(document).ready(function() {
+            $("#kythi_id").select2();   
+        });
  
 </script>
 @endsection

@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý đề thi - phòng thi')
+@section('pagetitle')
+Quản lý đề thi - phòng thi
+@endsection
 
 @section('content')
 
@@ -25,7 +27,7 @@
 	  <div class="card">
 		<div class="card-body">
 		  	<h5 class="card-title">Danh sách đề thi phòng {{$ktphongthi->maphong}}</h5>
-			<a href="#them" data-bs-toggle="modal" data-bs-target="#myModalThemSVPT" class="btn btn-outline-primary"><i class="bx bxs-plus-square"></i> Thêm mới</a>
+			<a href="#them" data-bs-toggle="modal" data-bs-target="#myModalThemDeThi" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Thêm mới</a>
 			
 		
 		  <!-- Table with stripped rows -->
@@ -81,8 +83,8 @@
 						</td>
 						<td class="small">{{ $value->ghichu }}</td>
 			
-						<td><a href="#suaghichu" data-bs-toggle="modal" data-bs-target="#ModalSua" onclick="getSua({{ $value->id }},'{{ $value->dethi_id }}','{{ $value->phongthi_id }}', '{{ $value->ghichu }}'); return false;"><i class="bx bxs-pencil"></i> Sửa</a></td>
-						<td class="text-center"><a href="#xoa" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id}},{{$value->phongthi_id}}); return false;"  ><i class="bx bxs-trash text-danger"></i> Xoá</a></td>
+						<td><a href="#suaghichu" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ModalSua" onclick="getSua({{ $value->id }},'{{ $value->dethi_id }}','{{ $value->phongthi_id }}', '{{ $value->ghichu }}'); return false;"><i class="fa-regular fa-pen-to-square"></i></a></td>
+						<td class="text-center"><a href="#xoa" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id}},{{$value->phongthi_id}}); return false;"  ><i class="fa-regular fa-trash-can"></i></a></td>
 		
 					</tr>
 				@endforeach
@@ -102,7 +104,7 @@
 <form action="{{route('admin.dethi_baithi.qldethi_phongthi.them',['phongthi_id'=> $ktphongthi->id])}}" method="post">
 		@csrf
 		
-		<div class="modal fade" id="myModalThemSVPT" role="dialog" >
+		<div class="modal fade" id="myModalThemDeThi" role="dialog" >
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -110,12 +112,12 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body" style="max-height: 800px">
-                    	<div>
+                    	<div class="form-group">
                             <label for="HinhAnh"> Đề thi<span class="text-danger font-weight-bold">*</span></label>
                                 
-							<select  class="form-select @error('dethi_id') is-invalid @enderror" name="dethi_id" required>
+							<select  class="form-select @error('dethi_id') is-invalid @enderror" style="width: 100%" name="dethi_id" id="Statesdethi_id">
 								@foreach($ktdethi as $value)
-									<option value="{{$value->id}}">{{$value->tendethi}} </option>
+									<option value="{{$value->id}}" {{(old('dethi_id')==$value->id)?'selected':''}}>{{$value->tendethi}} </option>
 								@endforeach
 							</select>
 							@error('dethi_id')
@@ -156,9 +158,10 @@
 					<div class="modal-body" style="max-height: 800px">
 						<div class="form-group">
 							<label for="ghichu" class="form-label">Đề thi</label>
-							<select class="form-select @error('dethi_id_edit') is-invalid @enderror" id="dethi_id_edit" name="dethi_id_edit" required>
+							<select class="form-select @error('dethi_id_edit') is-invalid @enderror" style="width: 100%" id="dethi_id_edit" name="dethi_id_edit" required>
 								@foreach($ktdethi as $value)
-									<option value="{{$value->id}}">{{$value->tenhocphan}}-{{$value->tenkythi}}-{{$value->namhoc}} </option>
+									
+									<option value="{{$value->id}}">{{$value->tendethi}}</option>
 								@endforeach
 							</select>
 							@error('dethi_id_edit')
@@ -198,11 +201,11 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body" >
-						<p class="font-weight-bold text-danger"><i class="fal fa-question-circle"></i> Xác nhận xóa? Hành động này không thể phục hồi.</p>
+						<p class="font-weight-bold text-danger"><i class="fa-regular fa-circle-question text-danger"></i> Xác nhận xóa? Hành động này không thể phục hồi.</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
-						<button type="submit" class="btn btn-danger"><i class="fal fa-trash-alt"></i> Thực hiện</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>
+						<button type="submit" class="btn btn-danger"> Thực hiện</button>
 					</div>
 				</div>
 			</div>
@@ -217,14 +220,23 @@
 		}
 		function getSua(id,dethi_id,phongthi_id,ghichu) {
 			$('#id_edit').val(id);
-			$('#dethi_id_edit').val(dethi_id);
+			$('#dethi_id_edit').val(dethi_id).change();
 			$('#phongthi_id_edit').val(phongthi_id);
 			$('#ghichu_edit').val(ghichu);
 		}
 		
-		$(document).ready(function() {
-            $("#states2").select2();   
-        });
+	
+
+		$('#Statesdethi_id').select2({
+			dropdownParent: $('#myModalThemDeThi'),
+			placeholder: "Chọn đề thi",
+    		allowClear: true
+		});
+	
+		
+		$('#dethi_id_edit').select2({
+			dropdownParent: $('#ModalSua')	
+		});
 		
   </script>
 @endsection

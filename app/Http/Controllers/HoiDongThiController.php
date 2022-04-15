@@ -10,6 +10,8 @@ use App\Exports\HoiDongThiExport;
 use Excel;
 use Carbon\Carbon;
 use Auth;
+use Illuminate\Support\Facades\Hash;
+
 class HoiDongThiController extends Controller
 {
     public function index(){
@@ -80,11 +82,11 @@ class HoiDongThiController extends Controller
 	
 		$hoidongthi = \DB::table('hoidongthi as hdt')
 				->join('khoa as k', 'hdt.makhoa', '=', 'k.makhoa')
-				->select('hdt.macanbo', 'hdt.holot','hdt.ten','hdt.email','hdt.dienthoai','k.makhoa', 'k.tenkhoa','hdt.vaitro')
-				->orderBy('k.makhoa', 'asc')->get();
+				->select('hdt.macanbo', 'hdt.holot','hdt.ten','hdt.email','hdt.dienthoai','k.makhoa', 'k.tenkhoa','hdt.vaitro','hdt.created_at')
+				->orderBy('hdt.created_at', 'desc')->get();
 		return view('admin.danhmuc.qlhoidongthi.danhsach',['hoidongthi' => $hoidongthi]);
     }
-    public function getXoa(Request $request)
+    public function postXoa(Request $request)
     {
         
         try {  
@@ -108,14 +110,15 @@ class HoiDongThiController extends Controller
             'holot' => 'required|max:255:hoidongthi,holot',
             'ten' => 'required|max:255:hoidongthi,ten',
             'email' => 'required|max:255|unique:hoidongthi,email',
+            'email' => 'required|max:255|unique:users,email',
             'dienthoai' => 'required|max:255|unique:hoidongthi,dienthoai',
             'makhoa' => 'required|max:255:hoidongthi,makhoa',
             'vaitro'=> 'required|max:255:hoidongthi,vaitro',
 
 		],
         [
-            'macanbo.unique'=>'Mã sinh viên đã tồn tại',
-            'email.unique'=>'Email đã tồn tại',
+            'macanbo.unique'=>'Mã cán bộ đã tồn tại trong hệ thống',
+            'email.unique'=>'Email đã tồn tại trong hệ thống',
             'makhoa.required'=>'Vui lòng chọn mã khoa.',
             'dienthoai.unique'=>'Số điện thoại đã tồn tại'
         ]);
@@ -130,6 +133,30 @@ class HoiDongThiController extends Controller
             'vaitro' => $request->vaitro,
             'updated_at' => Carbon::now()
 		]);
+        $name= $request->holot.' '.$request->ten;
+        $role=0;
+        if($request->vaitro=='canbocoithi')
+        {
+            $role=3;
+        }
+        elseif($request->vaitro=='thuky')
+        {
+            $role=2;
+        }
+        elseif($request->vaitro=='hoidongthi')
+        {
+            $role=4;
+        }
+      
+        \DB::table('users')->insert([
+            'macanbo' => $request->macanbo,
+            'name' => $name,
+            'username' => $request->macanbo,
+            'email' => $request->email,
+            'password'=>Hash::make($request->macanbo),
+            'role' => $role,
+            'updated_at' => Carbon::now()
+        ]);
 
         toastr()->success('Thêm dữ liệu thành công');
         return redirect()->route('admin.danhmuc.qlhoidongthi.danhsach');
@@ -165,6 +192,25 @@ class HoiDongThiController extends Controller
             'email' => $request->email,
             'makhoa' => $request->makhoa,
             'vaitro'=> $request->vaitro,
+        ]);
+        $name= $request->holot.' '.$request->ten;
+        $role=0;
+        if($request->vaitro=='canbocoithi')
+        {
+            $role=3;
+        }
+        elseif($request->vaitro=='thuky')
+        {
+            $role=2;
+        }
+        elseif($request->vaitro=='hoidongthi')
+        {
+            $role=4;
+        }
+        \DB::table('users')->where('macanbo', $request->macanbo)->update([
+            'name' => $name,
+            'email' => $request->email,
+            'updated_at' => Carbon::now()
         ]);
         toastr()->success('Cập nhật dữ liệu thành công!');
         return redirect()->route('admin.danhmuc.qlhoidongthi.danhsach');}

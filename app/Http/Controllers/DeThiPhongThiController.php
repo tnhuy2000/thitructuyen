@@ -50,15 +50,27 @@ class DeThiPhongThiController extends Controller
     public function postThem(Request $request,$phongthi_id)
     {
         
+        $dethi_phongthi =\DB::table('dethi_phongthi')
+                ->where('dethi_id',$request->dethi_id)
+                ->where('phongthi_id',$phongthi_id)->exists();
+        $phong =\DB::table('phongthi')
+                ->where('id',$phongthi_id)->first();
+        if($dethi_phongthi){
+            
+            toastr()->error('Đề thi đã tồn tại trong phòng '.$phong->maphong);
+            return redirect()->route('admin.dethi_baithi.qldethi_phongthi.danhsach',['id'=>$phongthi_id]);
+        }
+        else
+        {
+            $dt_pt = new DeThi_PhongThi(); 
+            $dt_pt->dethi_id = $request->dethi_id;
+            $dt_pt->phongthi_id = $phongthi_id;
+            $dt_pt->ghichu = $request->ghichu;
+            $dt_pt->save();
 
-        $dt_pt = new DeThi_PhongThi(); 
-        $dt_pt->dethi_id = $request->dethi_id;
-        $dt_pt->phongthi_id = $phongthi_id;
-        $dt_pt->ghichu = $request->ghichu;
-        $dt_pt->save();
-        
-        toastr()->success('Thêm dữ liệu thành công');
-        return redirect()->route('admin.dethi_baithi.qldethi_phongthi.danhsach',['id'=>$phongthi_id]);
+            toastr()->success('Thêm dữ liệu thành công');
+            return redirect()->route('admin.dethi_baithi.qldethi_phongthi.danhsach',['id'=>$phongthi_id]);
+        }  
     }
 
     public function postSua(Request $request)

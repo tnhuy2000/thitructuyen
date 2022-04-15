@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý thông báo')
+@section('pagetitle')
+Quản lý thông báo
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -67,7 +69,7 @@
 							
 								<input type="text" class="form-control" id="dinhkem1" name="dinhkem[]" value="" readonly />
 								
-								<button class="btn btn-primary btn-add-more" type="button"><i class="bi bi-plus-lg"></i></button>
+								<button class="btn btn-primary btn-add-more" type="button"><i class="fa-solid fa-plus"></i></button>
 								
 							</div>
 						</div>
@@ -85,7 +87,7 @@
 								
 									<input type="text" class="form-control" id="" name="dinhkem[]" value="" readonly />
                                
-									<button class="btn btn-danger btn-remover" type="button"><i class="bi bi-x-lg"></i></button>
+									<button class="btn btn-danger btn-remover" type="button"><i class="fa-solid fa-xmark"></i></button>
                                   
 									
 								</div>
@@ -103,7 +105,7 @@
 					</div>
 				</div>
 				<div class="col-12">
-				    <button type="submit" class="btn btn-primary"><i class="bx bxs-arrow-from-bottom"></i> Đăng thông báo</button>
+				    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-upload"></i> Đăng thông báo</button>
                 </div>
 			</form>
             </div>

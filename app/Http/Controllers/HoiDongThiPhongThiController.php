@@ -46,12 +46,12 @@ class HoiDongThiPhongThiController extends Controller
         $macanbo= $request->get('macanbo'); //answers array
 
         foreach($macanbo as $macb) {
-            $hoidongthi_phongthi = \DB::table('hoidongthi_phongthi as svpt')   
-                 ->where('phongthi_id', '=', $phongthi_id)
-                 ->where('macanbo', '=', $macb)->count();
+            $hoidongthi_phongthi = \DB::table('hoidongthi_phongthi as hdtpt')   
+                 ->where('hdtpt.phongthi_id', '=', $phongthi_id)
+                 ->where('hdtpt.macanbo', '=', $macb)->count();
         
             if($hoidongthi_phongthi>0){
-                toastr()->error('Mã số '.$macb.' đã tồn tại trong phòng'.$ktphongthi->maphong);
+                toastr()->error('Mã số '.$macb.' đã tồn tại trong phòng '.$ktphongthi->maphong);
             }
             else
             {

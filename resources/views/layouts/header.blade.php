@@ -3,10 +3,10 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
  <meta name="csrf-token" content="{{ csrf_token() }}">
  
-  <title>@yield('pagetitle', 'Trang chủ') - {{ config('app.short_name', 'OnlineExams') }}</title>
+  <title>@yield('pagetitle', 'Trang chủ') - {{ config('app.short_name', 'Online Exams') }}</title>
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="{{asset('public/img/agulogo.png')}}" rel="icon">
+  <link href="{{asset('public/img/agulogo.png')}}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -28,7 +28,7 @@
 
   @yield('css')
    
-    
+    <script src="https://kit.fontawesome.com/44f5ed54db.js" crossorigin="anonymous"></script>
   <!-- Template Main CSS File -->
     <link href="{{asset('public/themes/css/style.css')}}" rel="stylesheet">
     {{-- <link href="{{asset('public/select/select2.css')}}" rel="stylesheet"/>
@@ -41,6 +41,6 @@
      {{-- <script src="{{asset('public/select/select2.js')}}"></script>  --}}
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-   
+    <script src="https://kit.fontawesome.com/44f5ed54db.js" crossorigin="anonymous"></script>
     
 </head>

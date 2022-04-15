@@ -73,7 +73,6 @@ class KhoaController extends Controller
      public function postNhap(Request $request)
      {
         Excel::import(new KhoaImport, $request->file('file_excel'));
-        toastr()->info('Nhập dữ liệu thành công');
         return redirect()->route('admin.danhmuc.qlkhoa.danhsach');
      }
      // Xuất ra Excel

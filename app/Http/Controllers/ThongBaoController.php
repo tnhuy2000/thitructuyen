@@ -88,7 +88,7 @@ class ThongBaoController extends Controller
 				}
 			}
 		}
-		
+		toastr()->success('Thêm dữ liệu thành công!');
 		return redirect()->route('admin.thongbao.danhsach');
 	}
 	
@@ -125,7 +125,7 @@ class ThongBaoController extends Controller
 		$orm->noidung = $request->noidung;
 		$orm->quantrong = empty($request->quantrong) ? 0 : 1;
 		$orm->save();
-		
+		toastr()->success('Cập nhật dữ liệu thành công');
 		if($request->loai == 'dinhkem')
 			return redirect()->route('admin.thongbao.vanban', ['id' => $request->id]);
 		else
@@ -136,11 +136,19 @@ class ThongBaoController extends Controller
 	
 	public function postXoa(Request $request)
 	{
-		VanBan::where('thongbao_id', $request->id_delete)->delete();
-		ThongBao::where('id', $request->id_delete)->delete();
-		Storage::deleteDirectory('file/posts/' . str_pad($request->id_delete, 7, '0', STR_PAD_LEFT));
+		try {  
+			VanBan::where('thongbao_id', $request->id_delete)->delete();
+			ThongBao::where('id', $request->id_delete)->delete();
+           
+            Storage::deleteDirectory('file/posts/' . str_pad($request->id_delete, 7, '0', STR_PAD_LEFT));
+			toastr()->success('Xoá dữ liệu thành công!');
+			return redirect()->route('admin.thongbao.danhsach');
+        } catch (\Illuminate\Database\QueryException $e) {
+            toastr()->warning('Cảnh báo! Dữ liệu này không thể xoá vì để tránh mất dữ liệu.');
+            return redirect()->route('admin.thongbao.danhsach');
+        }
 		
-		return redirect()->route('admin.thongbao.danhsach');
+		
 	}
 	
 	public function getquantrong($id)

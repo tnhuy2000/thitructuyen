@@ -22,6 +22,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
+    <link rel="stylesheet" href="{{ asset('public/js/ijaboCropTool/ijaboCropTool.min.css') }}">
     <link href="{{asset('public/themes_user/lib/animate/animate.min.css')}}" rel="stylesheet">
     <link href="{{asset('public/themes_user/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
     <!-- data -->
@@ -68,8 +69,8 @@
                 </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                    <img width="30px" src="{{Auth::user()->picture}}" alt="Profile" class="rounded-circle">
-                    {{ Auth::user()->name }}
+                    <img width="30px" src="{{Auth::user()->picture}}" alt="Profile" class="rounded-circle user_picture">
+                    <span class="user_name">{{ Auth::user()->name }}</span>
                     </a>
                     <div class="dropdown-menu fade-up m-0">
                         <h6 class="dropdown-item">Quyền: 
@@ -79,7 +80,7 @@
                                 Cán bộ coi thi
                             @endif
                         </h6 >
-                        <a href="price.html" class="dropdown-item"><i class="fas fa-user-cog"></i> Hồ sơ cá nhân</a>
+                        <a href="{{route('giamthi.profile')}}" class="dropdown-item"><i class="fas fa-user-cog"></i> Hồ sơ cá nhân</a>
                    
                         <a href="{{route('logout')}}" onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();" class="dropdown-item"> <i class="fas fa-sign-out-alt"></i> Đăng xuất</a>

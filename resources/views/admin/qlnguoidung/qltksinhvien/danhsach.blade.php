@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý tài khoản sinh viên')
+@section('pagetitle')
+Quản lý tài khoản sinh viên
+@endsection
 
 @section('content')
 
@@ -23,9 +25,9 @@
 	  <div class="card">
 		<div class="card-body">
 		  <h5 class="card-title">Danh sách tài khoản sinh viên</h5>
-		  	<a href="#them" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModalThemUser"><i class="bx bxs-plus-square"></i> Thêm mới</a>
+		  	{{-- <a href="#them" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModalThemUser"><i class="bx bxs-plus-square"></i> Thêm mới</a>
 		  	<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-out"></i> Nhập từ Excel</a>
-			
+			 --}}
             
 		  <!-- Table with stripped rows -->
 		  <table class="table datatable table-hover table-sm">
@@ -39,7 +41,7 @@
                     <th class="small" width="10%">Trạng thái</th>
                     <th class="small" width="9%">O/F</th>
 					
-					<th class="small" width="6%" class="text-center">Xóa</th>
+					{{-- <th class="small" width="6%" class="text-center">Xóa</th> --}}
 				</tr>
 			</thead>
 			<tbody>
@@ -63,12 +65,12 @@
 						</td>
 						<td>
 							@if($value->trangthai==1)
-								<h2><a href="{{ route('admin.qlnguoidung.qltksinhvien.trangthai', ['id'=> $value->id, 'trangthai' => $value->trangthai]) }}">
+								<h2><a href="#khoa" data-bs-toggle="modal" data-bs-target="#myModalKhoa" onclick="getKhoa({{ $value->id}},{{$value->trangthai}},'{{$value->name}}'); return false;"   >
 								<i class="bi bi-toggle2-on text-primary"></i>
 								</a>
 								</h2>
 							@else
-								<h2><a href="{{ route('admin.qlnguoidung.qltksinhvien.trangthai', ['id'=> $value->id, 'trangthai' => $value->trangthai]) }}">
+								<h2><a href="#kichhoat" data-bs-toggle="modal" data-bs-target="#myModalKichHoat" onclick="getKichHoat({{ $value->id}},{{$value->trangthai}},'{{$value->name}}'); return false;">
 									<i class="bi bi-toggle2-off text-danger"></i>
 									</a>
 								</h2>
@@ -76,8 +78,8 @@
 						</td>
 					
 						
-						<td class="text-center small"><a class="btn btn-danger btn-sm" onclick="return confirm('Bạn có muốn xóa sinh viên {{$value->name}}?')" href="{{ route('admin.qlnguoidung.qltksinhvien.xoa', ['id' => $value->id]) }}" ><i class="bi bi-trash"></i> </a></td>
-		
+						{{-- <td class="text-center small"><a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id}}); return false;" ><i class="bi bi-trash"></i> </a></td>
+		 --}}
 					</tr>
 				@endforeach
 			</tbody>
@@ -156,13 +158,91 @@
 			</div>
 		</div>
 	</form>
+	<form action="{{ route('admin.qlnguoidung.qltksinhvien.trangthai')}}" method="post">
+		@csrf
+		<input type="hidden" id="id_khoa" name="id_khoa" value="" />
+		<input type="hidden" id="trangthai_khoa" name="trangthai_khoa" value="" />
+		<div class="modal fade" id="myModalKhoa" tabindex="-1" role="dialog" aria-labelledby="myModalLabelDelete">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+                      <h5 class="modal-title">Cập nhật trạng thái</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" >
+						<p >Bạn muốn <span class="fw-bold text-danger">khoá</span> người dùng <span class="fw-bold text-danger" id="hoten_khoa"></span> ?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+						<button type="submit" class="btn btn-danger"> Thực hiện</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>	
+
+	<form action="{{ route('admin.qlnguoidung.qltksinhvien.trangthai')}}" method="post">
+		@csrf
+		<input type="hidden" id="id_kichhoat" name="id_kichhoat" value="" />
+		<input type="hidden" id="trangthai_kichhoat" name="trangthai_kichhoat" value="" />
+		<div class="modal fade" id="myModalKichHoat" tabindex="-1" role="dialog" aria-labelledby="myModalLabelDelete">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+                      <h5 class="modal-title">Cập nhật trạng thái</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" >
+						<p >Bạn muốn <span class="fw-bold text-primary">kích hoạt</span> người dùng <span class="fw-bold text-primary" id="hoten_kichhoat"></span> ?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+						<button type="submit" class="btn btn-primary">Thực hiện</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
 	
+	<form action="{{ route('admin.qlnguoidung.qltksinhvien.xoa') }}" method="post">
+		@csrf
+		<input type="hidden" id="id_delete" name="id" value="" />
+		
+		<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabelDelete">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+                      <h5 class="modal-title">Xoá người dùng</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" >
+						<p class="font-weight-bold text-danger"><i class="fa-regular fa-circle-question"></i> Xác nhận xóa? Hành động này không thể phục hồi.</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+						<button type="submit" class="btn btn-danger">Thực hiện</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
 @endsection
 @section('javascript')    
 <script type="text/javascript">
   		function getXoa(id) {
-			$('#id').val(id);
+			$('#id_delete').val(id);
 		}
+		function getKichHoat(id,trangthai,hoten) {
+			$('#id_kichhoat').val(id);
+			$('#trangthai_kichhoat').val(trangthai);
+			$('#hoten_kichhoat').text(hoten);
+		}
+		function getKhoa(id,trangthai,hoten) {
+			$('#id_khoa').val(id);
+			$('#trangthai_khoa').val(trangthai);
+			$('#hoten_khoa').text(hoten);
+		}
+
 		$('#statesSV').select2({
 			dropdownParent: $('#myModalThemUser'),
 			placeholder: "Nhập mã sinh viên",

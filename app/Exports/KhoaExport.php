@@ -1,6 +1,7 @@
 <?php
 namespace App\Exports;
 use App\Models\Khoa;
+use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
@@ -47,9 +48,14 @@ class KhoaExport implements FromCollection,
     }
     public function styles(Worksheet $sheet)
     {
-        $sheet->mergeCells('B4:F4');
+        $dt= Carbon::now();
+        $ngay = Carbon::createFromFormat('Y-m-d H:i:s', $dt)->format('d/m/Y H:i:s');
+        $sheet->mergeCells('A3:B3');
+        $sheet->setCellValue('A3', 'Ngày xuất: '.$ngay);
         
-        $sheet->setCellValue('B4', 'DANH SÁCH KHOA/PHÒNG BAN');
+        $sheet->mergeCells('A4:C4');
+        
+        $sheet->setCellValue('A4', 'DANH SÁCH KHOA/PHÒNG BAN');
     }
     public function registerEvents(): array
     {
@@ -57,7 +63,7 @@ class KhoaExport implements FromCollection,
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 //định dạng B4
-                $cellRange = 'B4';
+                $cellRange = 'A4';
                 $event->sheet->getDelegate()
                     ->getStyle($cellRange)
                     ->getFont()

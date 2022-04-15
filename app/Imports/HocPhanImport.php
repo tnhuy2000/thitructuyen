@@ -9,12 +9,21 @@ class HocPhanImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
-       
-        return new HocPhan([
-        'mahocphan' => $row['ma_hoc_phan'],
-        'tenhocphan' => $row['ten_hoc_phan'],
-        'sotinchi' => $row['so_tin_chi'],
-        ]);
+        $isExist = HocPhan::select("*")
+            ->where("mahocphan", $row['ma_hoc_phan'])
+            ->doesntExist();
+        
+        if($isExist){
+            return new HocPhan([
+                'mahocphan' => $row['ma_hoc_phan'],
+                'tenhocphan' => $row['ten_hoc_phan'],
+                'sotinchi' => $row['so_tin_chi'],
+                ]);
+        }
+        else
+        {
+            toastr()->error('Học phần '.$row['ma_hoc_phan'].' đã tồn tại');
+        }
     }
     public function headingRow(): int
     {

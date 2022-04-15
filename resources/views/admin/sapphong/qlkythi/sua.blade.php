@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý kỳ thi')
+@section('pagetitle')
+Quản lý kỳ thi | Sửa
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -26,9 +28,9 @@
               
               <form action="{{ route('admin.sapphong.qlkythi.sua', ['id' => $ktkythi->id]) }}" method="post" class="row g-3 needs-validation" novalidate>
                     @csrf
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                     <label for="validationCustom01" class="form-label">Tên kỳ thi</label>
-                      <input type="text" class="form-control" id="tenkythi" name="tenkythi" value="{{ $ktkythi->tenkythi }}"  required>
+                      <input type="text" class="form-control @error('tenkythi') is-invalid @enderror" id="tenkythi" name="tenkythi" value="{{ $ktkythi->tenkythi }}"  required>
                       @error('tenkythi')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                       @enderror
@@ -61,16 +63,30 @@
                       @enderror
                      
                     </div>
+                    @php
+                    $namhoc=explode("-", $ktkythi->namhoc);
+                    $namhocbatdau= $namhoc[0];
+                    $namhocketthuc= $namhoc[1];
+                    @endphp
                     <div class="col-md-4">
-                      <label for="validationCustom02" class="form-label">Năm học</label>
-                      <input type="text" class="form-control @error('namhoc') is-invalid @enderror" value="{{ $ktkythi->namhoc }}"  id="namhoc" name="namhoc" required>
-                      @error('namhoc')
+                      <label for="validationCustom02" class="form-label">Năm học bắt đầu</label>
+                      <input type="number"  class="form-control @error('namhocbatdau') is-invalid @enderror" id="namhocbatdau" name="namhocbatdau" value="{{$namhocbatdau}}" required>
+                     
+                      @error('namhocbatdau')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                       @enderror
+                    </div>
+                  
+                    <div class="col-md-4">
+                      <label for="validationCustom02" class="form-label">Năm học kết thúc</label>
+                      <input type="number" class="form-control @error('namhocketthuc') is-invalid @enderror" id="namhocketthuc" name="namhocketthuc" value="{{ $namhocketthuc }}" readonly required>
                      
+                      @error('namhocketthuc')
+                      <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                      @enderror
                     </div>
                     <div class="col-12">
-                      <button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Cập nhật</button>
+                      <button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Cập nhật</button>
                     </div>
                     
                 </form>
@@ -84,4 +100,20 @@
 </section>
 
 </main><!-- End #main -->
+@endsection
+@section('javascript')    
+<script type="text/javascript">
+
+  const source = document.getElementById('namhocbatdau');
+  const result = document.getElementById('namhocketthuc');
+
+  const inputHandler = function(e) {
+    var namkethuc= e.target.value;
+    result.value = parseInt(namkethuc) +1;
+  }
+
+  source.addEventListener('input', inputHandler);
+  source.addEventListener('propertychange', inputHandler); // for IE8
+
+</script>
 @endsection

@@ -16,7 +16,7 @@ class HocPhanController extends Controller
         $hocphan = HocPhan::all();
         return view('admin.danhmuc.qlhocphan.danhsach',compact('hocphan'));
     }
-    public function getXoa(Request $request)
+    public function postXoa(Request $request)
     {
        
         try {  
@@ -36,7 +36,7 @@ class HocPhanController extends Controller
     {
         $this->validate($request, [
 			'mahocphan' => 'required|max:255|unique:hocphan,mahocphan',
-            'tenhocphan' => 'required|max:255|unique:hocphan,tenhocphan',
+            'tenhocphan' => 'required|max:255',
             'sotinchi' => 'required|max:10|min:2|numeric:hocphan,sotinchi'
 		],
         [
@@ -44,7 +44,6 @@ class HocPhanController extends Controller
             'tenhocphan.required'=>'Tên học phần không được bỏ trống',
             'sotinchi.required'=>'Số tín chỉ không được bỏ trống',
             'mahocphan.unique'=>'Mã học phần đã tồn tại',
-            'tenhocphan.unique'=>'Tên học phần đã tồn tại',
             'sotinchi.max'=>'Số tín chỉ không vượt quá 10',
             'sotinchi.min'=>'Số tín chỉ không nhỏ hơn 1'
             
@@ -68,13 +67,12 @@ class HocPhanController extends Controller
     public function postSua(Request $request, $mahocphan)
     {
         $this->validate($request, [
-            'tenhocphan'=>'required|max:255|unique:hocphan,tenhocphan,' . $request->mahocphan . ',mahocphan',
+            'tenhocphan'=>'required|max:255',
             'sotinchi'=>'required|max:10|min:2|numeric:hocphan,sotinchi,'
         ],[
             'mahocphan.required'=>'Mã học phần không được bỏ trống',
             'tenhocphan.required'=>'Tên học phần không được bỏ trống',
             'sotinchi.required'=>'Số tín chỉ không được bỏ trống',
-            'tenhocphan.unique'=>'Tên học phần '.$request->tenhocphan.' đã tồn tại',
             'sotinchi.max'=>'Số tín chỉ không vượt quá 10',
             'sotinchi.min'=>'Số tín chỉ không nhỏ hơn 1'
         ]);
@@ -89,13 +87,13 @@ class HocPhanController extends Controller
     // Nhập từ Excel
     public function postNhap(Request $request)
     {
-        toastr()->info('Nhập dữ liệu thành công');
-    Excel::import(new HocPhanImport, $request->file('file_excel'));
-    return redirect()->route('admin.danhmuc.qlhocphan.danhsach');
+       
+        Excel::import(new HocPhanImport, $request->file('file_excel'));
+        return redirect()->route('admin.danhmuc.qlhocphan.danhsach');
     }
     // Xuất ra Excel
     public function getXuat()
     {
-    return Excel::download(new HocPhanExport, 'danh-sach-hoc-phan.xlsx');
+        return Excel::download(new HocPhanExport, 'danh-sach-hoc-phan.xlsx');
     }
 }

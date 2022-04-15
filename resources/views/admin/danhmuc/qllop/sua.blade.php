@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý lớp')
+@section('pagetitle')
+Quản lý lớp | Sửa
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -72,7 +74,7 @@
                       @enderror
                     </div>
                     <div class="col-12">
-                      <button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Cập nhật</button>
+                      <button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Cập nhật</button>
                     </div>
                     
                 </form>

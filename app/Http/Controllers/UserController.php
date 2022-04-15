@@ -16,7 +16,27 @@ class UserController extends Controller
 	{
 		$this->middleware('auth');
 	}
- 
+    
+    public function postPhanQuyen(Request $request)
+    {
+            $role=$request->role;
+            $this->validate($request, [
+                'id_update' => 'required',
+                'role' => 'required',
+            ]);
+           
+            $orm = User::find($request->id_update);
+                $orm->role = $role;
+                $orm->save();
+            
+            toastr()->success('Thêm dữ liệu thành công');
+            if($role==3)
+                return redirect()->route('admin.qlnguoidung.qltkcanbocoithi.danhsach');
+            elseif($role==2)
+                return redirect()->route('admin.qlnguoidung.qltkthuky.danhsach');
+            elseif($role==4)
+                return redirect()->route('admin.qlnguoidung.qltkhoidongthi.danhsach');
+    }
     public function postThem(Request $request)
     {
         $role=$request->role;
@@ -124,51 +144,111 @@ class UserController extends Controller
 
         return view('admin.qlnguoidung.qltkhoidongthi.danhsach', compact('tkhoidongthi','kthoidongthi'));
     }
-    public function getTrangThai($id,$trangthai)
+    public function postTrangThai(Request $request)
 	{
-        $user = User::where('id', $id)->first();
-        if($user->role==5)
-        {
-            $orm = User::find($id);
-            $orm->trangthai = 1 -$orm->trangthai;
-            $orm->save();
-            return redirect()->route('admin.qlnguoidung.qltksinhvien.danhsach');
+        if(!empty($request->id_khoa)){
+            $user_khoa = User::where('id', $request->id_khoa)->first();
+            if($user_khoa->role==5)
+            {
+                $orm = User::find($request->id_khoa);
+                $orm->trangthai = 1 -$orm->trangthai;
+                $orm->save();
+                toastr()->success('Đã khoá');
+                return redirect()->route('admin.qlnguoidung.qltksinhvien.danhsach');
+            }
+            elseif($user_khoa->role==3)
+            {
+                $orm = User::find($request->id_khoa);
+                $orm->trangthai = 1 -$orm->trangthai;
+                $orm->save();
+                toastr()->success('Đã khoá');
+                return redirect()->route('admin.qlnguoidung.qltkcanbocoithi.danhsach');
+            }
+            elseif($user_khoa->role==2)
+            {
+                $orm = User::find($request->id_khoa);
+                $orm->trangthai = 1 -$orm->trangthai;
+                $orm->save();
+                toastr()->success('Đã khoá');
+                return redirect()->route('admin.qlnguoidung.qltkthuky.danhsach');
+            }
+            else
+            {
+                $orm = User::find($request->id_khoa);
+                $orm->trangthai = 1 -$orm->trangthai;
+                $orm->save();
+                toastr()->success('Đã khoá');
+                return redirect()->route('admin.qlnguoidung.qltkhoidongthi.danhsach');
+            }
         }
-        elseif($user->role==3)
+        elseif(!empty($request->id_kichhoat))
         {
-            $orm = User::find($id);
-            $orm->trangthai = 1 -$orm->trangthai;
-            $orm->save();
-            return redirect()->route('admin.qlnguoidung.qltkcanbocoithi.danhsach');
+            $user_kichhoat = User::where('id', $request->id_kichhoat)->first();
+            if($user_kichhoat->role==5)
+            {
+                $orm = User::find($request->id_kichhoat);
+                $orm->trangthai = 1 -$orm->trangthai;
+                $orm->save();
+                toastr()->success('Đã kích hoạt');
+                return redirect()->route('admin.qlnguoidung.qltksinhvien.danhsach');
+            }
+            elseif($user_kichhoat->role==3)
+            {
+                $orm = User::find($request->id_kichhoat);
+                $orm->trangthai = 1 -$orm->trangthai;
+                $orm->save();
+                toastr()->success('Đã kích hoạt');
+                return redirect()->route('admin.qlnguoidung.qltkcanbocoithi.danhsach');
+            }
+            elseif($user_kichhoat->role==2)
+            {
+                $orm = User::find($request->id_kichhoat);
+                $orm->trangthai = 1 -$orm->trangthai;
+                $orm->save();
+                toastr()->success('Đã kích hoạt');
+                return redirect()->route('admin.qlnguoidung.qltkthuky.danhsach');
+            }
+            else
+            {
+                $orm = User::find($request->id_kichhoat);
+                $orm->trangthai = 1 -$orm->trangthai;
+                $orm->save();
+                toastr()->success('Đã kích hoạt');
+                return redirect()->route('admin.qlnguoidung.qltkhoidongthi.danhsach');
+            }
         }
-        elseif($user->role==2)
-        {
-            $orm = User::find($id);
-            $orm->trangthai = 1 -$orm->trangthai;
-            $orm->save();
-            return redirect()->route('admin.qlnguoidung.qltkthuky.danhsach');
-        }
-        else
-        {
-            $orm = User::find($id);
-            $orm->trangthai = 1 -$orm->trangthai;
-            $orm->save();
-            return redirect()->route('admin.qlnguoidung.qltkhoidongthi.danhsach');
-        }
-		
-		
+        
 	}
-    function profile(){
-        return view('admin.profile');
-    }
-    function settings(){
-        return view('admin.settings');
-    }
+   
+  
 
+    function profileSV(){
+       
+        $sinhvien = \DB::table('sinhvien as sv')
+            ->join('lop as l', 'l.malop', '=', 'sv.malop')
+            ->join('khoa as k', 'l.makhoa', '=', 'k.makhoa')
+            ->where('sv.masinhvien','=', Auth::user()->masinhvien)
+            ->select('sv.*','l.malop','k.tenkhoa')->first();
+      
+        return view('sinhvien.hosocanhan.hoso',compact('sinhvien'));
+    }
+    function profileGiamThi(){
+       
+       
+        $giamthi = \DB::table('hoidongthi as hdt')
+            ->join('khoa as k', 'hdt.makhoa', '=', 'k.makhoa')
+            ->where('hdt.macanbo','=',Auth::user()->macanbo)
+            ->select('hdt.macanbo', 'hdt.holot','hdt.ten','hdt.email','hdt.dienthoai','k.makhoa', 'k.tenkhoa','hdt.vaitro')
+            ->orderBy('k.makhoa', 'asc')->first();
+        return view('giamthi.hosocanhan.hoso',compact('giamthi'));
+        
+    }
+  
     function updateInfo(Request $request){
         
         $validator = \Validator::make($request->all(),[
             'name'=>'required',
+            'dienthoai'=>'required',
             'email'=> 'required|email|unique:users,email,'.Auth::user()->id,
             
         ]);
@@ -177,15 +257,28 @@ class UserController extends Controller
             return response()->json(['status'=>0,'error'=>$validator->errors()->toArray()]);
         }else{
             $query = User::find(Auth::user()->id)->update([
-                    'name'=>$request->name,
-                    'email'=>$request->email,
-                    
+                    'name'=>$request->name,        
             ]);
-
+            if(!empty($request->dienthoai)){
+                if(Auth::user()->role==5){
+                    \DB::table('sinhvien')->where('masinhvien', Auth::user()->masinhvien)->update([
+                        'dienthoai' => $request->dienthoai,
+                    ]);
+                }
+                else
+                {
+                    \DB::table('hoidongthi')->where('macanbo', Auth::user()->macanbo)->update([
+                        'dienthoai' => $request->dienthoai,
+                    ]);
+                }
+            }
             if(!$query){
-                return response()->json(['status'=>0,'msg'=>'Something went wrong.']);
+               
+                return response()->json(['status'=>0,'msg'=>'Có lỗi xảy ra, cập nhật hồ sơ không thành công.']);
+
             }else{
-                return response()->json(['status'=>1,'msg'=>'Your profile info has been update successfuly.']);
+               
+                return response()->json(['status'=>1,'msg'=>'Cập nhật hồ sơ thành công']);
             }
         }
     }
@@ -196,10 +289,11 @@ class UserController extends Controller
         $new_name = 'UIMG_'.date('Ymd').uniqid().'.jpg';
 
         //Upload new image
+        
         $upload = $file->move(public_path($path), $new_name);
         
         if( !$upload ){
-            return response()->json(['status'=>0,'msg'=>'Something went wrong, upload new picture failed.']);
+            return response()->json(['status'=>0,'msg'=>'Có lỗi xảy ra, cập nhật ảnh không thành công.']);
         }else{
             //Get Old picture
             $oldPicture = User::find(Auth::user()->id)->getAttributes()['picture'];
@@ -214,14 +308,53 @@ class UserController extends Controller
             $update = User::find(Auth::user()->id)->update(['picture'=>$new_name]);
 
             if( !$upload ){
-                return response()->json(['status'=>0,'msg'=>'Something went wrong, updating picture in db failed.']);
+                return response()->json(['status'=>0,'msg'=>'Có lỗi xảy ra, cập nhật ảnh không thành công.']);
             }else{
-                return response()->json(['status'=>1,'msg'=>'Your profile picture has been updated successfully']);
+                return response()->json(['status'=>1,'msg'=>'Cập nhật ảnh thành công']);
             }
         }
     }
+    function changePassword(Request $request){
+        //Validate form
+        $validator = \Validator::make($request->all(),[
+            'oldpassword'=>[
+                'required', function($attribute, $value, $fail){
+                    if( !\Hash::check($value, Auth::user()->password) ){
+                        return $fail(__('Mật khẩu hiện tại không chính xác'));
+                    }
+                },
+                'min:4',
+                'max:30'
+             ],
+             'newpassword'=>'required|min:8|max:30',
+             'cnewpassword'=>'required|same:newpassword'
+         ],[
+             'oldpassword.required'=>'Nhập mật khẩu hiện tại',
+             'oldpassword.min'=>'Mật khẩu phải ít nhất 4 ký tự',
+             'oldpassword.max'=>'Mật khẩu không được quá 30 kí tự',
+             'newpassword.required'=>'Nhập mật khẩu mới',
+             'newpassword.min'=>'Mật khẩu mới phải ít nhất 8 ký tự',
+             'newpassword.max'=>'Mật khẩu mới không được quá 30 kí tự',
+             'cnewpassword.required'=>'Nhập lại mật khẩu mới',
+             'cnewpassword.same'=>'Xác nhận mật khẩu mới không khớp'
+         ]);
+
+        if( !$validator->passes() ){
+            return response()->json(['status'=>0,'error'=>$validator->errors()->toArray()]);
+        }else{
+             
+         $update = User::find(Auth::user()->id)->update(['password'=>\Hash::make($request->newpassword)]);
+
+         if( !$update ){
+             return response()->json(['status'=>0,'msg'=>'Có lỗi xảy ra, đổi mật khẩu không thành công']);
+         }else{
+             return response()->json(['status'=>1,'msg'=>'Đổi mật khẩu thành công']);
+             //return redirect()->route('admin.profile')->with('success','Your password has been changed successfully');
+         }
+        }
+    }
   
-    public function getXoa(Request $request)
+    public function postXoa(Request $request)
     {
         $user = User::where('id', $request->id)->first();
         if($user->role==5){

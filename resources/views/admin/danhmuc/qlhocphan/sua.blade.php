@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý học phần')
+@section('pagetitle')
+Quản lý học phần | Sửa
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -26,7 +28,7 @@
               <form action="{{ route('admin.danhmuc.qlhocphan.sua', ['mahocphan' => $kthocphan->mahocphan]) }}" method="post" class="row g-3 needs-validation" novalidate>
                     @csrf
                     <div class="col-md-4">
-                    <label for="validationCustom01" class="form-label">Mã khoa</label>
+                    <label for="validationCustom01" class="form-label">Mã học phần</label>
                       <input type="text" class="form-control" id="mahocphan" name="mahocphan" value="{{ $kthocphan->mahocphan }}" readonly  required>
                       @error('mahocphan')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
@@ -50,7 +52,7 @@
                      
                     </div>
                     <div class="col-12">
-                      <button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Cập nhật</button>
+                      <button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Cập nhật</button>
                     </div>
                     
                 </form>

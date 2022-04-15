@@ -13,10 +13,10 @@ class KyThiController extends Controller
     {
         $kythi = KyThi::all();
         
-            return view('admin.sapphong.qlkythi.danhsach',compact('kythi'));
+        return view('admin.sapphong.qlkythi.danhsach',compact('kythi'));
        
     }
-    public function getXoa(Request $request)
+    public function postXoa(Request $request)
     {
         try {  
             \DB::table('kythi')->where('id', '=', $request->id)->delete();
@@ -39,23 +39,22 @@ class KyThiController extends Controller
     }
     public function postThem(Request $request)
     {
-        $namhoc=explode('-',$request->namhoc);
-        $min=$namhoc[0];
-        $max=$namhoc[0]+1;
+        $nambatdau=$request->namhocbatdau;
+        
+        $min=$nambatdau+1;
+        $max=$nambatdau+1;
+        
+     
         $this->validate($request, [
-			'tenkythi' => 'required|max:255|unique:kythi,tenkythi',
+			'tenkythi' => 'required|max:255:kythi,tenkythi',
             'hocky' => 'required|max:255:kythi,hocky',
-            'namhoc' => 'required|numeric|min:'.$min.'|max:'.$max,
-		],
-        [
-            'tenkythi.unique'=>'Tên kỳ thi '.$request->tenkythi.' đã tồn tại',
-            
-        ]);
-		
+            'namhocketthuc' => 'required|numeric|min:'.$min.'|max:'.$max,
+		] );
+        $namhoc=$nambatdau.'-'.$min;
 		\DB::table('kythi')->insert([
             'tenkythi' => $request->tenkythi,
 			'hocky' => $request->hocky,
-            'namhoc' => $request->namhoc,
+            'namhoc' => $namhoc,
             'updated_at' => Carbon::now()
 		]);
         toastr()->success('Thêm dữ liệu thành công');     
@@ -70,18 +69,23 @@ class KyThiController extends Controller
     }
     public function postSua(Request $request, $id)
     {
+        $nambatdau=$request->namhocbatdau;
+        
+        $min=$nambatdau+1;
+        $max=$nambatdau+1;
+        
         $this->validate($request, [
             'tenkythi'=>'required|max:255|unique:kythi,tenkythi,' . $request->id . ',id',
             'hocky' => 'required|max:255:kythi,hocky',
-            'namhoc' => 'required|max:255:kythi,namhoc'
+            'namhocketthuc' => 'required|numeric|min:'.$min.'|max:'.$max,
         ],[
             'tenkythi.unique'=>'Tên kỳ thi '.$request->tenkythi.' đã tồn tại'
         ]);
-       
+       $namhoc=$nambatdau.'-'.$min;
         \DB::table('kythi')->where('id', $request->id)->update([
             'tenkythi' => $request->tenkythi,
             'hocky' => $request->hocky,
-            'namhoc' => $request->namhoc
+            'namhoc' => $namhoc,
         ]);
         toastr()->success('Cập nhật dữ liệu thành công!');
        

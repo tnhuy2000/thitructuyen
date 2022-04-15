@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý ca thi')
+@section('pagetitle')
+Quản lý ca thi
+@endsection
 
 @section('content')
 
@@ -23,9 +25,9 @@
 		<div class="card">
             <div class="card-body">
 			<h5 class="card-title">Danh sách ca thi</h5>
-		  	<a href="{{ route('admin.sapphong.qlcathi.them') }}" class="btn btn-primary"><i class="bx bxs-plus-square"></i> Thêm mới</a>
-			  <a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-out"></i> Nhập từ Excel</a>
-			  <a href="#xuat" data-bs-toggle="modal" data-bs-target="#exportModal" class="btn btn-success"><i class="bx bxs-archive-in"></i> Xuất ra Excel</a>
+		  		<a href="{{ route('admin.sapphong.qlcathi.them') }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Thêm mới</a>
+			 	<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="fa-solid fa-upload"></i> Nhập từ Excel</a>
+			  	<a href="#xuat" data-bs-toggle="modal" data-bs-target="#exportModal" class="btn btn-success"><i class="fa-solid fa-download"></i> Xuất ra Excel</a>
 		
 			 
 			  <!-- Bordered Tabs Justified -->
@@ -82,8 +84,8 @@
 											@endif
 										</span>
 									</td>
-									<td class="text-center"><a href="{{ route('admin.sapphong.qlcathi.sua', ['id' => $value->id]) }}"><i class="bx bxs-pencil"></i> Sửa</a></td>
-									<td class="text-center"><a onclick="return confirm('Bạn có muốn xóa ca thi {{$value->tenca}}?')" href="{{ route('admin.sapphong.qlcathi.xoa', ['id' => $value->id]) }}" ><i class="bx bxs-trash text-danger"></i> Xoá</a></td>
+									<td class="text-center"><a class="btn btn-primary btn-sm" href="{{ route('admin.sapphong.qlcathi.sua', ['id' => $value->id]) }}"><i class="fa-regular fa-pen-to-square"></i></a></td>
+									<td class="text-center"><a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id}},'{{$value->tenca}}'); return false;"   href="#xoa" ><i class="fa-regular fa-trash-can"></i></a></td>
 					
 								</tr>
 							@endforeach
@@ -127,8 +129,8 @@
 											@endif
 										</span>
 									</td>
-									<td class="text-center"><a href="{{ route('admin.sapphong.qlcathi.sua', ['id' => $value->id]) }}"><i class="bx bxs-pencil"></i> Sửa</a></td>
-									<td class="text-center"><a onclick="return confirm('Bạn có muốn xóa ca thi {{$value->tenca}}?')" href="{{ route('admin.sapphong.qlcathi.xoa', ['id' => $value->id]) }}" ><i class="bx bxs-trash text-danger"></i> Xoá</a></td>
+									<td class="text-center"><a class="btn btn-primary btn-sm" href="{{ route('admin.sapphong.qlcathi.sua', ['id' => $value->id]) }}"><i class="fa-regular fa-pen-to-square"></i></a></td>
+									<td class="text-center"><a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id}},'{{$value->tenca}}'); return false;"   href="#xoa" ><i class="fa-regular fa-trash-can"></i></a></td>
 					
 								</tr>
 							@endforeach
@@ -170,8 +172,8 @@
 											@endif
 										</span>
 									</td>
-									<td class="text-center"><a href="{{ route('admin.sapphong.qlcathi.sua', ['id' => $value->id]) }}"><i class="bx bxs-pencil"></i> Sửa</a></td>
-									<td class="text-center"><a onclick="return confirm('Bạn có muốn xóa ca thi {{$value->tenca}}?')" href="{{ route('admin.sapphong.qlcathi.xoa', ['id' => $value->id]) }}" ><i class="bx bxs-trash text-danger"></i> Xoá</a></td>
+									<td class="text-center"><a class="btn btn-primary btn-sm" href="{{ route('admin.sapphong.qlcathi.sua', ['id' => $value->id]) }}"><i class="fa-regular fa-pen-to-square"></i></a></td>
+									<td class="text-center"><a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id}},'{{$value->tenca}}'); return false;"   href="#xoa" ><i class="fa-regular fa-trash-can"></i></a></td>
 					
 								</tr>
 							@endforeach
@@ -266,11 +268,34 @@
 		</div>
 	</div>
 </form>
+<form action="{{ route('admin.sapphong.qlcathi.xoa') }}" method="post">
+	@csrf
+	<input type="hidden" id="id_delete" name="id" value="" />
+	
+	<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabelDelete">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title">Xoá ca thi</h5>
+				  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" >
+					<p ><i class="fa-regular fa-circle-question text-danger"></i> Xác nhận muốn xoá ca thi <span id="tenca" class="fw-bold text-danger"></span>.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+					<button type="submit" class="btn btn-danger">Thực hiện</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
 @endsection
 @section('javascript')    
 <script type="text/javascript">
-  		function getXoa(id) {
-			$('#id').val(id);
+  		function getXoa(id,tenca) {
+			$('#id_delete').val(id);
+			$('#tenca').text(tenca);
 		}
 		
 		@if($errors->has('id') || $errors->has('tenkhoa')  )

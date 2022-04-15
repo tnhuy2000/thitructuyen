@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý sinh viên')
+@section('pagetitle')
+Quản lý sinh viên
+@endsection
 
 @section('content')
 
@@ -23,9 +25,9 @@
 	  <div class="card">
 		<div class="card-body">
 		  <h5 class="card-title">Danh sách sinh viên</h5>
-		  	<a href="{{ route('admin.danhmuc.qlsinhvien.them') }}" class="btn btn-outline-primary"><i class="bx bxs-plus-square"></i> Thêm mới</a>
-		  	<a href="#nhap" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-in"></i> Nhập từ Excel</a>
-			<a href="{{ route('admin.danhmuc.qlsinhvien.xuat') }}" class="btn btn-outline-success"><i class="bx bxs-archive-out"></i> Xuất ra Excel</a>
+		  	<a href="{{ route('admin.danhmuc.qlsinhvien.them') }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Thêm mới</a>
+		  	<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="fa-solid fa-upload"></i> Nhập từ Excel</a>
+			<a href="{{ route('admin.danhmuc.qlsinhvien.xuat') }}" class="btn btn-success"><i class="fa-solid fa-download"></i> Xuất ra Excel</a>
             
 		  <!-- Table with stripped rows -->
 		  <table class="table datatable table-hover">
@@ -59,8 +61,8 @@
 						</td>
 						<td>{{ $value->malop }}</td>
 						
-						<td class="text-center"><a href="{{ route('admin.danhmuc.qlsinhvien.sua', ['masinhvien' => $value->masinhvien]) }}"><i class="bx bxs-pencil"></i> Sửa</a></td>
-						<td class="text-center"><a onclick="return confirm('Bạn có muốn xóa sinh viên {{$value->ten}}?')" href="{{ route('admin.danhmuc.qlsinhvien.xoa', ['masinhvien' => $value->masinhvien]) }}" ><i class="bx bxs-trash text-danger"></i> Xoá</a></td>
+						<td class="text-center"><a class="btn btn-primary btn-sm" href="{{ route('admin.danhmuc.qlsinhvien.sua', ['masinhvien' => $value->masinhvien]) }}"><i class="fa-regular fa-pen-to-square"></i></a></td>
+						<td class="text-center"><a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa('{{ $value->masinhvien}}','{{$value->holot}}','{{$value->ten}}'); return false;"   href="#xoa" ><i class="fa-regular fa-trash-can"></i></a></td>
 		
 					</tr>
 				@endforeach
@@ -93,18 +95,43 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
-					<button type="submit" class="btn btn-danger"><i class="fal fa-upload"></i> Nhập dữ liệu</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>
+					<button type="submit" class="btn btn-danger"> Nhập dữ liệu</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </form> 
+
+<form action="{{ route('admin.danhmuc.qlsinhvien.xoa') }}" method="post">
+	@csrf
+	<input type="hidden" id="masinhvien_delete" name="masinhvien" value="" />
+	
+	<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabelDelete">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title">Xoá sinh viên</h5>
+				  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" >
+					<p ><i class="fa-regular fa-circle-question text-danger"></i> Xác nhận muốn xoá sinh viên <span id="holot" class="fw-bold text-danger"></span> <span id="ten" class="fw-bold text-danger"></span>.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+					<button type="submit" class="btn btn-danger">Thực hiện</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
 @endsection
 @section('javascript')    
 <script type="text/javascript">
-  		function getXoa(id) {
-			$('#id').val(id);
+  		function getXoa(masinhvien,holot,ten) {
+			$('#masinhvien_delete').val(masinhvien);
+			$('#holot').text(holot);
+			$('#ten').text(ten);
 		}
 		
 		@if($errors->has('id') || $errors->has('tenkhoa')  )

@@ -1,6 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý bài thi & dữ liệu bài thi')
-
+@section('pagetitle')
+Quản lý bài thi và dữ liệu đề thi
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -55,7 +56,7 @@
                            
                             if($result==$value->tenca){
                             @endphp
-                                <a href="{{route('admin.dethi_baithi.qlbaithi.zipCaThi',['ngaythi' => $ngaythi, 'cathi'=>$fileInfo->getFilename()])}}"><i class="bx bxs-download"></i>Tải</a>
+                                <a href="{{route('admin.dethi_baithi.qlbaithi.zipCaThi',['ngaythi' => $ngaythi, 'cathi'=>$fileInfo->getFilename()])}}"><i class="fa-solid fa-download"></i> Tải xuống</a>
                             @php
                             }
                         }
@@ -74,7 +75,7 @@
                            
                             if($result==$value->tenca){
                             @endphp
-							<a href="{{route('admin.dethi_baithi.qlbaithi.phongthi',['ngaythi'=>$ngaythi,'cathi' => $value->id])}}"><i class="bx bxs-folder-open text-warning"></i> Mở</a>
+							<a href="{{route('admin.dethi_baithi.qlbaithi.phongthi',['ngaythi'=>$ngaythi,'cathi' => $value->id])}}"><i class="fa-regular fa-folder-open text-warning"></i> Mở</a>
 							@php
                             }
                         }

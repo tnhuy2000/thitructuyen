@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý hội đồng thi')
+@section('pagetitle')
+Quản lý hội đồng thi | Sửa
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -66,9 +68,9 @@
                       </div>
                 
                       <div class="col-md-6">
-                      <label for="makhoa" class="form-label">Khoa</label>
+                      <label for="makhoa" class="form-label">Khoa/Phòng ban</label>
                       <select class="form-control" id="makhoa" name="makhoa" required>
-                        <option value="">-- Chọn Khoa --</option>
+                        <option value="">-- Chọn Khoa/Phòng ban --</option>
                         @foreach($ktkhoa as $value){
                           @if($kthoidongthi->makhoa == $value->makhoa)
                             <option value="{{$value->makhoa}}" selected="selected">{{$value->tenkhoa}}</option>
@@ -93,19 +95,19 @@
                         <option value="">-- Chọn vai trò --</option>
                         
                           @if($kthoidongthi->vaitro=='canbocoithi'){
-                            <option value="canbocoithi" selected="selected">Giám thị (Cán bộ coi thi)</option>
+                            <option value="canbocoithi" selected="selected">Cán bộ coi thi</option>
                             <option value="thuky" >Thư ký</option>
                             <option value="hoidongthi" >Hội đồng thi</option>
                           }
                           @elseif($kthoidongthi->vaitro=='thuky')
                           {
-                            <option value="canbocoithi" >Giám thị (Cán bộ coi thi)</option>
+                            <option value="canbocoithi" >Cán bộ coi thi</option>
                             <option value="thuky" selected="selected">Thư ký</option>
                             <option value="hoidongthi" >Hội đồng thi</option>
                           }
                           @else
                           {
-                            <option value="canbocoithi" >Giám thị (Cán bộ coi thi)</option>
+                            <option value="canbocoithi" >Cán bộ coi thi</option>
                             <option value="thuky" >Thư ký</option>
                             <option value="hoidongthi" selected="selected">Hội đồng thi</option>
                           }
@@ -117,7 +119,7 @@
                     </div>
 
                     <div class="col-12">
-                      <button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Cập nhật</button>
+                      <button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Cập nhật</button>
                     </div>
                     
                 </form>

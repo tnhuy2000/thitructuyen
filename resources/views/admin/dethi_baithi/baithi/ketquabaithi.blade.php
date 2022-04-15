@@ -1,6 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý bài thi & dữ liệu bài thi')
-
+@section('pagetitle')
+Quản lý bài thi và dữ liệu đề thi
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -32,11 +33,15 @@
               <div class="row">
 
                  
-                    <div class="col-md-4 pl-1"></div>
+                    <div class="col-md-4 pl-1">
+						<a href="" onclick="event.preventDefault();
+       document.getElementById('zipFilePhongThi').submit();" class="btn btn-primary mb-2"><i class="fa-solid fa-download"></i>  Tải toàn bộ bài làm</a>
+					</div>
 
-                    <div class="col-md-3 col-sm-3 pl-1 mb-3">
-                        <div class="form-group" id="filter_col4" data-column="4">
-                            <label class="form-label" >Trạng thái</label>
+                    <div class="col-md-4 col-sm-4 pl-1 mb-3">
+                        <div class="input-group flex-nowrap" id="filter_col4" data-column="4">
+                            {{-- <label class="form-label" >Trạng thái</label> --}}
+							<span class="input-group-text" id="addon-wrapping">Tìm kiếm</span>
                             <select name="trangthai" class="form-select column_filter " id="col4_filter">
                                 <option value="">--Tất cả--</option>
 								
@@ -53,8 +58,7 @@
 
 
                     </div>
-              <a href="" onclick="event.preventDefault();
-       document.getElementById('zipFilePhongThi').submit();" class="btn btn-primary mb-2"><i class="bx bxs-download"></i> Tải toàn bộ bài làm</a>
+              
             <!-- Table with stripped rows -->
 			<div class="table-responsive-lg">
 		 	 <table class="table table-hover table-sm " id="ex">
@@ -87,9 +91,9 @@
 								@foreach($dulieubaithi as $dulieubaithi2)
 									@if($dulieubaithi2->baithi_id== $value->id)
                                    
-								<a href="#hinhanh" class="fw-bold text-danger" onclick="getXemHinh('{{ $dulieubaithi2->duongdan }}')"><i class="bi bi-eye-fill"></i> Xem bài làm</a><br>
+								<a href="#hinhanh" class="fw-bold text-danger" onclick="getXemHinh('{{ $dulieubaithi2->duongdan }}')"><i class="fa-solid fa-eye"></i> Xem bài làm</a><br>
 								<a href="#taiZip" class="fw-bold text-danger" onclick="event.preventDefault();getZip('{{$value->masinhvien}}','{{$dulieubaithi2->duongdan}}');
-       document.getElementById('zipFile').submit();" ><i class="bx bxs-download"></i> Tải bài làm</a>
+       document.getElementById('zipFile').submit();" ><i class="fa-solid fa-download"></i> Tải bài làm</a>
 	   								@endif
 	   							@endforeach
 							</span>
@@ -185,7 +189,7 @@
                                 </span>
                         </td>	
 						<td class="small text-center">
-						<a href="#lambailai" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#ModalXacNhanLamBaiLai" onclick="getLamBaiLai({{ $value->id }},'{{ $value->dethiphongthi_id }}'); return false;"><i class="bi bi-arrow-counterclockwise"></i></a>
+						<a href="#lambailai" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#ModalXacNhanLamBaiLai" onclick="getLamBaiLai({{ $value->id }},'{{ $value->dethiphongthi_id }}'); return false;"><i class="fa-solid fa-arrow-rotate-right"></i></a>
 						</td>
 								
 					</tr>

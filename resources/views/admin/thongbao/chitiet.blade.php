@@ -1,6 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Chi tiết thông báo')
-
+@section('pagetitle')
+Quản lý thông báo
+@endsection
 @section('content')
 
 <main id="main" class="main">

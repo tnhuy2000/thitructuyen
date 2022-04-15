@@ -30,7 +30,7 @@ class UserImport implements ToModel, WithHeadingRow
                 ->where("masinhvien", $row['ma_sinh_vien'])
                 ->doesntExist();
             if($isExistSV){
-                if($isNotExistUser){
+                if($isNotExistUserSV){
                         $sinhvien = SinhVien::where('masinhvien', $row['ma_sinh_vien'])->first();
                         $name=$sinhvien->holot.' '.$sinhvien->ten;
                         return new User([

@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title', 'Hồ sơ cá nhân')
+@section('pagetitle')
+Hồ sơ cá nhân
+@endsection
 
 @section('content')
 
@@ -34,8 +36,11 @@
                             <h3 class="mt-3">
                                 <p class="profile-username text-center user_name">{{ Auth::user()->name }}</p>
                             </h3>
-
+                            @if(Auth::user()->role==1)
                             <h6 class="text-muted text-center">Quyền hạn: Admin</h6>
+                            @elseif(Auth::user()->role==4)
+                            <h6 class="text-muted text-center">Quyền hạn: Hội đồng thi</h6>
+                            @endif
                             <div class="d-grid gap-2">
                                 <input type="file" name="user_image" id="user_image"
                                     style="opacity: 0;height:1px;display:none">
@@ -81,8 +86,8 @@
                                             @csrf
                                             <h4>Thông tin tài khoản</h4>
                                             <div class="form-group row">
-                                                <label for="inputName" class="col-sm-2 form-label">Họ tên</label>
-                                                <div class="col-sm-10">
+                                                <label for="inputName" class="col-sm-3   form-label">Họ tên</label>
+                                                <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="inputName"
                                                         placeholder="Họ tên" value="{{ Auth::user()->name }}" name="name">
 
@@ -92,21 +97,22 @@
                                             @if (Auth::user()->role != 1)
                                                 @if (!empty($hoidongthi->dienthoai))
                                                     <div class="form-group row mt-2">
-                                                        <label for="inputName" class="col-sm-2 form-label">Điện
+                                                        <label for="inputName" class="col-sm-3 form-label">Điện
                                                             thoại</label>
-                                                        <div class="col-sm-10">
+                                                        <div class="col-sm-9">
                                                             <input type="text" class="form-control" id="inputPhone"
                                                                 placeholder="Điện thoại"
-                                                                value="{{ $hoidongthi->dienthoai }}" name="name">
-                                                            <span class="text-danger error-text name_error"></span>
+                                                                value="{{ $hoidongthi->dienthoai }}" name="dienthoai">
+                                                            <span class="text-danger error-text dienthoai_error"></span>
+                                                       
                                                         </div>
                                                     </div>
                                                 @endif
                                                 @if (!empty($hoidongthi->tenkhoa))
                                                     <div class="form-group row mt-2">
-                                                        <label for="inputName" class="col-sm-2 form-label">Khoa/phòng
+                                                        <label for="inputName" class="col-sm-3 form-label">Khoa/phòng
                                                             ban</label>
-                                                        <div class="col-sm-10">
+                                                        <div class="col-sm-9">
                                                             <input type="text" class="form-control" id="" readonly
                                                                 value="{{ $hoidongthi->tenkhoa }}">
 
@@ -116,8 +122,8 @@
                                                 @endif
                                             @endif
                                             <div class="form-group row mt-2">
-                                                <label for="inputEmail" class="col-sm-2 form-label">Email</label>
-                                                <div class="col-sm-10">
+                                                <label for="inputEmail" class="col-sm-3 form-label">Email</label>
+                                                <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="inputEmail" readonly
                                                         placeholder="Email" value="{{ Auth::user()->email }}"
                                                         name="email">
@@ -126,7 +132,7 @@
                                             </div>
 
                                             <div class="form-group row mt-2">
-                                                <div class="offset-sm-2 col-sm-10">
+                                                <div class="offset-sm-3 col-sm-9">
                                                     <button type="submit" class="btn btn-danger fw-bold">Cập nhật</button>
                                                 </div>
                                             </div>
@@ -222,6 +228,7 @@
                                 $(this).html($('#InfoForm').find($(
                                     'input[name="name"]')).val());
                             });
+                            
                             // alert(data.msg);
                             toastr.success(data.msg);
                         }

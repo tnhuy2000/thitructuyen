@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý khoa')
+@section('pagetitle')
+	Quản lý khoa
+@endsection
 
 @section('content')
 
@@ -24,8 +26,8 @@
 		<div class="card-body">
 		  <h5 class="card-title">Danh sách khoa</h5>
 		 
-              	<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModalKhoa"><i class="bx bxs-archive-out"></i> Nhập từ Excel</a>
-				<a href="{{ route('admin.danhmuc.qlkhoa.xuat') }}" class="btn btn-success"><i class="bx bxs-archive-in"></i> Xuất ra Excel</a>
+              	<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModalKhoa"><i class="fa-solid fa-upload"></i> Nhập từ Excel</a>
+				<a href="{{ route('admin.danhmuc.qlkhoa.xuat') }}" class="btn btn-success"><i class="fa-solid fa-download"></i> Xuất ra Excel</a>
             <br><br>
 		  <!-- Table with stripped rows -->
 		  <table class="table datatable table-hover table-sm"">
@@ -46,8 +48,8 @@
 						<td>{{ $value->makhoa }}</td>
 						<td class="small">{{ $value->tenkhoa }}</td>
 						
-						<td class="text-center"><a href="#sua" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModalSua" onclick="getSua('{{ $value->makhoa}}','{{$value->tenkhoa}}'); return false;"  ><i class="bi bi-pencil-square"></i></a></td>
-						<td class="text-center"><a href="#xoa" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa('{{ $value->makhoa}}'); return false;"  ><i class="bi bi-trash"></i></a></td>
+						<td class="text-center"><a href="#sua" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModalSua" onclick="getSua('{{ $value->makhoa}}','{{$value->tenkhoa}}'); return false;"  ><i class="fa-regular fa-pen-to-square"></i></a></td>
+						<td class="text-center"><a href="#xoa" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa('{{ $value->makhoa}}'); return false;"  ><i class="fa-regular fa-trash-can"></i></a></td>
 		
 					</tr>
 				@endforeach
@@ -84,7 +86,7 @@
 								<br>
                                 <div class="form-group">
 								
-                                    <button type="submit" class="btn btn-primary"><i class="bx bxs-plus-square"></i> Thêm mới</button>
+                                    <button type="submit" class="btn btn-primary">Thêm mới</button>
                                 </div>
                             </form>
                         </div>
@@ -106,16 +108,17 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body" >
-						<p class="font-weight-bold text-danger"><i class="fal fa-question-circle"></i> Xác nhận xóa? Hành động này không thể phục hồi.</p>
+						<p class="font-weight-bold text-danger"><i class="fa-regular fa-circle-question"></i> Xác nhận xóa? Hành động này không thể phục hồi.</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
-						<button type="submit" class="btn btn-danger"><i class="fal fa-trash-alt"></i> Thực hiện</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+						<button type="submit" class="btn btn-danger">Thực hiện</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</form>
+	
 <form action="{{ route('admin.danhmuc.qlkhoa.nhap') }}" method="post" enctype="multipart/form-data">
 	@csrf
 	<div class="modal fade" id="importModalKhoa" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
@@ -132,8 +135,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
-					<button type="submit" class="btn btn-danger"><i class="fal fa-upload"></i> Nhập dữ liệu</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+					<button type="submit" class="btn btn-danger">Nhập dữ liệu</button>
 				</div>
 			</div>
 		</div>
@@ -171,8 +174,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
-					<button type="submit" class="btn btn-success"><i class="fal fa-upload"></i> Cập nhật</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+					<button type="submit" class="btn btn-success"><i class="fa-regular fa-floppy-disk"></i> Cập nhật</button>
 			</div>
         </div>
     </div>
@@ -181,8 +184,7 @@
 @endsection
 @section('javascript') 
 <script src="{{ asset('public/jquery/jquery-3.6.0.min.js') }}"></script>
-    <script src="{{ asset('public/bootstrap/js/bootstrap.min.js') }}"></script>
-  
+   
 	<script type="text/javascript">
   
         function getXoa(makhoa) {

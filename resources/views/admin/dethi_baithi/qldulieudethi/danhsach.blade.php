@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý dữ liệu đề thi')
+@section('pagetitle')
+Quản lý dữ liệu đề thi
+@endsection
 
 @section('content')
 
@@ -33,7 +35,7 @@
 				<span>Thực hành</span>
 			@endif
 		</h6>
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal"><i class="bx bxs-plus-square"></i> Thêm dữ liệu</button></p>
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal"><i class="fa-solid fa-plus"></i> Thêm dữ liệu</button></p>
 		<table class="table table-hover table-bordered">
 		  	<thead>
 				<tr>
@@ -57,8 +59,8 @@
                         <td>{{ $value->thutuhienthi }}</td>
 						<td>{{ $value->ghichu }}</td>
 						
-						<td class="text-center"><a href="#sua" data-bs-toggle="modal" data-bs-target="#myModalEdit" onclick="getCapNhat({{ $value->id }},{{ $value->dethi_id }}, '{{ $value->duongdan }}','{{ $value->ghichu }}', {{ $value->thutuhienthi }}); return false;"><i class="bx bxs-pencil"></i> Sửa</a></td>
-						<td class="text-center"><a href="#xoa" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id}},{{$value->dethi_id}},'{{$value->duongdan}}'); return false;" ><i class="bx bxs-trash text-danger"></i> Xoá</a></td>
+						<td class="text-center"><a href="#sua" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModalEdit" onclick="getCapNhat({{ $value->id }},{{ $value->dethi_id }}, '{{ $value->duongdan }}','{{ $value->ghichu }}', {{ $value->thutuhienthi }}); return false;"><i class="fa-regular fa-pen-to-square"></i></a></td>
+						<td class="text-center"><a href="#xoa" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id}},{{$value->dethi_id}},'{{$value->duongdan}}'); return false;" ><i class="fa-regular fa-trash-can"></i></a></td>
 					</tr>
 				@endforeach
 			</tbody>
@@ -168,7 +170,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-						<button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Thực hiện</button>
+						<button type="submit" class="btn btn-primary"> Thực hiện</button>
 					</div>
 				</div>
 			</div>
@@ -189,11 +191,11 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
-						<p class="font-weight-bold text-danger"><i class="fal fa-question-circle"></i> Xác nhận xóa? Hành động này không thể phục hồi.</p>
+						<p class="font-weight-bold text-danger"><i class="fa-regular fa-circle-question "></i> Xác nhận xóa? Hành động này không thể phục hồi.</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
-						<button type="submit" class="btn btn-danger"><i class="fal fa-trash-alt"></i> Thực hiện</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+						<button type="submit" class="btn btn-danger">Thực hiện</button>
 					</div>
 				</div>
 			</div>

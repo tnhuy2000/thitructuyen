@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý học phần')
+@section('pagetitle')
+Quản lý học phần | Thêm
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -51,7 +53,7 @@
                       @enderror
                     </div>
                     <div class="col-12">
-                      <button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Thêm vào CSDL</button>
+                      <button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Thực hiện</button>
                     </div>
                     
                 </form>

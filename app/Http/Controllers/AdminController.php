@@ -1,11 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Exports\BieuMauExport;
+use App\Models\HoiDongThi;
 use Auth;
 use Illuminate\Http\Request;
 use App\Models\ThongBao;
 use App\Models\VanBan;
 use App\Models\User;
+use Maatwebsite\Excel\Facades\Excel;
+
 class AdminController extends Controller
 {
     public function __construct()
@@ -23,6 +28,48 @@ class AdminController extends Controller
     public function getDashboard(){
        
         return redirect()->route('admin.dashboard');
+    }
+    public function getBieuMau(){
+       
+        return view('admin.bieumau.danhsach');
+    }
+    public function TaiBieuMau($tenbieumau){
+       
+        $ten='';
+        if($tenbieumau=='khoa'){
+            $ten= 'bieu-mau-ds-khoa.xlsx' ;
+        }
+        elseif($tenbieumau=='lop'){
+            $ten= 'bieu-mau-ds-lop.xlsx' ;
+        }
+        elseif($tenbieumau=='hocphan'){
+            $ten= 'bieu-mau-ds-hoc-phan.xlsx' ;
+        }
+        elseif($tenbieumau=='sinhvien'){
+            $ten= 'bieu-mau-ds-sinh-vien.xlsx' ;
+        }
+        elseif($tenbieumau=='hoidongthi'){
+            $ten= 'bieu-mau-ds-hoi-dong-thi.xlsx' ;
+        }
+        elseif($tenbieumau=='kythi'){
+            $ten= 'bieu-mau-ds-ky-thi.xlsx' ;
+        }
+        elseif($tenbieumau=='cathi'){
+            $ten= 'bieu-mau-ds-ca-thi.xlsx' ;
+        }
+        elseif($tenbieumau=='phongthi'){
+            $ten= 'bieu-mau-ds-phong-thi.xlsx' ;
+        }
+        elseif($tenbieumau=='dt_pt'){
+            $ten= 'bieu-mau-ds-de-thi-phong-thi.xlsx' ;
+        }
+        elseif($tenbieumau=='sv_pt'){
+            $ten= 'bieu-mau-ds-sinh-vien-phong-thi.xlsx' ;
+        }
+        elseif($tenbieumau=='hdt_pt'){
+            $ten= 'bieu-mau-ds-hoi-dong-thi-phong-thi.xlsx' ;
+        }
+        return Excel::download(new BieuMauExport($tenbieumau), $ten);
     }
     
     public function index(){
@@ -53,14 +100,12 @@ class AdminController extends Controller
         
         return view('admin.hosocanhan.hoso');
     }
-    function settings(){
-        return view('admin.settings');
-    }
-
+  
     function updateInfo(Request $request){
         
         $validator = \Validator::make($request->all(),[
             'name'=>'required',
+            'dienthoai'=>'required',
             'email'=> 'required|email|unique:users,email,'.Auth::user()->id,
             
         ]);
@@ -69,10 +114,13 @@ class AdminController extends Controller
             return response()->json(['status'=>0,'error'=>$validator->errors()->toArray()]);
         }else{
             $query = User::find(Auth::user()->id)->update([
-                    'name'=>$request->name,
-                          
+                    'name'=>$request->name,        
             ]);
-
+            if(!empty($request->dienthoai)){
+                \DB::table('hoidongthi')->where('macanbo', Auth::user()->macanbo)->update([
+                    'dienthoai' => $request->dienthoai,
+                ]);
+            }
             if(!$query){
                
                 return response()->json(['status'=>0,'msg'=>'Có lỗi xảy ra, cập nhật hồ sơ không thành công.']);
@@ -124,20 +172,20 @@ class AdminController extends Controller
                         return $fail(__('Mật khẩu hiện tại không chính xác'));
                     }
                 },
-                'min:8',
+                'min:4',
                 'max:30'
              ],
              'newpassword'=>'required|min:8|max:30',
              'cnewpassword'=>'required|same:newpassword'
          ],[
              'oldpassword.required'=>'Nhập mật khẩu hiện tại',
-             'oldpassword.min'=>'Mật khẩu cũ phải ít nhất 8 ký tự',
-             'oldpassword.max'=>'Mật khẩu cũ không được quá 30 kí tự',
+             'oldpassword.min'=>'Mật khẩu phải ít nhất 4 ký tự',
+             'oldpassword.max'=>'Mật khẩu không được quá 30 kí tự',
              'newpassword.required'=>'Nhập mật khẩu mới',
              'newpassword.min'=>'Mật khẩu mới phải ít nhất 8 ký tự',
              'newpassword.max'=>'Mật khẩu mới không được quá 30 kí tự',
              'cnewpassword.required'=>'Nhập lại mật khẩu mới',
-             'cnewpassword.same'=>'Mật khẩu mới và mật khẩu cũ không khớp'
+             'cnewpassword.same'=>'Xác nhận mật khẩu mới không khớp'
          ]);
 
         if( !$validator->passes() ){

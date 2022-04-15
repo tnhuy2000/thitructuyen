@@ -1,6 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý hội đồng thi - phòng thi')
-
+@section('pagetitle')
+Quản lý hội đồng thi - phòng thi
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -25,9 +26,9 @@
 	  <div class="card">
 		<div class="card-body">
 		  	<h5 class="card-title">Danh sách hội đồng thi phòng {{$ktphongthi->maphong}}</h5>
-			<a href="#them" data-bs-toggle="modal" data-bs-target="#myModalThemHDTPT" class="btn btn-outline-primary"><i class="bx bxs-plus-square"></i> Thêm mới</a>
-			<a href="#nhap" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-in"></i> Nhập từ Excel</a>
-			<a href="{{ route('admin.sapphong.qlsv_pt.xuat',['phongthi_id'=> $ktphongthi->id])}}" class="btn btn-outline-success"><i class="bx bxs-archive-out"></i> Xuất ra Excel</a>
+			<a href="#them" data-bs-toggle="modal" data-bs-target="#myModalThemHDTPT" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Thêm mới</a>
+			<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="fa-solid fa-upload"></i> Nhập từ Excel</a>
+			<a href="{{ route('admin.sapphong.qlsv_pt.xuat',['phongthi_id'=> $ktphongthi->id])}}" class="btn btn-success"><i class="fa-solid fa-download"></i> Xuất ra Excel</a>
 		
 		
 		  <!-- Table with stripped rows -->
@@ -77,10 +78,10 @@
 						</td>
 						<td>{{ $value->ghichu }}</td>
 						<td class="small">
-							<a href="#sua" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ModalSua" onclick="getSua({{ $value->id }},'{{ $value->macanbo }}','{{ $value->phongthi_id }}','{{ $value->ghichu }}'); return false;"><i class="bi bi-pencil-square"></i></a>
+							<a href="#sua" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ModalSua" onclick="getSua({{ $value->id }},'{{ $value->macanbo }}','{{ $value->phongthi_id }}','{{ $value->ghichu }}'); return false;"><i class="fa-regular fa-pen-to-square"></i></a>
 						</td>
 						
-						<td class="text-center"><a class="btn btn-danger btn-sm" href="#xoa" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id}},{{$value->phongthi_id}}); return false;"  ><i class="bi bi-trash"></i></a></td>
+						<td class="text-center"><a class="btn btn-danger btn-sm" href="#xoa" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id}},{{$value->phongthi_id}}); return false;"  ><i class="fa-regular fa-trash-can"></i></a></td>
 		
 					</tr>
 				@endforeach
@@ -192,8 +193,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
-					<button type="submit" class="btn btn-danger"><i class="fal fa-upload"></i> Nhập dữ liệu</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>
+					<button type="submit" class="btn btn-danger"> Nhập dữ liệu</button>
 				</div>
 			</div>
 		</div>
@@ -212,11 +213,11 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body" >
-						<p class="font-weight-bold text-danger"><i class="fal fa-question-circle"></i> Xác nhận xóa? Hành động này không thể phục hồi.</p>
+						<p class="font-weight-bold text-danger"><i class="fa-regular fa-circle-question text-danger"></i> Xác nhận xóa? Hành động này không thể phục hồi.</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
-						<button type="submit" class="btn btn-danger"><i class="fal fa-trash-alt"></i> Thực hiện</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+						<button type="submit" class="btn btn-danger"> Thực hiện</button>
 					</div>
 				</div>
 			</div>

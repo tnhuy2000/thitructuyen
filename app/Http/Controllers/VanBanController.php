@@ -42,7 +42,7 @@ class VanBanController extends Controller
 		$orm->tenvanbankhongdau = Str::slug($request->tenvanban, '-');
 		$orm->duongdan = $request->duongdan;
 		$orm->save();
-		
+		toastr()->success('Thêm dữ liệu thành công!');
 		return redirect()->route('admin.thongbao.vanban', ['id' => $request->thongbao_id]);
 	}
 	
@@ -58,7 +58,7 @@ class VanBanController extends Controller
 		$orm->tenvanbankhongdau = Str::slug($request->tenvanban_edit, '-');
 		$orm->duongdan = $request->duongdan_edit;
 		$orm->save();
-		
+		toastr()->success('Cập nhật dữ liệu thành công!');
 		return redirect()->route('admin.thongbao.vanban', ['id' => $request->thongbao_id_edit]);
 	}
 	
@@ -88,7 +88,7 @@ class VanBanController extends Controller
 	{
 		$orm = VanBan::find($request->id_delete);
 		$orm->delete();
-		
+		toastr()->success('Xoá dữ liệu thành công!');
 		return redirect()->route('admin.thongbao.vanban', ['id' => $request->thongbao_id_delete]);
 	}
 	

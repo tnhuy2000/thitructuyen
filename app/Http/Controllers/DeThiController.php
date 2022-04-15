@@ -51,11 +51,13 @@ class DeThiController extends Controller
 				->orderBy('kt.namhoc', 'desc')->get();
 		return view('admin.dethi_baithi.qldethi.danhsach',compact('dethicu','dethi','dethimoi','hocphan'));
     }
-    public function getXoa(Request $request)
+    public function postXoa(Request $request)
     {
         
         try {  
+            DuLieuDeThi::where('dethi_id', $request->id)->delete();
             \DB::table('dethi')->where('id', '=', $request->id)->delete();
+            //Storage::deleteDirectory('file/dethi/' . str_pad($request->id, 7, '0', STR_PAD_LEFT));
             toastr()->success('Xoá dữ liệu thành công!');
             return redirect()->route('admin.dethi_baithi.qldethi.danhsach');
         } catch (\Illuminate\Database\QueryException $e) {
@@ -66,7 +68,7 @@ class DeThiController extends Controller
     public function getThem()
     {
         $hocphan=\DB::table('hocphan')->get();
-        $kythi=\DB::table('kythi')->get();
+        $kythi=\DB::table('kythi')->orderBy('kythi.id', 'desc')->get();
         return view('admin.dethi_baithi.qldethi.them')->with('kthocphan',$hocphan)->with('ktkythi',$kythi);
     }
     public function postThem(Request $request)
@@ -75,12 +77,13 @@ class DeThiController extends Controller
 			'mahocphan' => 'required|max:8:dethi,mahocphan',
             'kythi_id' => 'required|max:255:dethi,kythi_id',
             'tendethi' => 'required|max:255:dethi,tendethi',
-            'thoigianlambai' => 'required|max:255:dethi,thoigianlambai',
+            'thoigianlambai' => 'required|numeric|min:5|max:300',
             'hinhthuc' => 'required|max:255:dethi,hinhthuc'
 
 		],
         [
-           
+            'thoigianlambai.max' => 'Thời gian làm bài tối đa là 300 phút',
+            'thoigianlambai.min' => 'Thời gian làm bài tối thiểu là 5 phút',
         ]);
 		
 		\DB::table('dethi')->insert([
@@ -98,7 +101,7 @@ class DeThiController extends Controller
     {
         $dethi=\DB::table('dethi')->where('id',$id)->first();
         $hocphan=\DB::table('hocphan')->get();
-        $kythi=\DB::table('kythi')->get();
+        $kythi=\DB::table('kythi')->orderBy('kythi.id', 'desc')->get();
         return view('admin.dethi_baithi.qldethi.sua') ->with('ktdethi',$dethi)->with('kthocphan',$hocphan)->with('ktkythi',$kythi);
     }
     public function postSua(Request $request, $id)
@@ -107,10 +110,11 @@ class DeThiController extends Controller
             'mahocphan'=>'required|max:255:dethi,mahocphan,' . $request->id . ',id',
             'kythi_id'=>'required|max:255:dethi,kythi_id',
             'tendethi' => 'required|max:255:dethi,tendethi',
-            'thoigianlambai' => 'required|max:255:dethi,thoigianlambai',
+            'thoigianlambai' => 'required|numeric|min:5|max:300',
             'hinhthuc' => 'required|max:255:dethi,hinhthuc'
         ],[
-            
+            'thoigianlambai.max' => 'Thời gian làm bài tối đa là 300 phút',
+            'thoigianlambai.min' => 'Thời gian làm bài tối thiểu là 5 phút',
         ]);
        
         \DB::table('dethi')->where('id', $request->id)->update([

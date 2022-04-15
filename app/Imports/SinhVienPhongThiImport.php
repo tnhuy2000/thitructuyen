@@ -13,7 +13,6 @@ class SinhVienPhongThiImport implements ToModel, WithHeadingRow
         return new SinhVien_PhongThi([
         'phongthi_id' => $row['phong_id'],
         'masinhvien' => $row['ma_sinh_vien'],
-        'diemdanh' => $row['diem_danh'],
         'ghichu' => $row['ghi_chu'],
         ]);
     }

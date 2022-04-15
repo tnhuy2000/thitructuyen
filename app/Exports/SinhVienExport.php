@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\SinhVien;
+use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
@@ -27,12 +28,12 @@ class SinhVienExport implements FromCollection,
     public function headings(): array
     {
         return [
-        'Mã sinh viên',
-        'Họ lót',
-        'Tên',
+        'MSSV',
+        'Họ',
+        'Tên đệm và tên',
         'Địa chỉ Email',
         'Điện thoại',
-        'Mã lớp',
+        'Lớp',
         ];
     }
   
@@ -58,6 +59,10 @@ class SinhVienExport implements FromCollection,
     }
     public function styles(Worksheet $sheet)
     {
+        $dt= Carbon::now();
+        $ngay = Carbon::createFromFormat('Y-m-d H:i:s', $dt)->format('d/m/Y H:i:s');
+        $sheet->mergeCells('A3:C3');
+        $sheet->setCellValue('A3', 'Ngày xuất: '.$ngay);
         $sheet->mergeCells('C4:D4');
         
         $sheet->setCellValue('C4', 'DANH SÁCH SINH VIÊN');

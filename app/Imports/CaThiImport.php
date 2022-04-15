@@ -28,6 +28,7 @@ class CaThiImport implements ToModel, WithHeadingRow
        $result = str_replace($search, $replace, $subject);						
         
        $kythi_id = $this->kythi_id;
+       
         return new CaThi([
         'kythi_id' => $kythi_id,
         'tenca' => $row['ca_thi'],

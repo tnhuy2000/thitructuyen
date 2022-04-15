@@ -19,7 +19,7 @@
 
     {{-- <!-- Icon Font Stylesheet -->
     <link rel="stylesheet" href="{{ asset('public/vendor/datatables/datatables-1.10.22/css/dataTables.bootstrap4.min.css') }}" /> --}}
-
+    <link rel="stylesheet" href="{{ asset('public/js/ijaboCropTool/ijaboCropTool.min.css') }}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
@@ -72,11 +72,11 @@
                 </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                    <img width="30px" src="{{Auth::user()->picture}}" alt="Profile" class="rounded-circle">
-                    {{ Auth::user()->name }}
+                    <img width="30px" src="{{Auth::user()->picture}}" alt="Profile" class="rounded-circle user_picture">
+                    <span class="user_name">{{ Auth::user()->name }}</span>
                     </a>
                     <div class="dropdown-menu fade-up m-0">
-                        <a href="price.html" class="dropdown-item"> <i class="fas fa-user-cog"></i> Hồ sơ cá nhân</a>
+                        <a href="{{route('sinhvien.profile')}}" class="dropdown-item"> <i class="fas fa-user-cog"></i> Hồ sơ cá nhân</a>
                         
                         <a href="{{route('logout')}}" onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();" class="dropdown-item"> <i class="fas fa-sign-out-alt"></i> Đăng xuất</a>

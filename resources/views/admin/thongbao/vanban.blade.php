@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Cập nhật đính kèm cho {{ $thongbao->tieude }}')
+@section('pagetitle')
+Quản lý văn bản
+@endsection
 
 @section('content')
 
@@ -11,7 +13,7 @@
 	<ol class="breadcrumb">
 	  <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Bảng điều khiển</a></li>
       <li class="breadcrumb-item"><a href="{{route('admin.thongbao.danhsach')}}">Quản lý thông báo</a></li>
-	  <li class="breadcrumb-item active">Cập nhật đính kèm cho {{ $thongbao->tieude }}</li>
+	  <li class="breadcrumb-item active">Cập nhật đính kèm</li>
 	  
 	</ol>
   </nav>
@@ -24,7 +26,7 @@
 	  <div class="card">
 		<div class="card-body">
 		  	<h5 class="card-title">Cập nhật đính kèm cho {{ $thongbao->tieude }}</h5>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal"><i class="bx bxs-plus-square"></i> Thêm mới</button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal"><i class="fa-solid fa-plus"></i> Thêm mới</button>
 			
             <table class="table datatable table-hover table-sm">
 				<thead>
@@ -44,19 +46,19 @@
 							<td>{{ $loop->iteration }}</td>
 							<td>
 								{{ $value->tenvanban }}<br />
-								<span class="small"><i class="bi bi-link-45deg"></i> <span class="text-primary">{{ $value->tenvanbankhongdau }}</span></span>
+								<span class="small"><i class="fa-solid fa-link"></i> <span class="text-primary">{{ $value->tenvanbankhongdau }}</span></span>
 							</td>
-							<td><i class="bi bi-file-earmark"></i> {{ $value->duongdan }}</td>
+							<td><i class="fa-regular fa-file"></i> {{ $value->duongdan }}</td>
 							<td>{{ $value->luotdownload }}</td>
 							<td >
 								@if($value->kichhoat == 1)
-									<h2><a href="{{ route('admin.thongbao.vanban.kichhoat', ['idthongbao' => $thongbao->id, 'id' => $value->id]) }}"><i class="bx bxs-check-circle text-success" title="Kích hoạt"></i></a></h2>
+									<h2><a href="{{ route('admin.thongbao.vanban.kichhoat', ['idthongbao' => $thongbao->id, 'id' => $value->id]) }}"><i class="fa-solid fa-circle-check text-success" title="Kích hoạt"></i></a></h2>
 								@else
-                                    <h2><a href="{{ route('admin.thongbao.vanban.kichhoat', ['idthongbao' => $thongbao->id, 'id' => $value->id]) }}"><i class="bx bx-x-circle text-danger" title="Bị khóa"></i></a></h2>
+                                    <h2><a href="{{ route('admin.thongbao.vanban.kichhoat', ['idthongbao' => $thongbao->id, 'id' => $value->id]) }}"><i class="fa-solid fa-circle-xmark text-danger" title="Bị khóa"></i></a></h2>
 								@endif
 							</td>
-							<td ><a class="btn btn-primary btn-sm" href="#sua" data-bs-toggle="modal" data-bs-target="#myModalEdit" onclick="getCapNhat({{ $value->id }}, '{{ $value->tenvanban }}', '{{ $value->duongdan }}'); return false;"><i class="bi bi-pencil-square"></i></a></td>
-							<td ><a class="btn btn-danger btn-sm" href="#xoa" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id }}); return false;"><i class="bi bi-trash"></i></a></td>
+							<td ><a class="btn btn-primary btn-sm" href="#sua" data-bs-toggle="modal" data-bs-target="#myModalEdit" onclick="getCapNhat({{ $value->id }}, '{{ $value->tenvanban }}', '{{ $value->duongdan }}'); return false;"><i class="fa-regular fa-pen-to-square"></i></a></td>
+							<td ><a class="btn btn-danger btn-sm" href="#xoa" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id }}); return false;"><i class="fa-regular fa-trash-can"></i></a></td>
 						</tr>
 					@endforeach
 				</tbody>
@@ -106,8 +108,8 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
-						<button type="submit" class="btn btn-danger"><i class="fal fa-trash-alt"></i> Thực hiện</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+						<button type="submit" class="btn btn-danger"> Thực hiện</button>
 					</div>
 				</div>
 			</div>
@@ -150,8 +152,8 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
-						<button type="submit" class="btn btn-danger"><i class="fal fa-trash-alt"></i> Thực hiện</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>
+						<button type="submit" class="btn btn-danger">Thực hiện</button>
 					</div>
 				</div>
 			</div>
@@ -171,11 +173,11 @@
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
-						<p class="font-weight-bold text-danger"><i class="fal fa-question-circle"></i> Xác nhận xóa? Hành động này không thể phục hồi.</p>
+						<p class="font-weight-bold text-danger"><i class="fa-regular fa-circle-question "></i> Xác nhận xóa? Hành động này không thể phục hồi.</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
-						<button type="submit" class="btn btn-danger"><i class="fal fa-trash-alt"></i> Thực hiện</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>
+						<button type="submit" class="btn btn-danger">Thực hiện</button>
 					</div>
 				</div>
 			</div>

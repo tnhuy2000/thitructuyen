@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý đề thi')
+@section('pagetitle')
+Quản lý đề thi | Xoá
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -31,7 +33,7 @@
                       <select class="form-control @error('kythi_id') is-invalid @enderror" onchange="testb(this)" id="statesKyThi" name="kythi_id" required>
                         <option value="">-- Chọn kỳ thi --</option>
                         @foreach($ktkythi as $value){ 
-                            <option value="{{$value->id}}" {{(old('kythi_id')==$value->id)?'selected':''}}>{{$value->tenkythi}} học kỳ {{$value->hocky}}, năm học {{$value->namhoc}}</option>
+                            <option value="{{$value->id}}" {{(old('kythi_id')==$value->id)?'selected':''}}>{{$value->tenkythi}} - học kỳ: {{$value->hocky}} - năm học: {{$value->namhoc}}</option>
                         }
                         @endforeach
                       </select>
@@ -44,7 +46,7 @@
                     <select class="form-control @error('mahocphan') is-invalid @enderror" onchange="test(this)" id="statesHocPhan" name="mahocphan" class="required">
                         <option value="">-- Chọn học phần --</option>
                         @foreach($kthocphan as $value){ 
-                            <option value="{{$value->mahocphan}}">{{$value->tenhocphan}} - {{$value->mahocphan}}</option>
+                            <option value="{{$value->mahocphan}}" {{(old('mahocphan')==$value->mahocphan)?'selected':''}}>{{$value->tenhocphan}} - {{$value->mahocphan}}</option>
                         }
                         @endforeach
                       </select>
@@ -65,7 +67,7 @@
                     </div>
                     <div class="form-group col-sm-6">
                       <label for="validationCustom02" class="form-label">Thời gian làm bài (đơn vị: phút)</label>
-                      <input type="text" class="form-control @error('thoigianlambai') is-invalid @enderror" id="thoigianlambai" name="thoigianlambai" value="{{ old('thoigianlambai') }}" required>
+                      <input type="number" class="form-control @error('thoigianlambai') is-invalid @enderror" id="thoigianlambai" name="thoigianlambai" value="{{ old('thoigianlambai') }}" required>
                       @error('thoigianlambai')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                       @enderror
@@ -75,8 +77,8 @@
                       <label for="MaLoai" class="form-label">Hình thức</label>
                       <select class="form-control" id="hinhthuc" name="hinhthuc" required>
                           <option value="">-- Chọn hình thức --</option>
-                          <option value="tuluan">Tự luận</option>
-                          <option value="thuchanh">Thực hành</option>
+                          <option value="tuluan" {{(old('hinhthuc')=='tuluan')?'selected':''}}>Tự luận</option>
+                          <option value="thuchanh" {{(old('hinhthuc')=='thuchanh')?'selected':''}}>Thực hành</option>
                       
                       </select>
                       @error('hinhthuc')
@@ -85,7 +87,7 @@
                     </div>
                    
                     <div class="col-12">
-                      <button type="submit" class="btn btn-primary"><i class="bx bxs-plus-square"></i> Thêm mới</button>
+                      <button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Thực hiện</button>
                     </div>
                 </form>
               <!-- End Custom Styled Validation -->
@@ -105,14 +107,14 @@
   var x = a.options[a.selectedIndex].text;
   var kythi=document.getElementById('kythi').value;
   $('#hocphan').val(x);
-  $('#tendethi').val("Đề thi "+kythi+' học phần '+x);
+  $('#tendethi').val(kythi+' - học phần: '+x);
   
   }
   function testb(a) {
     var x = a.options[a.selectedIndex].text;
     var ten=document.getElementById('hocphan').value;
     $('#kythi').val(x);
-    $('#tendethi').val("Đề thi "+x+ ' học phần '+ten);
+    $('#tendethi').val(x+ ' - học phần: '+ten);
   }
 
       $(document).ready(function() {

@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý thông báo')
+@section('pagetitle')
+Quản lý thông báo
+@endsection
 
 @section('content')
 
@@ -23,7 +25,7 @@
 	  <div class="card">
 		<div class="card-body">
 		  	<h5 class="card-title">Quản lý thông báo</h5>
-			<a href="{{ route('admin.thongbao.them') }}"  class="btn btn-primary"><i class="bx bxs-plus-square"></i> Thêm mới</a>
+			<a href="{{ route('admin.thongbao.them') }}"  class="btn btn-primary"><i class="fa-solid fa-plus"></i> Thêm mới</a>
 			
 		  <!-- Table with stripped rows -->
 		  <table class="table datatable table-hover">
@@ -64,20 +66,20 @@
 							</td>
 							<td>
 								@if($value->quantrong == 1)
-									<h2><a href="{{ route('admin.thongbao.quantrong', ['id' => $value->id]) }}"><i class="bx bxs-check-circle text-success" title="Thông báo quan trọng"></i></a></h2>
+									<h2><a href="{{ route('admin.thongbao.quantrong', ['id' => $value->id]) }}"><i class="fa-solid fa-circle-check text-success" title="Thông báo quan trọng"></i></a></h2>
 								@else
-								<h2><a href="{{ route('admin.thongbao.quantrong', ['id' => $value->id]) }}"><i class="bx bx-x-circle text-danger" title="Thông báo bình thường"></i></a></h2>
+								<h2><a href="{{ route('admin.thongbao.quantrong', ['id' => $value->id]) }}"><i class="fa-solid fa-circle-xmark text-danger" title="Thông báo bình thường"></i></a></h2>
 								@endif
 							</td>
 							<td >
 								@if($value->kichhoat == 1)
-									<h2><a href="{{ route('admin.thongbao.kichhoat', ['id' => $value->id]) }}"><i class="bx bxs-check-circle text-success" title="Kích hoạt"></i></a></h2>
+									<h2><a href="{{ route('admin.thongbao.kichhoat', ['id' => $value->id]) }}"><i class="fa-solid fa-circle-check text-success" title="Kích hoạt"></i></a></h2>
 								@else
-									<h2><a href="{{ route('admin.thongbao.kichhoat', ['id' => $value->id]) }}"><i class="bx bx-x-circle text-danger" title="Bị khóa"></i></a></h2>
+									<h2><a href="{{ route('admin.thongbao.kichhoat', ['id' => $value->id]) }}"><i class="fa-solid fa-circle-xmark text-danger" title="Bị khóa"></i></a></h2>
 								@endif
 							</td>
-							<td ><a class="btn btn-primary btn-sm" href="{{ route('admin.thongbao.sua', ['id' => $value->id]) }}"><i class="bi bi-pencil-square"></i></a></td>
-							<td ><a href="#xoa" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id }}); return false;"><i class="bi bi-trash"></i></a></td>
+							<td ><a class="btn btn-primary btn-sm" href="{{ route('admin.thongbao.sua', ['id' => $value->id]) }}"><i class="fa-regular fa-pen-to-square"></i></a></td>
+							<td ><a href="#xoa" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id }}); return false;"><i class="fa-regular fa-trash-can"></i></td>
 						</tr>
 					@endforeach
 			</tbody>
@@ -108,11 +110,11 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body" >
-						<p class="font-weight-bold text-danger"><i class="fal fa-question-circle"></i> Xác nhận xóa? Hành động này không thể phục hồi.</p>
+						<p class="font-weight-bold text-danger"><i class="fa-regular fa-circle-question "></i> Xác nhận xóa? Hành động này không thể phục hồi.</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
-						<button type="submit" class="btn btn-danger"><i class="fal fa-trash-alt"></i> Thực hiện</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>
+						<button type="submit" class="btn btn-danger"> Thực hiện</button>
 					</div>
 				</div>
 			</div>

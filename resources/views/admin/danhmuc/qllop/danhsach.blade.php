@@ -1,6 +1,8 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý lớp')
 
+@section('pagetitle')
+Quản lý lớp
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -46,9 +48,9 @@
                 
             	</div>
 				<br>
-		  	<a href="{{ route('admin.danhmuc.qllop.them') }}" class="btn btn-primary"><i class="bx bxs-plus-square"></i> Thêm mới</a>
-		  	<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-in"></i> Nhập từ Excel</a>
-			<a href="{{ route('admin.danhmuc.qllop.xuat') }}" class="btn btn-success"><i class="bx bxs-archive-out"></i> Xuất ra Excel</a>
+		  	<a href="{{ route('admin.danhmuc.qllop.them') }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Thêm mới</a>
+		  	<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="fa-solid fa-upload"></i> Nhập từ Excel</a>
+			<a href="{{ route('admin.danhmuc.qllop.xuat') }}" class="btn btn-success"><i class="fa-solid fa-download"></i> Xuất ra Excel</a>
             <br><br>
 		  <!-- Table with stripped rows -->
 		  <table class="table table-hover" id="ex">
@@ -72,8 +74,8 @@
 						<td class="small">{{ $value->tenlop }}</td>
 						<td class="small">{{ $value->tenkhoa }}</td>
 						<td>{{ $value->nienkhoa }}</td>
-						<td class="text-center"><a href="{{ route('admin.danhmuc.qllop.sua', ['malop' => $value->malop]) }}"><i class="bx bxs-pencil"></i> Sửa</a></td>
-						<td class="text-center"><a onclick="return confirm('Bạn có muốn xóa lớp {{$value->tenlop}}?')" href="{{ route('admin.danhmuc.qllop.xoa', ['malop' => $value->malop]) }}" ><i class="bx bxs-trash text-danger"></i> Xoá</a></td>
+						<td class="text-center"><a class="btn btn-primary btn-sm" href="{{ route('admin.danhmuc.qllop.sua', ['malop' => $value->malop]) }}"><i class="fa-regular fa-pen-to-square"></i></a></td>
+						<td class="text-center"><a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa('{{ $value->malop}}'); return false;"   href="#xoa" ><i class="fa-regular fa-trash-can"></i></a></td>
 		
 					</tr>
 				@endforeach
@@ -106,8 +108,30 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
-					<button type="submit" class="btn btn-danger"><i class="fal fa-upload"></i> Nhập dữ liệu</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>
+					<button type="submit" class="btn btn-danger"> Nhập dữ liệu</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+<form action="{{ route('admin.danhmuc.qllop.xoa') }}" method="post">
+	@csrf
+	<input type="hidden" id="malop_delete" name="malop" value="" />
+	
+	<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabelDelete">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title">Xoá lớp</h5>
+				  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" >
+					<p ><i class="fa-regular fa-circle-question text-danger"></i> Xác nhận muốn xoá lớp <span id="lop" class="fw-bold text-danger"></span>.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+					<button type="submit" class="btn btn-danger">Thực hiện</button>
 				</div>
 			</div>
 		</div>
@@ -118,8 +142,9 @@
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>    
 <script type="text/javascript">
-  		function getXoa(id) {
-			$('#id').val(id);
+  		function getXoa(malop) {
+			$('#malop_delete').val(malop);
+			$('#lop').text(malop);
 		}
 		
 		@if($errors->has('id') || $errors->has('tenkhoa')  )

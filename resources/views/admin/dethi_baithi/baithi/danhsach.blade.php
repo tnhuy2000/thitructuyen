@@ -1,6 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý bài thi & dữ liệu bài thi')
-
+@section('pagetitle')
+Quản lý bài thi và dữ liệu đề thi
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -59,7 +60,7 @@
 							
 							if($ngaythi_format==$fileInfo->getFilename()){
 							@endphp
-							<a href="{{route('admin.dethi_baithi.qlbaithi.zipNgayThi',['ngaythi' => $fileInfo->getFilename()])}}"><i class="bx bxs-download"></i> Tải</a>	
+							<a href="{{route('admin.dethi_baithi.qlbaithi.zipNgayThi',['ngaythi' => $fileInfo->getFilename()])}}"><i class="fa-solid fa-download"></i> Tải xuống</a>	
 							@php
 							}
 						}
@@ -72,7 +73,7 @@
 							
 						if($ngaythi_format==$fileInfo->getFilename()){
 						@endphp
-							<a href="{{route('admin.dethi_baithi.qlbaithi.cathi',['ngaythi' => $ngaythi_format])}}"><i class="bx bxs-folder-open text-warning"></i> Mở</a>
+							<a href="{{route('admin.dethi_baithi.qlbaithi.cathi',['ngaythi' => $ngaythi_format])}}"><i class="fa-regular fa-folder-open text-warning"></i> Mở</a>
 						@php
 						}
 					}
@@ -93,29 +94,7 @@
 
 </main><!-- End #main -->
 
-<form action="{{ route('admin.dethi_baithi.qldethi_phongthi.xoa') }}" method="post">
-		@csrf
-		<input type="hidden" id="id_delete" name="id_delete" value="" />
-		<input type="hidden" id="phongthi_id_delete" name="phongthi_id_delete" value="" />
-		
-		<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabelDelete">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-                      <h5 class="modal-title">Xoá đề thi - phòng thi</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body" >
-						<p class="font-weight-bold text-danger"><i class="fal fa-question-circle"></i> Xác nhận xóa? Hành động này không thể phục hồi.</p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
-						<button type="submit" class="btn btn-danger"><i class="fal fa-trash-alt"></i> Thực hiện</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</form>
+
 @endsection
 @section('javascript')    
   
@@ -124,20 +103,7 @@
 			$('#id_delete').val(id);
 			$('#phongthi_id_delete').val(phongthi_id);
 		}
-		function getSua(id,dethi_id,phongthi_id,ghichu) {
-			$('#id_edit').val(id);
-			$('#dethi_id_edit').val(dethi_id);
-			$('#phongthi_id_edit').val(phongthi_id);
-			$('#ghichu_edit').val(ghichu);
-		}
 		
-		$(document).ready(function() {
-            $("#states2").select2();   
-        });
-		
-
-
-
 
   </script>
 @endsection

@@ -7,10 +7,20 @@ class KhoaImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
-        return new Khoa([
-        'makhoa' => $row['ma_khoa'],
-        'tenkhoa' => $row['ten_khoa'],
-        ]);
+        $isExist = Khoa::select("*")
+            ->where("makhoa", $row['ma_khoa'])
+            ->orWhere("tenkhoa",$row['ten_khoa'])
+            ->doesntExist();
+        if($isExist){
+            return new Khoa([
+            'makhoa' => $row['ma_khoa'],
+            'tenkhoa' => $row['ten_khoa'],
+            ]);
+        }
+        else
+        {
+            toastr()->error('Khoa '.$row['ten_khoa'].' đã tồn tại');
+        }
     }
     public function headingRow(): int
     {

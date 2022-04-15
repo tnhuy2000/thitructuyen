@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Dashboard')
+@section('pagetitle')
+Bảng điều khiển
+@endsection
 
 @section('content')
 

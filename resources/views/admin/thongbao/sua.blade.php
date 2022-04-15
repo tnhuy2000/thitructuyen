@@ -1,5 +1,8 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý thông báo')
+@section('pagetitle')
+Quản lý thông báo
+@endsection
+
 @section('content')
 
 <main id="main" class="main">
@@ -62,7 +65,7 @@
 				</div>
 				
 				<div class="form-group" id="divDinhKem">
-					<span class="text-danger"><i class="fal fa-info-circle"></i> Văn bản đính kèm được cập nhật ở bước tiếp theo.</span>
+					<span class="text-danger"><i class="fa-solid fa-link"></i> Văn bản đính kèm được cập nhật ở bước tiếp theo.</span>
 				</div>
 				<div class="form-group">
 					<div class="custom-control custom-checkbox">
@@ -72,9 +75,9 @@
 				</div>
 				<div class="col-12">
 				@if($thongbao->loai == 'dinhkem')
-					<button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Lưu và tiếp tục</button>
+					<button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Lưu và tiếp tục</button>
 				@else
-					<button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Cập nhật thông báo</button>
+					<button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Cập nhật thông báo</button>
 				@endif
 				</div>
 			</form>

@@ -1,7 +1,8 @@
 <?php
 namespace App\Exports;
 use App\Models\Lop;
-
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
@@ -29,16 +30,19 @@ class LopExport implements FromCollection,
         'Mã lớp',
         'Tên lớp',
         'Mã khoa',
+        'Tên khoa',
         'Niên khoá',
         ];
     }
   
     public function map($row): array
     {
+        $khoa= DB::table('khoa')->where('makhoa',$row->makhoa)->first();
         return [
             $row->malop,
             $row->tenlop,
             $row->makhoa,
+            $khoa->tenkhoa,
             $row->nienkhoa,
         ];
     }
@@ -52,8 +56,12 @@ class LopExport implements FromCollection,
     }
     public function styles(Worksheet $sheet)
     {
+        $dt= Carbon::now();
+        $ngay = Carbon::createFromFormat('Y-m-d H:i:s', $dt)->format('d/m/Y H:i:s');
+        $sheet->mergeCells('A3:B3');
+        $sheet->setCellValue('A3', 'Ngày xuất: '.$ngay);
+
         $sheet->mergeCells('B4:C4');
-        
         $sheet->setCellValue('B4', 'DANH SÁCH LỚP');
     }
     public function registerEvents(): array
@@ -72,7 +80,7 @@ class LopExport implements FromCollection,
                 $lop = \DB::table('lop')->count();
                 $lop=6 + $lop;
                     //kẻ khung
-                $event->sheet->getStyle('A6:D'.$lop)->applyFromArray([
+                $event->sheet->getStyle('A6:E'.$lop)->applyFromArray([
                     'borders' => [
                         'allBorders' => [
                             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,

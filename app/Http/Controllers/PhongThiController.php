@@ -68,7 +68,7 @@ class PhongThiController extends Controller
 
 		return view('admin.sapphong.qlphongthi.danhsach',compact('phongthi_dangdienra','phongthi_sapdienra','phongthi_daketthuc'));
     }
-    public function getXoa(Request $request)
+    public function postXoa(Request $request)
     {
         
         try {  
@@ -83,7 +83,7 @@ class PhongThiController extends Controller
     public function getThem()
     {
         $phongthi=\DB::table('phongthi')->get();
-        $cathi=\DB::table('cathi')->get();
+        $cathi=\DB::table('cathi') ->orderBy('cathi.id', 'desc')->get();
 
         return view('admin.sapphong.qlphongthi.them')->with('ktphongthi',$phongthi)->with('ktcathi',$cathi);
     }
@@ -91,7 +91,7 @@ class PhongThiController extends Controller
     {
         $this->validate($request, [
             'maphong' => 'required|max:255|unique:phongthi,maphong',
-            'soluongthisinh' => 'required|max:300|numeric:phongthi,soluongthisinh',
+            'soluongthisinh' => 'required|max:100|numeric:phongthi,soluongthisinh',
             'ghichu' => 'nullable|max:255:phongthi,ghichu',
             'cathi_id' => 'required|max:255:phongthi,cathi_id'
 		],
@@ -120,7 +120,7 @@ class PhongThiController extends Controller
     public function getSua($id)
     {
         $phongthi=\DB::table('phongthi')->where('id',$id)->first();
-        $cathi=\DB::table('cathi')->get();
+        $cathi=\DB::table('cathi')->orderBy('cathi.id', 'desc')->get();
         return view('admin.sapphong.qlphongthi.sua') ->with('ktphongthi',$phongthi)->with('ktcathi',$cathi);
     }
     public function postSua(Request $request, $malop)

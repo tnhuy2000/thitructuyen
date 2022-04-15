@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Thống kê điểm danh Sinh viên')
+@section('pagetitle')
+Thống kê điểm danh sinh viên
+@endsection
 
 @section('content')
 

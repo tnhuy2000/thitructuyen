@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý ca thi')
+@section('pagetitle')
+Quản lý ca thi | Sửa
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -28,7 +30,7 @@
                     @csrf
                     <div class="form-group">
                       <label for="MaLoai" class="form-label">Kỳ thi</label>
-                      <select class="form-control" id="kythi_id" name="kythi_id" required>
+                      <select class="form-select @error('kythi_id') is-invalid @enderror" id="kythi_id" name="kythi_id">
                         <option value="">-- Chọn kỳ thi --</option>
                         @foreach($ktkythi as $value){
                           @if($ktcathi->kythi_id == $value->id)
@@ -44,7 +46,7 @@
                         @endforeach
  
                       </select>
-                      @error('makhoa')
+                      @error('kythi_id')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                       @enderror
                     </div>
@@ -84,7 +86,7 @@
                     
                       
                     <div class="col-12">
-                      <button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Cập nhật</button>
+                      <button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Cập nhật</button>
                     </div>
                     
                 </form>
@@ -110,6 +112,9 @@
       }
     }
 
+    $(document).ready(function() {
+            $("#kythi_id").select2();   
+        });
  
 </script>
 @endsection

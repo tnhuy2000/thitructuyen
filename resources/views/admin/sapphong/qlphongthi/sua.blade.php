@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý phòng thi')
+@section('pagetitle')
+Quản lý phòng thi | Sửa
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -28,7 +30,7 @@
                     @csrf
                     <div class="form-group">
                       <label for="MaLoai" class="form-label">Ca thi</label>
-                      <select class="form-control @error('cathi_id') is-invalid @enderror" id="states" name="cathi_id" required>
+                      <select class="form-select @error('cathi_id') is-invalid @enderror" id="statesCaThi" name="cathi_id">
                         <option value="">-- Chọn ca thi --</option>
                         @foreach($ktcathi as $value){
                           @if($ktphongthi->cathi_id == $value->id)
@@ -72,7 +74,7 @@
                     </div>
                       
                     <div class="col-12">
-                      <button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Cập nhật</button>
+                      <button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Cập nhật</button>
                     </div>
                     
                 </form>
@@ -86,4 +88,13 @@
 </section>
 
 </main><!-- End #main -->
+@endsection
+@section('javascript')    
+<script type="text/javascript">
+$(document).ready(function() {
+            $("#statesCaThi").select2();   
+        });
+
+</script>
+
 @endsection

@@ -22,7 +22,7 @@ class LopController extends Controller
 				->orderBy('k.makhoa', 'asc')->get();
 		return view('admin.danhmuc.qllop.danhsach',compact('lop','khoa'));
     }
-    public function getXoa(Request $request)
+    public function postXoa(Request $request)
     {
         try {  
             \DB::table('lop')->where('malop', '=', $request->malop)->delete();
@@ -43,12 +43,13 @@ class LopController extends Controller
     {
         $this->validate($request, [
 			'malop' => 'required|max:8|unique:lop,malop',
-            'tenlop' => 'required|max:255|unique:lop,tenlop',
-            'makhoa' => 'required|max:255:lop,makhoa',
+            'tenlop' => 'required|max:255',
+            'makhoa' => 'required',
             'nienkhoa' => 'required|max:255:lop,nienkhoa'
 
 		],
         [
+            'makhoa.required'=>'Vui lòng chọn',
             'malop.unique'=>'Mã lớp đã tồn tại',
             'tenlop.unique'=>'Tên lớp đã tồn tại'
         ]);
@@ -72,7 +73,7 @@ class LopController extends Controller
     public function postSua(Request $request, $malop)
     {
         $this->validate($request, [
-            'tenlop'=>'required|max:255|unique:lop,tenlop,' . $request->malop . ',malop',
+            'tenlop'=>'required|max:255:lop,tenlop',
             'nienkhoa'=>'required|max:255:lop,nienkhoa'
         ],[
             'tenlop.required'=>'Vui lòng nhập tên lớp',

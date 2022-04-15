@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý bài thi & dữ liệu bài thi')
+@section('pagetitle')
+Quản lý bài thi và dữ liệu đề thi
+@endsection
 
 @section('content')
 
@@ -63,7 +65,7 @@
                          
                             if($value->maphong==$result){
                             @endphp
-                            <a href="{{route('admin.dethi_baithi.qlbaithi.zipPhongThi',['ngaythi' => $ngaythi_format,'cathi'=>$cathi,'phongthi'=>$fileInfo->getFilename()])}}"><i class="bx bxs-download"></i>Tải</a>
+                            <a href="{{route('admin.dethi_baithi.qlbaithi.zipPhongThi',['ngaythi' => $ngaythi_format,'cathi'=>$cathi,'phongthi'=>$fileInfo->getFilename()])}}"><i class="fa-solid fa-download"></i> Tải xuống</a>
                             @php
                             }
                         }
@@ -81,7 +83,7 @@
                           
                               if($value->maphong==$result){
                               @endphp
-                              <a href="{{route('admin.dethi_baithi.qlbaithi.ketquabaithi',['phongthi'=>$value->id])}}"><i class="bx bxs-folder-open text-warning"></i> Mở</a>
+                              <a href="{{route('admin.dethi_baithi.qlbaithi.ketquabaithi',['phongthi'=>$value->id])}}"><i class="fa-regular fa-folder-open text-warning"></i> Mở</a>
                               @php
                               }
                           }

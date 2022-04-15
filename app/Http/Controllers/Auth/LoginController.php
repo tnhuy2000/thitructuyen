@@ -66,7 +66,7 @@ class LoginController extends Controller
         'password'=>'required|min:4|max:30'
         ]);
         if( auth()->attempt(array('username'=>$input['username'], 'password'=>$input['password'])) ){
-            //dd(auth()->user()->trangthai);
+            
             if(auth()->user()->trangthai==1){
                 if( auth()->user()->role == 1 || auth()->user()->role == 4){
                     return redirect()->route('admin.dashboard');
@@ -82,7 +82,8 @@ class LoginController extends Controller
             }
 
         }else{
-            return redirect()->route('login')->with('fail','Tài khoản hoặc mật khẩu không đúng');
+            // redirect()->route('login')->with('fail','Tài khoản hoặc mật khẩu không đúng');
+            return redirect()->back()->with(['fail' => 'Tài khoản hoặc mật khẩu không đúng!']);
         }
     }
 }

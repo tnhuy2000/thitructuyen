@@ -1,6 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý đề thi')
-
+@section('pagetitle')
+Quản lý đề thi
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -43,7 +44,7 @@
                 
             	</div>
        
-			<a href="{{ route('admin.dethi_baithi.qldethi.them') }}" class="btn btn-primary mt-2 mb-2"><i class="bx bxs-plus-square"></i> Thêm mới</a>
+			<a href="{{ route('admin.dethi_baithi.qldethi.them') }}" class="btn btn-primary mt-2 mb-2"><i class="fa-solid fa-plus"></i> Thêm mới</a>
 		  <!-- Table with stripped rows -->
 		  <table class="table table-hover" id="ex">
 						<thead>
@@ -91,16 +92,16 @@
 										</span>
 									</td>
 									<td class="small"><span style="font-size:0.9em;">{{ $value->tendethi }}</span></td>
-									<td class="small"><span class="badge rounded-pill bg-secondary">{{ $value->thoigianlambai }} phút</span></td>
+									<td class="small"><span class="badge bg-secondary">{{ $value->thoigianlambai }} phút</span></td>
 									<td class="small">@if($value->hinhthuc=='thuchanh')
-											<span>Thực hành</span>
+										<span class="badge bg-info">Thực hành</span>
 										@else
-											<span>Tự luận</span>
+										<span class="badge  bg-success">Tự luận</span>
 										@endif
 										</td>
-									<td><a class="btn btn-primary btn-sm" href="{{ route('admin.dethi_baithi.qldulieudethi.danhsach', ['id' => $value->id]) }}"><i class="bx bx-plus-circle"></i> Thêm</a></td>
-									<td class="text-center"><a href="{{ route('admin.dethi_baithi.qldethi.sua', ['id' => $value->id]) }}"><i class="bx bxs-pencil"></i> Sửa</a></td>
-									<td class="text-center"><a onclick="return confirm('Bạn có muốn xóa đề thi của học phần {{$value->tenhocphan}}?')" href="{{ route('admin.dethi_baithi.qldethi.xoa', ['id' => $value->id]) }}" ><i class="bx bxs-trash text-danger"></i> Xoá</a></td>
+									<td><a class="btn btn-primary btn-sm" href="{{ route('admin.dethi_baithi.qldulieudethi.danhsach', ['id' => $value->id]) }}"><i class="fa-solid fa-plus"></i> Thêm</a></td>
+									<td class="text-center"><a class="btn btn-primary btn-sm" href="{{ route('admin.dethi_baithi.qldethi.sua', ['id' => $value->id]) }}"><i class="fa-regular fa-pen-to-square"></i></a></td>
+									<td class="text-center"><a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id}}); return false;"   href="#xoa" ><i class="fa-regular fa-trash-can"></i></a></td>
 					
 								</tr>
 							@endforeach
@@ -260,7 +261,30 @@
 
 </main><!-- End #main -->
     
-
+{{-- Xoá --}}
+<form action="{{ route('admin.dethi_baithi.qldethi.xoa') }}" method="post">
+	@csrf
+	<input type="hidden" id="id_delete" name="id" value="" />
+	
+	<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabelDelete">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title">Xoá đề thi</h5>
+				  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" >
+					<p class="text-danger"><i class="fa-regular fa-circle-question "></i> Xác nhận xoá đề thi? Hành động này không thể phục hồi.</p>
+					<p class="text-muted">(Ghi chú: Dữ liệu đề thi đính kèm sẽ mất nếu đề thi bị xoá.)</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+					<button type="submit" class="btn btn-danger">Thực hiện</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
 @endsection
 @section('javascript')  
 
@@ -269,7 +293,7 @@
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script> 
 <script type="text/javascript">
   		function getXoa(id) {
-			$('#id').val(id);
+			$('#id_delete').val(id);
 		}
 		
 		@if($errors->has('id') || $errors->has('tenkhoa')  )

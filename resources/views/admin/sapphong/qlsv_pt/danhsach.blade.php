@@ -1,6 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý sinh viên - phòng thi')
-
+@section('pagetitle')
+Quản lý sinh viên - phòng thi
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -25,9 +26,9 @@
 	  <div class="card">
 		<div class="card-body">
 		  	<h5 class="card-title">Danh sách sinh viên phòng {{$ktphongthi->maphong}}</h5>
-			<a href="#them" data-bs-toggle="modal" data-bs-target="#myModalThemSVPT" class="btn btn-primary"><i class="bx bxs-plus-square"></i> Thêm mới</a>
-			<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-out"></i> Nhập từ Excel</a>
-			<a href="{{ route('admin.sapphong.qlsv_pt.xuat',['phongthi_id'=> $ktphongthi->id])}}" class="btn btn-success"><i class="bx bxs-archive-in"></i> Xuất ra Excel</a>
+			<a href="#them" data-bs-toggle="modal" data-bs-target="#myModalThemSVPT" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Thêm mới</a>
+			<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="fa-solid fa-upload"></i> Nhập từ Excel</a>
+			<a href="{{ route('admin.sapphong.qlsv_pt.xuat',['phongthi_id'=> $ktphongthi->id])}}" class="btn btn-success"><i class="fa-solid fa-download"></i> Xuất ra Excel</a>
 		
 		
 		  <!-- Table with stripped rows -->
@@ -67,15 +68,15 @@
 						</td>
 						<td class="text-center">
 							@if($value->diemdanh==1)
-								<h2><a href="{{ route('admin.sapphong.qlsv_pt.diemdanh', ['id' => $value->id,'phongthi_id'=>$value->phongthi_id]) }}"><i class="bx bxs-check-circle text-success"></i></a></h2>
+								<h2><a href="{{ route('admin.sapphong.qlsv_pt.diemdanh', ['id' => $value->id,'phongthi_id'=>$value->phongthi_id]) }}"><i class="fa-solid fa-circle-check text-success" title="Có mặt"></i></a></h2>
 							@else
-								<h2><a href="{{ route('admin.sapphong.qlsv_pt.diemdanh', ['id' => $value->id,'phongthi_id'=>$value->phongthi_id]) }}"><i class="bx bx-x-circle text-danger"></i></a></h2>
+								<h2><a href="{{ route('admin.sapphong.qlsv_pt.diemdanh', ['id' => $value->id,'phongthi_id'=>$value->phongthi_id]) }}"><i class="fa-solid fa-circle-xmark text-danger" title="Vắng"></i></a></h2>
 							@endif
 						<td>{{ $value->ghichu }}</td>	
 						<td class="text-cente small">
-							<a href="#sua" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ModalSua" onclick="getSua({{ $value->id }},'{{ $value->masinhvien }}','{{ $value->phongthi_id }}', '{{ $value->ghichu }}'); return false;"><i class="bi bi-pencil-square"></i></a>
+							<a href="#sua" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ModalSua" onclick="getSua({{ $value->id }},'{{ $value->masinhvien }}','{{ $value->phongthi_id }}', '{{ $value->ghichu }}'); return false;"><i class="fa-regular fa-pen-to-square"></i></a>
 						</td>
-						<td class="text-center"><a class="btn btn-danger btn-sm" href="#xoa" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id}},{{$value->phongthi_id}}); return false;"  ><i class="bi bi-trash"></i></a></td>
+						<td class="text-center"><a class="btn btn-danger btn-sm" href="#xoa" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id}},{{$value->phongthi_id}}); return false;"  ><i class="fa-regular fa-trash-can"></i></a></td>
 		
 					</tr>
 				@endforeach
@@ -114,7 +115,7 @@
 								<select class="form-select  @error('masinhvien') is-invalid @enderror" style="width: 100%" id="statesSV" multiple="multiple" name="masinhvien[]" required>
 									
 									@foreach($ktsinhvien as $value)
-										<option value="{{$value->masinhvien}}">{{$value->masinhvien}} - {{$value->holot}} {{$value->ten}} </option>
+										<option value="{{$value->masinhvien}}" {{(old('masinhvien')==$value->masinhvien)?'selected':''}}>{{$value->masinhvien}} - {{$value->holot}} {{$value->ten}} </option>
 									@endforeach
 								</select>
 							</div>
@@ -147,7 +148,7 @@
 							<br>
 							<select class="form-select @error('masinhvien') is-invalid @enderror" style="width: 100%" id="stateSVEdit" name="masinhvien_edit" required>
 								@foreach($ktsinhvien as $value)
-									<option value="{{$value->masinhvien}}">{{$value->masinhvien}}</option>
+									<option value="{{$value->masinhvien}}">{{$value->masinhvien}} - {{$value->holot}} {{$value->ten}}</option>
 								@endforeach
 							</select>
 						</div>
@@ -183,8 +184,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
-					<button type="submit" class="btn btn-danger"><i class="fal fa-upload"></i> Nhập dữ liệu</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>
+					<button type="submit" class="btn btn-danger"> Nhập dữ liệu</button>
 				</div>
 			</div>
 		</div>
@@ -203,11 +204,11 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body" >
-						<p class="font-weight-bold text-danger"><i class="fal fa-question-circle"></i> Xác nhận xóa? Hành động này không thể phục hồi.</p>
+						<p class="font-weight-bold text-danger"><i class="fa-regular fa-circle-question text-danger"></i> Xác nhận xóa? Hành động này không thể phục hồi.</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
-						<button type="submit" class="btn btn-danger"><i class="fal fa-trash-alt"></i> Thực hiện</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>
+						<button type="submit" class="btn btn-danger"> Thực hiện</button>
 					</div>
 				</div>
 			</div>

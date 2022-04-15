@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý phòng thi')
+@section('pagetitle')
+Quản lý phòng thi
+@endsection
 
 @section('content')
 
@@ -24,9 +26,9 @@
 	  <div class="card">
 		<div class="card-body">
 		<h5 class="card-title">Danh sách phòng thi</h5>
-		<a href="{{ route('admin.sapphong.qlphongthi.them') }}" class="btn btn-primary  "><i class="bx bxs-plus-square"></i> Thêm mới</a>
-		<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-out"></i> Nhập từ Excel</a>
-		<a href="#nhap" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-in"></i> Xuất ra Excel</a>
+		<a href="{{ route('admin.sapphong.qlphongthi.them') }}" class="btn btn-primary  "><i class="fa-solid fa-plus"></i> Thêm mới</a>
+		<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="fa-solid fa-upload"></i> Nhập từ Excel</a>
+		<a href="#nhap" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importModal"><i class="fa-solid fa-download"></i> Xuất ra Excel</a>
 			
             <!-- Bordered Tabs Justified -->
 			<ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
@@ -55,8 +57,8 @@
 								<th width="10%">SL thí sinh</th>
 								<th width="10%">Mã meeting</th>
 								<th width="10%">Ghi chú</th>
-								<th width="10%">Đề thi</th>
 								<th width="10%">Bài thi</th>
+								<th width="10%">Đề thi</th>
 								<th width="15%" class="text-center">Danh sách</th>
 								<th width="8%" class="text-center">Sửa</th>
 								<th width="8%" class="text-center">Xóa</th>
@@ -83,14 +85,15 @@
 									<td>{{ $value->soluongthisinh }}</td>
 									<td class="small">{{ $value->ma_meeting }}</td>
 									<td class="small">{{ $value->ghichu }}</td>
-									<td><a class="btn btn-sm btn-danger" href="{{ route('admin.dethi_baithi.qldethi_phongthi.danhsach', ['id' => $value->id]) }}" title="Thêm đề thi"><i class="bi bi-plus-lg"></i></a></td>
 									<td class="small"><a class="btn btn-sm btn-success" href="{{ route('admin.dethi_baithi.qlbaithi.ketquabaithi', ['phongthi'=>$value->id]) }}" title="Xem kết quả bài thi"><i class="bi bi-eye-fill"></i></a></td>
+									<td><a class="btn btn-sm btn-danger" href="{{ route('admin.dethi_baithi.qldethi_phongthi.danhsach', ['id' => $value->id]) }}" title="Thêm đề thi"><i class="fa-solid fa-paperclip"></i></a></td>
+							
 									<td class="text-center">
-										<a class="btn btn-sm btn-primary" href="{{ route('admin.sapphong.qlsv_pt.danhsach', ['id' => $value->id]) }}" title="Thêm sinh viên"><i class="bi bi-plus-lg" ></i> Sinh viên</a>
-										<a class="btn btn-sm btn-warning mt-1" href="{{ route('admin.sapphong.qlhdt_pt.danhsach', ['id' => $value->id]) }}" title="Thêm hội đồng thi"><i class="bi bi-plus-lg" ></i> Hội đồng thi</a>
+										<a class="btn btn-sm btn-primary" href="{{ route('admin.sapphong.qlsv_pt.danhsach', ['id' => $value->id]) }}" title="Thêm sinh viên"><i class="fa-solid fa-plus"></i> Sinh viên</a>
+										<a class="btn btn-sm btn-warning mt-1" href="{{ route('admin.sapphong.qlhdt_pt.danhsach', ['id' => $value->id]) }}" title="Thêm hội đồng thi"><i class="fa-solid fa-plus"></i> Hội đồng thi</a>
 									</td>
-									<td class="text-center"><a href="{{ route('admin.sapphong.qlphongthi.sua', ['id' => $value->id]) }}"><i class="bx bxs-pencil"></i> Sửa</a></td>
-									<td class="text-center"><a onclick="return confirm('Bạn có muốn xóa phòng thi {{$value->maphong}}?')" href="{{ route('admin.sapphong.qlphongthi.xoa', ['id' => $value->id]) }}" ><i class="bx bxs-trash text-danger"></i> Xoá</a></td>
+									<td class="text-center"><a class="btn btn-primary btn-sm" href="{{ route('admin.sapphong.qlphongthi.sua', ['id' => $value->id]) }}"><i class="fa-regular fa-pen-to-square"></i></a></td>
+									<td class="text-center"><a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id}},'{{$value->maphong}}'); return false;"   href="#xoa"><i class="fa-regular fa-trash-can"></i></a></td>
 					
 								</tr>
 							@endforeach
@@ -110,8 +113,9 @@
 								<th width="10%">SL thí sinh</th>
 								<th width="10%">Mã meeting</th>
 								<th width="10%">Ghi chú</th>
-								<th width="10%">Đề thi</th>
 								<th width="10%">Bài thi</th>
+								<th width="10%">Đề thi</th>
+								
 								<th width="15%" class="text-center">Danh sách</th>
 								<th width="8%" class="text-center">Sửa</th>
 								<th width="8%" class="text-center">Xóa</th>
@@ -125,7 +129,7 @@
 									<td class="small">{{ $value->maphong }}</td>
 
 									<td><span style="color:#0000ff;font-weight:bold;">{{ $value->tenca }}</span>
-										<span style="font-size:0.9em;">
+										<span style="font-size:0.8em;">
 										
 											@if(!empty($value->ngaythi))
 												<br />{{ \Carbon\Carbon::parse($value->ngaythi)->format('d/m/Y')}}
@@ -136,16 +140,17 @@
 										</span>
 									</td>
 									<td>{{ $value->soluongthisinh }}</td>
-									<td class="small">{{ $value->ma_meeting }}</td>
+									<td class="small"><span style="font-size:0.9em;">{{ $value->ma_meeting }}</span></td>
 									<td class="small">{{ $value->ghichu }}</td>
-									<td><a class="btn btn-sm btn-danger" href="{{ route('admin.dethi_baithi.qldethi_phongthi.danhsach', ['id' => $value->id]) }}" title="Thêm đề thi"><i class="bi bi-plus-lg"></i></a></td>
-									<td class="small"><a class="btn btn-sm btn-success" href="{{ route('admin.dethi_baithi.qlbaithi.ketquabaithi', ['phongthi'=>$value->id]) }}" title="Xem kết quả bài thi"><i class="bi bi-eye-fill"></i></a></td>
+									<td class="small"><a class="btn btn-sm btn-success" href="{{ route('admin.dethi_baithi.qlbaithi.ketquabaithi', ['phongthi'=>$value->id]) }}" title="Xem kết quả bài thi"><i class="fa-solid fa-eye"></i></a></td>
+									<td><a class="btn btn-sm btn-danger" href="{{ route('admin.dethi_baithi.qldethi_phongthi.danhsach', ['id' => $value->id]) }}" title="Thêm đề thi"><i class="fa-solid fa-paperclip"></i></a></td>
+									
 									<td class="text-center">
-										<a class="btn btn-sm btn-primary" href="{{ route('admin.sapphong.qlsv_pt.danhsach', ['id' => $value->id]) }}" title="Thêm sinh viên"><i class="bi bi-plus-lg" ></i> Sinh viên</a>
-										<a class="btn btn-sm btn-warning mt-1" href="{{ route('admin.sapphong.qlhdt_pt.danhsach', ['id' => $value->id]) }}" title="Thêm hội đồng thi"><i class="bi bi-plus-lg" ></i> Hội đồng thi</a>
+										<a class="btn btn-sm btn-primary" href="{{ route('admin.sapphong.qlsv_pt.danhsach', ['id' => $value->id]) }}" title="Thêm sinh viên"><i class="fa-solid fa-plus"></i> Sinh viên</a>
+										<a class="btn btn-sm btn-warning mt-1" href="{{ route('admin.sapphong.qlhdt_pt.danhsach', ['id' => $value->id]) }}" title="Thêm hội đồng thi"><i class="fa-solid fa-plus"></i> Hội đồng thi</a>
 									</td>
-									<td class="text-center"><a href="{{ route('admin.sapphong.qlphongthi.sua', ['id' => $value->id]) }}"><i class="bx bxs-pencil"></i> Sửa</a></td>
-									<td class="text-center"><a onclick="return confirm('Bạn có muốn xóa phòng thi {{$value->maphong}}?')" href="{{ route('admin.sapphong.qlphongthi.xoa', ['id' => $value->id]) }}" ><i class="bx bxs-trash text-danger"></i> Xoá</a></td>
+									<td class="text-center"><a class="btn btn-primary btn-sm" href="{{ route('admin.sapphong.qlphongthi.sua', ['id' => $value->id]) }}"><i class="fa-regular fa-pen-to-square"></i></a></td>
+									<td class="text-center"><a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id}},'{{$value->maphong}}'); return false;"   href="#xoa"><i class="fa-regular fa-trash-can"></i></a></td>
 					
 								</tr>
 							@endforeach
@@ -165,8 +170,9 @@
 								<th width="10%">SL thí sinh</th>
 								<th width="10%">Mã meeting</th>
 								<th width="10%">Ghi chú</th>
-								<th width="10%">Đề thi</th>
 								<th width="8%">Bài thi</th>
+								<th width="10%">Đề thi</th>
+								
 								<th width="15%" class="text-center">Danh sách</th>
 								<th width="8%" class="text-center">Sửa</th>
 								<th width="8%" class="text-center">Xóa</th>
@@ -193,14 +199,15 @@
 									<td>{{ $value->soluongthisinh }}</td>
 									<td class="small"><span style="font-size:0.9em;">{{ $value->ma_meeting }}</span></td>
 									<td class="small">{{ $value->ghichu }}</td>
-									<td><a class="btn btn-sm btn-danger" href="{{ route('admin.dethi_baithi.qldethi_phongthi.danhsach', ['id' => $value->id]) }}" title="Thêm đề thi"><i class="bi bi-plus-lg"></i></a></td>
-									<td class="small"><a class="btn btn-sm btn-success" href="{{ route('admin.dethi_baithi.qlbaithi.ketquabaithi', ['phongthi'=>$value->id]) }}" title="Xem kết quả bài thi"><i class="bi bi-eye-fill"></i></a></td>
+									<td class="small"><a class="btn btn-sm btn-success" href="{{ route('admin.dethi_baithi.qlbaithi.ketquabaithi', ['phongthi'=>$value->id]) }}" title="Xem kết quả bài thi"><i class="fa-solid fa-eye"></i></a></td>
+									<td><a class="btn btn-sm btn-danger" href="{{ route('admin.dethi_baithi.qldethi_phongthi.danhsach', ['id' => $value->id]) }}" title="Thêm đề thi"><i class="fa-solid fa-paperclip"></i></a></td>
+								
 									<td class="text-center">
-										<a class="btn btn-sm btn-primary" href="{{ route('admin.sapphong.qlsv_pt.danhsach', ['id' => $value->id]) }}" title="Thêm sinh viên"><i class="bi bi-plus-lg" ></i> Sinh viên</a>
-										<a class="btn btn-sm btn-warning mt-1" href="{{ route('admin.sapphong.qlhdt_pt.danhsach', ['id' => $value->id]) }}" title="Thêm hội đồng thi"><i class="bi bi-plus-lg" ></i> Hội đồng thi</a>
+										<a class="btn btn-sm btn-primary" href="{{ route('admin.sapphong.qlsv_pt.danhsach', ['id' => $value->id]) }}" title="Thêm sinh viên"><i class="fa-solid fa-plus"></i> Sinh viên</a>
+										<a class="btn btn-sm btn-warning mt-1" href="{{ route('admin.sapphong.qlhdt_pt.danhsach', ['id' => $value->id]) }}" title="Thêm hội đồng thi"><i class="fa-solid fa-plus"></i> Hội đồng thi</a>
 									</td>
-									<td class="text-center"><a href="{{ route('admin.sapphong.qlphongthi.sua', ['id' => $value->id]) }}"><i class="bx bxs-pencil"></i> Sửa</a></td>
-									<td class="text-center"><a onclick="return confirm('Bạn có muốn xóa phòng thi {{$value->maphong}}?')" href="{{ route('admin.sapphong.qlphongthi.xoa', ['id' => $value->id]) }}" ><i class="bx bxs-trash text-danger"></i> Xoá</a></td>
+									<td class="text-center"><a class="btn btn-primary btn-sm" href="{{ route('admin.sapphong.qlphongthi.sua', ['id' => $value->id]) }}"><i class="fa-regular fa-pen-to-square"></i></a></td>
+									<td class="text-center"><a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id}},'{{$value->maphong}}'); return false;"   href="#xoa"><i class="fa-regular fa-trash-can"></i></a></td>
 					
 								</tr>
 							@endforeach
@@ -243,12 +250,34 @@
 		</div>
 	</div>
 </form> 
-
+<form action="{{ route('admin.sapphong.qlphongthi.xoa') }}" method="post">
+	@csrf
+	<input type="hidden" id="id_delete" name="id" value="" />
+	
+	<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabelDelete">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title">Xoá phòng thi</h5>
+				  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" >
+					<p ><i class="fa-regular fa-circle-question text-danger"></i> Xác nhận muốn xoá phòng thi <span id="maphong" class="fw-bold text-danger"></span>.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+					<button type="submit" class="btn btn-danger">Thực hiện</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
 @endsection
 @section('javascript')    
 <script type="text/javascript">
-  		function getXoa(id) {
-			$('#id').val(id);
+  		function getXoa(id,maphong) {
+			$('#id_delete').val(id);
+			$('#maphong').text(maphong);
 		}
 		
 		@if($errors->has('id') || $errors->has('tenkhoa')  )

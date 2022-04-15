@@ -82,7 +82,7 @@ class SinhVienPhongThiController extends Controller
                  ->where('masinhvien', '=', $masv)->count();
         
             if($sinhvien_phongthi>0){
-                toastr()->error('Mã số '.$masv.' đã tồn tại trong phòng'.$ktphongthi->maphong);
+                toastr()->error('Mã số '.$masv.' đã tồn tại trong phòng '.$ktphongthi->maphong);
             }
             else
             {

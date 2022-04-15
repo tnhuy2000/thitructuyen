@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý hội đồng thi')
+@section('pagetitle')
+Quản lý hội đồng thi | Thêm
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -27,7 +29,7 @@
                     @csrf
                     <div class="col-md-4">
                     <label for="validationCustom01" class="form-label">Mã cán bộ</label>
-                      <input type="text" placeholder="Vd: DTH185437" class="form-control @error('macanbo') is-invalid @enderror" id="macanbo" name="macanbo" value="{{ old('macanbo') }}" required>
+                      <input type="text" placeholder="Vd: 0212" class="form-control @error('macanbo') is-invalid @enderror" id="macanbo" name="macanbo" value="{{ old('macanbo') }}" required>
                       
                       @error('macanbo')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
@@ -66,9 +68,9 @@
                       </div>
                    
                     <div class="col-md-6">
-                      <label for="MaLoai" class="form-label">Khoa</label>
+                      <label for="MaLoai" class="form-label">Khoa/Phòng ban</label>
                       <select class="form-control" id="makhoa" name="makhoa" required>
-                        <option value="">-- Chọn Khoa --</option>
+                        <option value="">-- Chọn Khoa/Phòng ban --</option>
                         @foreach($ktkhoa as $value){
                           <option value="{{$value->makhoa}}" {{(old('makhoa')==$value->makhoa)?'selected':''}}>{{$value->tenkhoa}}</option>
                         }
@@ -82,19 +84,17 @@
                     <div class="col-md-6">
                       <label for="validationCustom02" class="form-label">Vai trò</label>
                       <select class="form-control" id="vaitro" name="vaitro" required>
-                        <option value="">-- Chọn vai trò --</option>
-                        
-                          <option value="canbocoithi">Giám thị (Cán bộ coi thi)</option>
-                          <option value="thuky">Thư ký</option>
-                          <option value="hoidongthi">Hội đồng thi</option>
- 
+                          <option value="" {{old('vaitro')=='' ?'selected':''}}>-- Chọn vai trò --</option>
+                          <option value="canbocoithi" {{old('vaitro')=='canbocoithi' ?'selected':''}}>Cán bộ coi thi</option>
+                          <option value="thuky" {{old('vaitro')=='thuky' ?'selected':''}}>Thư ký</option>
+                          <option value="hoidongthi" {{old('vaitro')=='hoidongthi' ?'selected':''}}>Hội đồng thi</option>
                       </select>
                       @error('vaitro')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                       @enderror
                     </div>
                     <div class="col-12">
-                      <button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Thêm vào CSDL</button>
+                      <button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Thực hiện</button>
                     </div>
                 </form>
               <!-- End Custom Styled Validation -->

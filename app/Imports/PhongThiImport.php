@@ -50,16 +50,16 @@ class PhongThiImport implements ToModel, WithHeadingRow
 
         $meeting =  $user->meetings()->save($meeting);
 
-        $phongthi= new PhongThi([
-            'cathi_id' => $cathi->id,
-            'maphong' => $row['phong_thi'],
-            'soluongthisinh' => $row['so_luong_thi_sinh'],
-            'ma_meeting' => $meeting->id,
-            'join_url' => $meeting->join_url,
-            'ghi_chu' => $row['ghi_chu'],
-            ]);
+        // $phongthi= new PhongThi([
+        //     'cathi_id' => $cathi->id,
+        //     'maphong' => $row['phong_thi'],
+        //     'soluongthisinh' => $row['so_luong_thi_sinh'],
+        //     'ma_meeting' => $meeting->id,
+        //     'join_url' => $meeting->join_url,
+        //     'ghi_chu' => $row['ghi_chu'],
+        //     ]);
 
-        $data = new PhongThi;
+        $data = new PhongThi();
         $data->cathi_id = $cathi->id;
         $data->maphong = $row['phong_thi'];
         $data->soluongthisinh = $row['so_luong_thi_sinh'];
@@ -71,7 +71,7 @@ class PhongThiImport implements ToModel, WithHeadingRow
 
         $dethi = DeThi::where('tendethi', $row['de_thi'])->first();
        
-        $dethi_phongthi= new DeThi_PhongThi;
+        $dethi_phongthi= new DeThi_PhongThi();
         $dethi_phongthi->dethi_id = $dethi->id;
         $dethi_phongthi->phongthi_id = $data->id;
         $dethi_phongthi->ghichu = $row['ghi_chu'];

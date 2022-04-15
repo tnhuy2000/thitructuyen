@@ -32,7 +32,12 @@
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
-        
+        <li class="nav-item pe-3">  
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="{{route('admin.bieumau')}}">
+            
+            <span class="d-none d-md-block ps-2 user_name"><i class="fa-solid fa-file-excel"></i> Biểu mẫu</span>
+          </a>
+        </li>
         <li class="nav-item dropdown pe-3">  
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="{{Auth::user()->picture}}" alt="Profile" class="rounded-circle profile-user-img user_picture">
@@ -60,20 +65,8 @@
                 <span>Hồ sơ cá nhân</span>
               </a>
             </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            {{-- <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                <i class="bi bi-gear"></i>
-                <span>Đổi mật khẩu</span>
-              </a>
-            </li> --}}
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
+           
+         
             <li>
               <hr class="dropdown-divider">
             </li>
@@ -125,7 +118,11 @@
               <i class="bi bi-circle"></i><span>Lớp</span>
             </a>
           </li>
-          
+          <li>
+            <a href="{{route('admin.danhmuc.qlhocphan.danhsach')}}" class="{{ request()->is('*/qlhocphan*') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Học phần</span>
+            </a>
+          </li>
           <li>
             <a href="{{route('admin.danhmuc.qlsinhvien.danhsach')}}" class="{{ request()->is('*/qlsinhvien*') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Sinh viên</span>
@@ -136,11 +133,7 @@
               <i class="bi bi-circle"></i><span>Hội đồng thi</span>
             </a>
           </li>
-          <li>
-            <a href="{{route('admin.danhmuc.qlhocphan.danhsach')}}" class="{{ request()->is('*/qlhocphan*') ? 'active' : '' }}">
-              <i class="bi bi-circle"></i><span>Học phần</span>
-            </a>
-          </li>
+         
           
         </ul>
       </li><!-- End Components Nav -->

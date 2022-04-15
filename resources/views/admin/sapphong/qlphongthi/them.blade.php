@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý phòng thi')
+@section('pagetitle')
+Quản lý phòng thi | Thêm
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -28,11 +30,11 @@
                     @csrf
                     <div class="form-group">
                       <label for="MaLoai" class="form-label">Ca thi</label>
-                      <select class="form-select @error('cathi_id') is-invalid @enderror" id="statesCaThi" height="40px" name="cathi_id" required>
+                      <select class="form-select @error('cathi_id') is-invalid @enderror" id="statesCaThi" height="40px" name="cathi_id">
                         <option value="">-- Chọn ca thi --</option>
                         @foreach($ktcathi as $value){
 
-                            <option value="{{$value->id}}">{{$value->tenca}} - ngày: {{ \Carbon\Carbon::parse($value->ngaythi)->format('d/m/Y')}} - giờ bắt đầu: {{$value->giobatdau}}</option>
+                            <option value="{{$value->id}}" {{(old('cathi_id')==$value->id)?'selected':''}} >{{$value->tenca}} - ngày: {{ \Carbon\Carbon::parse($value->ngaythi)->format('d/m/Y')}} - giờ bắt đầu: {{$value->giobatdau}}</option>
                         
                         }
                         @endforeach
@@ -77,7 +79,7 @@
                     
                     
                     <div class="col-12">
-                      <button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Thêm vào CSDL</button>
+                      <button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Thực hiện</button>
                     </div>
                 </form>
               <!-- End Custom Styled Validation -->

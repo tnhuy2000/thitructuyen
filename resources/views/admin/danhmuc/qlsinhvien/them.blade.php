@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý sinh viên')
+@section('pagetitle')
+Quản lý sinh viên | Thêm
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -68,7 +70,7 @@
                    
                     <div class="form-group">
                       <label for="MaLoai" class="form-label">Lớp</label>
-                      <select class="form-control @error('dienthoai') is-invalid @enderror" id="states" name="malop" required>
+                      <select class="form-control @error('malop') is-invalid @enderror" id="statesLop" name="malop" style="height: 100%" >
                         <option value="">-- Chọn Lớp --</option>
                         @foreach($ktkhoa as $value1){
                         <optgroup label="{{$value1->tenkhoa}}">
@@ -89,7 +91,7 @@
                     </div>
                    
                     <div class="col-12">
-                      <button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Thêm vào CSDL</button>
+                      <button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Thực hiện</button>
                     </div>
                 </form>
               <!-- End Custom Styled Validation -->
@@ -102,4 +104,14 @@
 </section>
 
 </main><!-- End #main -->
+@endsection
+@section('javascript')    
+<script type="text/javascript">
+  $(document).ready(function() {
+            $("#statesLop").select2({ 
+             height : 'Resolution' });   
+        });
+
+</script>
+
 @endsection

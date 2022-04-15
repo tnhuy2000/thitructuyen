@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý kỳ thi')
+@section('pagetitle')
+Quản lý kỳ thi
+@endsection
 
 @section('content')
 
@@ -24,7 +26,7 @@
 	  <div class="card">
 		<div class="card-body">
 		  <h5 class="card-title">Danh sách kỳ thi</h5>
-		  		<a href="{{route('admin.sapphong.qlkythi.them')}}" type="button" class="btn btn-outline-primary"><i class="bx bxs-plus-square"></i> Thêm mới</a>
+		  		<a href="{{route('admin.sapphong.qlkythi.them')}}" type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Thêm mới</a>
               
 		  <!-- Table with stripped rows -->
 		  <table class="table datatable table-hover">
@@ -32,7 +34,7 @@
 				<tr>
 					<th width="2%">#</th>
 					<th>Tên kỳ thi</th>
-					<th width="15%">Học kỳ</th>
+					<th width="10%">Học kỳ</th>
                     <th width="20%">Năm học</th>
 					<th width="10%" class="text-center">Sửa</th>
 					<th width="10%" class="text-center">Xóa</th>
@@ -44,10 +46,10 @@
 					<tr>
 						<td>{{ $count++ }}</td>
 						<td><span style="color:#0000ff;font-weight:bold;">{{ $value->tenkythi }}</span></td>
-						<td>{{ $value->hocky }}</td>
-                        <td>{{ $value->namhoc }}</td>
-						<td class="text-center"><a href="{{ route('admin.sapphong.qlkythi.sua', ['id' => $value->id]) }}" class=""><i class="bx bxs-pencil"></i> Sửa</a></td>
-						<td class="text-center"><a onclick="return confirm('Bạn có muốn xóa kỳ thi {{$value->tenkythi}}?')" href="{{ route('admin.sapphong.qlkythi.xoa', ['id' => $value->id]) }}"><i class="bx bxs-trash text-danger"></i> Xoá</a></td>
+						<td ><span class="badge bg-secondary">{{ $value->hocky }}</span></td>
+                        <td><span class="badge bg-secondary">{{ $value->namhoc }}</span></td>
+						<td class="text-center"><a class="btn btn-primary btn-sm" href="{{ route('admin.sapphong.qlkythi.sua', ['id' => $value->id]) }}" class=""><i class="fa-regular fa-pen-to-square"></i></a></td>
+						<td class="text-center"><a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModalDelete" onclick="getXoa({{ $value->id}},'{{$value->tenkythi}}',{{$value->hocky}},'{{$value->namhoc}}'); return false;"   href="#xoa"><i class="fa-regular fa-trash-can"></i></a></td>
 		
 					</tr>
 				@endforeach
@@ -63,12 +65,36 @@
 </section>
 
 </main><!-- End #main -->
-
+<form action="{{ route('admin.sapphong.qlkythi.xoa') }}" method="post">
+	@csrf
+	<input type="hidden" id="id_delete" name="id" value="" />
+	
+	<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabelDelete">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title">Xoá kỳ thi</h5>
+				  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" >
+					<p ><i class="fa-regular fa-circle-question text-danger"></i> Xác nhận muốn xoá kỳ thi <span  class="fw-bold text-danger"><span id="tenkythi" class="fw-bold text-danger"></span> - học kỳ: <span id="hocky"></span> - năm học: <span id="namhoc"></span> </span>.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+					<button type="submit" class="btn btn-danger">Thực hiện</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
 @endsection
 @section('javascript')    
 <script type="text/javascript">
-  		function getXoa(id) {
-			$('#id').val(id);
+  		function getXoa(id,tenkythi,hocky,namhoc) {
+			$('#id_delete').val(id);
+			$('#tenkythi').text(tenkythi);
+			$('#hocky').text(hocky);
+			$('#namhoc').text(namhoc);
 		}
 		
 		@if($errors->has('id') || $errors->has('tenkhoa')  )

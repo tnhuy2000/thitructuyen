@@ -37,7 +37,7 @@ class CaThiController extends Controller
             ->orderBy('c.ngaythi', 'desc')->get();
 		return view('admin.sapphong.qlcathi.danhsach',compact('cathi_dangdienra','cathi_dathi','cathi_sapdienra','ktkythi'));
     }
-    public function getXoa(Request $request)
+    public function postXoa(Request $request)
     {
         try {  
             \DB::table('cathi')->where('id', '=', $request->id)->delete();
@@ -51,7 +51,7 @@ class CaThiController extends Controller
     public function getThem()
     {
         $cathi=\DB::table('cathi')->get();
-        $kythi=\DB::table('kythi')->get();
+        $kythi=\DB::table('kythi')->orderBy('kythi.id', 'desc')->get();
 
         return view('admin.sapphong.qlcathi.them')->with('ktcathi',$cathi)->with('ktkythi',$kythi);
     }
@@ -83,7 +83,7 @@ class CaThiController extends Controller
     public function getSua($id)
     {
         $cathi=\DB::table('cathi')->where('id',$id)->first();
-        $kythi=\DB::table('kythi')->get();
+        $kythi=\DB::table('kythi')->orderBy('kythi.id', 'desc')->get();
         return view('admin.sapphong.qlcathi.sua') ->with('ktcathi',$cathi)->with('ktkythi',$kythi);
     }
     public function postSua(Request $request, $malop)

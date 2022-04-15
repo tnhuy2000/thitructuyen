@@ -1,5 +1,7 @@
 @extends('layouts.admin-layout')
-@section('title','Quản lý đề thi')
+@section('pagetitle')
+Quản lý đề thi | Sửa
+@endsection
 @section('content')
 
 <main id="main" class="main">
@@ -28,15 +30,15 @@
                     @csrf
                     <div class="col-md-6">
                       <label for="validationCustom02" class="form-label">Kỳ thi</label>
-                      <select class="form-control @error('kythi_id') is-invalid @enderror"  onchange="testb(this)" id="states1" name="kythi_id" required>
+                      <select class="form-control @error('kythi_id') is-invalid @enderror"  onchange="testb(this)" id="statesKyThi" name="kythi_id" required>
                         <option value="">-- Chọn kỳ thi --</option>
                         @foreach($ktkythi as $value){ 
                           @if($value->id==$ktdethi->kythi_id){
-                            <option value="{{$value->id}}" selected="selected">{{$value->tenkythi}} học kỳ {{$value->hocky}}, năm học {{$value->namhoc}}</option>
+                            <option value="{{$value->id}}" selected="selected">{{$value->tenkythi}} - học kỳ: {{$value->hocky}} - năm học: {{$value->namhoc}}</option>
                           }
                           @else
                           {
-                            <option value="{{$value->id}}">{{$value->tenkythi}} học kỳ {{$value->hocky}}, năm học {{$value->namhoc}} </option>
+                            <option value="{{$value->id}}">{{$value->tenkythi}} - học kỳ: {{$value->hocky}} - năm học: {{$value->namhoc}} </option>
                           }
                           @endif
                         }
@@ -48,7 +50,7 @@
                     </div>
                     <div class="col-md-6">
                     <label for="validationCustom01" class="form-label">Học phần</label>
-                    <select class="form-control @error('mahocphan') is-invalid @enderror"  onchange="test(this)" id="states" name="mahocphan" required>
+                    <select class="form-control @error('mahocphan') is-invalid @enderror"  onchange="test(this)" id="statesHocPhan" name="mahocphan" required>
                         <option value="">-- Chọn học phần --</option>
                         @foreach($kthocphan as $value){ 
                           @if($value->mahocphan==$ktdethi->mahocphan){
@@ -108,7 +110,7 @@
                     </div>
                    
                     <div class="col-12">
-                      <button type="submit" class="btn btn-primary"><i class="fal fa-save"></i> Cập nhật</button>
+                      <button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Cập nhật</button>
                     </div>
                 </form>
               <!-- End Custom Styled Validation -->
@@ -124,18 +126,25 @@
 @endsection
 @section('javascript')    
 <script type="text/javascript">
-  function test(a) {
+    function test(a) {
   var x = a.options[a.selectedIndex].text;
   var kythi=document.getElementById('kythi').value;
   $('#hocphan').val(x);
-  $('#tendethi').val("Đề thi "+kythi+' học phần '+x);
+  $('#tendethi').val(kythi+' - học phần: '+x);
   
   }
   function testb(a) {
     var x = a.options[a.selectedIndex].text;
     var ten=document.getElementById('hocphan').value;
     $('#kythi').val(x);
-    $('#tendethi').val("Đề thi "+x+ ' học phần '+ten);
+    $('#tendethi').val(x+ ' - học phần: '+ten);
   }
+
+  $(document).ready(function() {
+            $("#statesKyThi").select2();   
+        });
+        $(document).ready(function() {
+            $("#statesHocPhan").select2();   
+        });
 </script>
 @endsection

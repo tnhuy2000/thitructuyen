@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\HocPhan;
+use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
@@ -53,6 +54,11 @@ class HocPhanExport implements FromCollection,
     }
     public function styles(Worksheet $sheet)
     {
+        $dt= Carbon::now();
+        $ngay = Carbon::createFromFormat('Y-m-d H:i:s', $dt)->format('d/m/Y H:i:s');
+        $sheet->mergeCells('A3:B3');
+        $sheet->setCellValue('A3', 'Ngày xuất: '.$ngay);
+        
         $sheet->mergeCells('B4:E4');
         
         $sheet->setCellValue('B4', 'DANH SÁCH HỌC PHẦN');

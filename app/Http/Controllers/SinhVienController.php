@@ -17,6 +17,7 @@ use Illuminate\Support\Str;
 use Auth;
 use Carbon\Carbon;
 use File;
+use Illuminate\Support\Facades\Hash;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 class SinhVienController extends Controller
@@ -195,13 +196,13 @@ class SinhVienController extends Controller
 	
 		$sinhvien = \DB::table('sinhvien as sv')
 				->join('lop as l', 'sv.malop', '=', 'l.malop')
-				->select('sv.masinhvien', 'sv.holot','sv.ten','sv.email','sv.dienthoai','l.malop', 'l.tenlop')
-				->orderBy('l.malop', 'asc')->get();
+				->select('sv.masinhvien', 'sv.holot','sv.ten','sv.email','sv.dienthoai','l.malop', 'l.tenlop','sv.created_at')
+				->orderBy('sv.created_at', 'desc')->get();
 		return view('admin.danhmuc.qlsinhvien.danhsach',['sinhvien' => $sinhvien]);
     }
-    public function getXoa(Request $request)
+    public function postXoa(Request $request)
     {
-        
+   
         try {  
             \DB::table('sinhvien')->where('masinhvien', '=', $request->masinhvien)->delete();
             toastr()->success('Xoá dữ liệu thành công!');
@@ -225,14 +226,15 @@ class SinhVienController extends Controller
             'holot' => 'required|max:255:sinhvien,holot',
             'ten' => 'required|max:255:sinhvien,ten',
             'email' => 'required|max:255|unique:sinhvien,email',
+            'email' => 'required|max:255|unique:users,email',
             'dienthoai' => 'required|max:255|unique:sinhvien,dienthoai',
             'malop' => 'required|max:255:sinhvien,malop',
             
 
 		],
         [
-            'masinhvien.unique'=>'Mã sinh viên đã tồn tại',
-            'email.unique'=>'Email đã tồn tại',
+            'masinhvien.unique'=>'Mã sinh viên đã tồn tại trong hệ thống',
+            'email.unique'=>'Email đã tồn tại trong hệ thống',
             'malop.required'=>'Vui lòng chọn mã lớp.',
             'dienthoai.unique'=>'Số điện thoại đã tồn tại'
         ]);
@@ -246,7 +248,16 @@ class SinhVienController extends Controller
             'malop' => $request->malop,
             'updated_at' => Carbon::now()
 		]);
-
+        $name= $request->holot.' '.$request->ten;
+        \DB::table('users')->insert([
+            'masinhvien' => $request->masinhvien,
+            'name' => $name,
+            'username' => $request->masinhvien,
+            'email' => $request->email,
+            'password'=>Hash::make($request->masinhvien),
+            'role' => 5,
+            'updated_at' => Carbon::now()
+        ]);
         toastr()->success('Thêm dữ liệu thành công');
         return redirect()->route('admin.danhmuc.qlsinhvien.danhsach');
     }
@@ -280,13 +291,20 @@ class SinhVienController extends Controller
             'email' => $request->email,
             'malop' => $request->malop
         ]);
+        $name= $request->holot.' '.$request->ten;
+        \DB::table('users')->where('masinhvien', $request->masinhvien)->update([
+            'name' => $name,
+            'email' => $request->email,
+            
+        ]);
+
         toastr()->success('Cập nhật dữ liệu thành công!');
         return redirect()->route('admin.danhmuc.qlsinhvien.danhsach');}
 
     // Nhập từ Excel
     public function postNhap(Request $request)
     {
-    Excel::import(new SinhVienImport, $request->file('file_excel'));
+        Excel::import(new SinhVienImport, $request->file('file_excel'));
    
         return redirect()->route('admin.danhmuc.qlsinhvien.danhsach');
     }
