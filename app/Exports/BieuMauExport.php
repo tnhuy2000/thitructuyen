@@ -48,6 +48,7 @@ class BieuMauExport implements  WithStyles,
         }
         elseif($this->tenbieumau=='sinhvien'){
             return [
+                'TT',
                 'MSSV',
                 'Họ',
                 'Tên đệm và tên',
@@ -59,8 +60,8 @@ class BieuMauExport implements  WithStyles,
         elseif($this->tenbieumau=='hoidongthi'){
             return [
                 'Mã cán bộ',
-                'Họ lót',
-                'Tên',
+                'Họ',
+                'Tên đệm và tên',
                 'Địa chỉ Email',
                 'Điện thoại',
                 'Mã khoa',

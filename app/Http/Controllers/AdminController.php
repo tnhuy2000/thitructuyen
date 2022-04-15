@@ -103,9 +103,9 @@ class AdminController extends Controller
   
     function updateInfo(Request $request){
         
+        
         $validator = \Validator::make($request->all(),[
             'name'=>'required',
-            'dienthoai'=>'required',
             'email'=> 'required|email|unique:users,email,'.Auth::user()->id,
             
         ]);

@@ -28,6 +28,7 @@ class SinhVienExport implements FromCollection,
     public function headings(): array
     {
         return [
+        'TT',
         'MSSV',
         'Họ',
         'Tên đệm và tên',
@@ -36,11 +37,12 @@ class SinhVienExport implements FromCollection,
         'Lớp',
         ];
     }
-  
+    public $count=0;
     public function map($row): array
     {
-        
+        $count=$this->count+=1;
         return [
+            $count,
             $row->masinhvien,
             $row->holot,
             $row->ten,
@@ -83,7 +85,7 @@ class SinhVienExport implements FromCollection,
                 $sinhvien = \DB::table('sinhvien')->count();
                 $sinhvien=6 + $sinhvien;
                     //kẻ khung
-                $event->sheet->getStyle('A6:F'.$sinhvien)->applyFromArray([
+                $event->sheet->getStyle('A6:G'.$sinhvien)->applyFromArray([
                     'borders' => [
                         'allBorders' => [
                             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,

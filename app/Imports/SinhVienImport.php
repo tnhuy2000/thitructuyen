@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\PhongThi;
 use App\Models\SinhVien;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -26,7 +27,7 @@ class SinhVienImport implements ToModel, WithHeadingRow
             $dataSV->malop=$row['lop'];
             $dataSV->save();
 
-            $name=$row['ho_lot'].' '.$row['ten'];
+            $name=$row['ho'].' '.$row['ten_dem_va_ten'];
             $data = new User();
             $data->masinhvien = $row['mssv'];
             $data->username = $row['mssv'];
@@ -38,7 +39,20 @@ class SinhVienImport implements ToModel, WithHeadingRow
         }
         else
         {
-            toastr()->error('Sinh viên có mã '.$row['mssv'].' đã tồn tại');
+            DB::table('sinhvien')->where('masinhvien', $row['mssv'])->update([
+                'holot' => $row['ho'],
+                'ten' => $row['ten_dem_va_ten'],
+                'dienthoai' => $row['dien_thoai'],
+                'email' => $row['dia_chi_email'],
+                'malop' => $row['lop'],
+            ]);
+            $name= $row['ho'].' '.$row['ten_dem_va_ten'];
+            DB::table('users')->where('masinhvien', $row['mssv'])->update([
+                'name' => $name,
+                'email' => $row['dia_chi_email'],
+                
+            ]);
+            //toastr()->error('Sinh viên có mã '.$row['mssv'].' đã tồn tại');
         }
     }
     public function headingRow(): int

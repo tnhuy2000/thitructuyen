@@ -113,7 +113,7 @@ class CaThiController extends Controller
         {
             Excel::import(new CaThiImport($request->kythi_id), $request->file('file_excel'));
     
-            return redirect()->route('admin.sapphong.qlphongthi.danhsach');
+            return redirect()->route('admin.sapphong.qlcathi.danhsach');
         }
 
         public function postXuat(Request $request)

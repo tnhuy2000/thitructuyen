@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\HoiDongThi;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
@@ -28,18 +29,36 @@ class HoiDongThiExport implements FromCollection,
     {
         return [
         'Mã cán bộ',
-        'Họ lót',
-        'Tên',
+        'Họ',
+        'Tên đệm và tên',
         'Địa chỉ Email',
         'Điện thoại',
         'Mã khoa',
+        'Tên khoa',
         'Vai trò',
         ];
     }
   
     public function map($row): array
     {
+        $khoa= DB::table('khoa')->where('makhoa',$row->makhoa)->first();
+        $vaitro='';
         
+        if($row->vaitro=='canbocoithi')
+        {
+            $vaitro='Cán bộ coi thi';
+           
+        }
+        if($row->vaitro=='thuky')
+        {
+            $vaitro='Thư ký';
+           
+        }
+        if($row->vaitro=='hoidongthi')
+        {
+            $vaitro='Hội đồng thi';
+           
+        }
         return [
             $row->macanbo,
             $row->holot,
@@ -47,7 +66,8 @@ class HoiDongThiExport implements FromCollection,
             $row->email,
             $row->dienthoai,
             $row->makhoa,
-            $row->vaitro,
+            $khoa->tenkhoa,
+            $vaitro,
         ];
     }
     public function startCell(): string
@@ -80,7 +100,7 @@ class HoiDongThiExport implements FromCollection,
                 $hoidongthi = \DB::table('hoidongthi')->count();
                 $hoidongthi=6 + $hoidongthi;
                     //kẻ khung
-                $event->sheet->getStyle('A6:G'.$hoidongthi)->applyFromArray([
+                $event->sheet->getStyle('A6:H'.$hoidongthi)->applyFromArray([
                     'borders' => [
                         'allBorders' => [
                             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,

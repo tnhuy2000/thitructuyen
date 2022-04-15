@@ -92,12 +92,12 @@ class LopController extends Controller
     // Nhập từ Excel
     public function postNhap(Request $request)
     {
-    Excel::import(new LopImport, $request->file('file_excel'));
-    return redirect()->route('admin.danhmuc.qllop.danhsach');
+        Excel::import(new LopImport, $request->file('file_excel'));
+        return redirect()->route('admin.danhmuc.qllop.danhsach');
     }
     // Xuất ra Excel
     public function getXuat()
     {
-    return Excel::download(new LopExport, 'danh-sach-lop.xlsx');
+        return Excel::download(new LopExport, 'danh-sach-lop.xlsx');
     }
 }

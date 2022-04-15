@@ -79,7 +79,7 @@ class HoiDongThiPhongThiController extends Controller
     public function getXuat(Request $request)
     {
         
-        return Excel::download(new HoiDongThiPhongThiExport($request->phongthi_id),'danh-sach-sinh-vien-theo-phong.xlsx');
+        return Excel::download(new HoiDongThiPhongThiExport($request->phongthi_id),'danh-sach-hdt-theo-phong.xlsx');
 
     }
     public function getDiemDanh($id,$phongthi_id)

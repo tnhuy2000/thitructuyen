@@ -28,8 +28,8 @@ Quản lý phòng thi
 		<h5 class="card-title">Danh sách phòng thi</h5>
 		<a href="{{ route('admin.sapphong.qlphongthi.them') }}" class="btn btn-primary  "><i class="fa-solid fa-plus"></i> Thêm mới</a>
 		<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="fa-solid fa-upload"></i> Nhập từ Excel</a>
-		<a href="#nhap" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importModal"><i class="fa-solid fa-download"></i> Xuất ra Excel</a>
-			
+		{{-- <a href="#nhap" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importModal"><i class="fa-solid fa-download"></i> Xuất ra Excel</a>
+			 --}}
             <!-- Bordered Tabs Justified -->
 			<ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
                 <li class="nav-item flex-fill" role="presentation">
@@ -243,8 +243,8 @@ Quản lý phòng thi
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
-					<button type="submit" class="btn btn-danger"><i class="fal fa-upload"></i> Nhập dữ liệu</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>
+					<button type="submit" class="btn btn-danger"> Nhập dữ liệu</button>
 				</div>
 			</div>
 		</div>

@@ -33,7 +33,7 @@ Quản lý đề thi | Xoá
                       <select class="form-control @error('kythi_id') is-invalid @enderror" onchange="testb(this)" id="statesKyThi" name="kythi_id" required>
                         <option value="">-- Chọn kỳ thi --</option>
                         @foreach($ktkythi as $value){ 
-                            <option value="{{$value->id}}" {{(old('kythi_id')==$value->id)?'selected':''}}>{{$value->tenkythi}} - học kỳ: {{$value->hocky}} - năm học: {{$value->namhoc}}</option>
+                            <option value="{{$value->id}}" {{(old('kythi_id')==$value->id)?'selected':''}}>{{$value->tenkythi}}</option>
                         }
                         @endforeach
                       </select>

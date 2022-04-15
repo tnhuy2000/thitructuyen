@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\HoiDongThi_PhongThi;
+use App\Models\PhongThi;
 use Maatwebsite\Excel\Concerns\ToModel;
 
 class HoiDongThiPhongThiImport implements ToModel
@@ -14,8 +15,12 @@ class HoiDongThiPhongThiImport implements ToModel
     */
     public function model(array $row)
     {
+        $phong = PhongThi::where('maphong', $row['phong_thi'])->first();
+
         return new HoiDongThi_PhongThi([
-            //
+        'phongthi_id' => $phong->id,
+        'macanbo' => $row['ma_can_bo'],
+        'ghichu' => $row['ghi_chu'],
         ]);
     }
 }

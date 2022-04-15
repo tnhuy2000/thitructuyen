@@ -198,7 +198,7 @@ Quản lý ca thi
 	@csrf
 	
 	<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
+		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="importModalLabel">Nhập từ Excel</h5>
@@ -210,7 +210,7 @@ Quản lý ca thi
                       <select class="form-control" id="kythi_id" name="kythi_id">
                         <option value="">-- Chọn kỳ thi --</option>
                         @foreach($ktkythi as $value){
-                          <option value="{{$value->id}}">{{$value->tenkythi}} năm học {{$value->namhoc}} </option>
+                          <option value="{{$value->id}}">{{$value->tenkythi}}</option>
                         }
                         @endforeach
  
@@ -225,8 +225,8 @@ Quản lý ca thi
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
-					<button type="submit" class="btn btn-danger"><i class="fal fa-upload"></i> Nhập dữ liệu</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>
+					<button type="submit" class="btn btn-danger">Nhập dữ liệu</button>
 				</div>
 			</div>
 		</div>
@@ -237,7 +237,7 @@ Quản lý ca thi
 	@csrf
 	
 	<div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
+		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="importModalLabel">Xuất ra Excel</h5>
@@ -249,7 +249,7 @@ Quản lý ca thi
                       <select class="form-control" id="kythi_id" name="kythi_id" required>
                         <option value="">-- Chọn kỳ thi --</option>
                         @foreach($ktkythi as $value){
-                          <option value="{{$value->id}}">{{$value->tenkythi}} năm học {{$value->namhoc}} </option>
+                          <option value="{{$value->id}}">{{$value->tenkythi}}</option>
                         }
                         @endforeach
  
@@ -261,8 +261,8 @@ Quản lý ca thi
 					
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fal fa-times"></i> Hủy bỏ</button>
-					<button type="submit" class="btn btn-danger"><i class="fal fa-upload"></i> Xuất dữ liệu</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>
+					<button type="submit" class="btn btn-danger"> Xuất dữ liệu</button>
 				</div>
 			</div>
 		</div>

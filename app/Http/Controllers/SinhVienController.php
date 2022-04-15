@@ -304,8 +304,9 @@ class SinhVienController extends Controller
     // Nhập từ Excel
     public function postNhap(Request $request)
     {
+        
         Excel::import(new SinhVienImport, $request->file('file_excel'));
-   
+        toastr()->success('Nhập dữ liệu thành công!');
         return redirect()->route('admin.danhmuc.qlsinhvien.danhsach');
     }
     // Xuất ra Excel
