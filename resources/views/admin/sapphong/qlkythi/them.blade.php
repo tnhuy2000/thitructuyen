@@ -21,7 +21,6 @@ Quản lý kỳ thi | Thêm
 <section class="section">
   <div class="row">
 	<div class="col-lg-12">
-
 	  <div class="card">
       <div class="card-body">
               <h5 class="card-title">Thêm mới</h5>
@@ -69,14 +68,11 @@ Quản lý kỳ thi | Thêm
                     
                     <div class="col-12">
                       <button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Thực hiện</button>
-                    </div>
-                    
+                    </div> 
                 </form>
               <!-- End Custom Styled Validation -->
-
             </div>
 	    </div>
-
 	  </div>
   </div>
 </section>
@@ -86,16 +82,16 @@ Quản lý kỳ thi | Thêm
 @section('javascript')    
 <script type="text/javascript">
 
-  const source = document.getElementById('namhocbatdau');
-  const result = document.getElementById('namhocketthuc');
+    const source = document.getElementById('namhocbatdau');
+    const result = document.getElementById('namhocketthuc');
 
-  const inputHandler = function(e) {
-    var namkethuc= e.target.value;
-    result.value = parseInt(namkethuc) +1;
-  }
+    const inputHandler = function(e) {
+      var namkethuc= e.target.value;
+      result.value = parseInt(namkethuc) +1;
+    }
 
-  source.addEventListener('input', inputHandler);
-  source.addEventListener('propertychange', inputHandler); // for IE8
+    source.addEventListener('input', inputHandler);
+    source.addEventListener('propertychange', inputHandler); // for IE8
 
 </script>
 @endsection

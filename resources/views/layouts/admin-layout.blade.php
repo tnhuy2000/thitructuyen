@@ -31,7 +31,18 @@
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-
+        <li class="nav-item pe-3">  
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="" data-bs-toggle="modal" data-bs-target="#restoreDB">
+            
+            <span class="d-none d-md-block ps-2 user_name"><i class="fa-solid fa-file-excel"></i> Phục hồi</span>
+          </a>
+        </li>
+        <li class="nav-item pe-3">  
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="{{route('admin.saoluu')}}">
+            
+            <span class="d-none d-md-block ps-2 user_name"><i class="fa-solid fa-file-excel"></i> Sao lưu</span>
+          </a>
+        </li>
         <li class="nav-item pe-3">  
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="{{route('admin.bieumau')}}">
             
@@ -288,7 +299,29 @@
   
   @yield('content')
   @include('layouts.footer')
-
+  <form action="{{ route('admin.restoreDB') }}" method="post" enctype="multipart/form-data">
+    @csrf
+    <div class="modal fade" id="restoreDB" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="importModalLabel">Phục hồi</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-0">
+              <label for="file_excel" class="form-label">Chọn file CSDL</label>
+              <input type="file" class="form-control" id="file_sql" name="file_sql" required />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+            <button type="submit" class="btn btn-danger">Phục hồi</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
 </body>
 
 </html>

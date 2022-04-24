@@ -17,6 +17,7 @@ use App\Http\Controllers\DeThiPhongThiController;
 use App\Http\Controllers\KhoaController;
 use App\Http\Controllers\BaiThiController;
 use App\Http\Controllers\LopController;
+use App\Http\Controllers\RestoreDataController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ZipController;
 use App\Http\Controllers\ThongBaoController;
@@ -58,7 +59,10 @@ Route::prefix('admin')->name('admin.')->middleware(['isHoiDongThi','auth','Preve
         Route::get('/', [AdminController::class, 'getDashboard'])->name('getdashboard');
         Route::get('/403', [AdminController::class,'getForbidden'])->name('forbidden');
         Route::get('dashboard',[AdminController::class,'index'])->name('dashboard');
-       
+
+        Route::get('saoluu',[RestoreDataController::class,'Backup'])->name('saoluu');
+        Route::post('restoreDB',[RestoreDataController::class,'Restore'])->name('restoreDB');
+      
         Route::get('bieumau',[AdminController::class,'getBieuMau'])->name('bieumau');
         Route::get('taibieumau/{tenbieumau}',[AdminController::class,'TaiBieuMau'])->name('taibieumau');
         Route::get('/dashboard/chitietthongbao/{id}',  [ThongBaoController::class, 'getChiTietThongBao'])->name('dashboard.chitietthongbao');

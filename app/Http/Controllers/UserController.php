@@ -29,7 +29,7 @@ class UserController extends Controller
                 $orm->role = $role;
                 $orm->save();
             
-            toastr()->success('Thêm dữ liệu thành công');
+            toastr()->success('Cập nhật quyền hạn thành công');
             if($role==3)
                 return redirect()->route('admin.qlnguoidung.qltkcanbocoithi.danhsach');
             elseif($role==2)
