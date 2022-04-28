@@ -29,6 +29,7 @@ class HomeController extends Controller
         }
         if(!Str::contains($user->email, 'agu.edu.vn'))
 		{
+           
 			return redirect()->route('login')->with('fail', 'Phải sử dụng email của AGU!');
 		}
         $existingUser = User::where('email', $user->email)->first();

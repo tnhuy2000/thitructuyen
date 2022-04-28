@@ -39,7 +39,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputEmail1" class="text-uppercase">Tài khoản</label>
-                        <input id="text" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{old('username') }}">
+                        <input id="text" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="@if(Session::get('old_username')){{Session::get('old_username')}}@else{{old('username')}}@endif">
                         <span class="text-danger">@error('username'){{ $message }}@enderror</span>
                         
                         

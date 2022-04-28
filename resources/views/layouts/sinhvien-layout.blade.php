@@ -78,12 +78,9 @@
                     <div class="dropdown-menu fade-up m-0">
                         <a href="{{route('sinhvien.profile')}}" class="dropdown-item"> <i class="fas fa-user-cog"></i> Hồ sơ cá nhân</a>
                         
-                        <a href="{{route('logout')}}" onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();" class="dropdown-item"> <i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                        <a href="#dangxuat" data-bs-toggle="modal" data-bs-target="#ModalDangXuat" class="dropdown-item"> <i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
                         
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
+                       
                     </div>
                 </div>
             </div>
@@ -108,11 +105,8 @@
                   </div>
                   <div class="col-md-6 text-center text-md-end">
                      Bạn đang đăng nhập với tên: <a class="border-bottom">{{Auth::user()->name}}</a>
-                      </br>Bạn có muốn thoát? <a class="border-bottom" onclick="event.preventDefault();
-            document.getElementById('logout-form').submit();" href="" target="_blank">Thoát</a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                        </form>
+                      </br>Bạn có muốn thoát? <a class="border-bottom"  data-bs-target="#ModalDangXuat" data-bs-toggle="modal" href="#dangxuat" target="_blank">Thoát</a>
+                   
                   </div>
                   
               </div>
@@ -122,7 +116,26 @@
       </div>
   </div>
 
- 
+  <form action="{{ route('logout') }}" method="POST">
+    @csrf
+    <div class="modal fade" id="ModalDangXuat" tabindex="-1" role="dialog" aria-labelledby="myModalLabelDelete">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Đăng xuất</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" >
+                    <p class="fw-bold text-danger">Bạn chắc chắn muốn đăng xuất?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>
+                    <button type="submit" class="btn btn-danger">Thực hiện</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>	
   
 
     <!-- Back to Top -->

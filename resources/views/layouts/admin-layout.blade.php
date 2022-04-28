@@ -31,21 +31,46 @@
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-        <li class="nav-item pe-3">  
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="" data-bs-toggle="modal" data-bs-target="#restoreDB">
+        <li class="nav-item dropdown pe-3">  
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             
-            <span class="d-none d-md-block ps-2 user_name"><i class="fa-solid fa-file-excel"></i> Phục hồi</span>
-          </a>
-        </li>
-        <li class="nav-item pe-3">  
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="{{route('admin.saoluu')}}">
-            
-            <span class="d-none d-md-block ps-2 user_name"><i class="fa-solid fa-file-excel"></i> Sao lưu</span>
-          </a>
-        </li>
+            <span class="d-none d-md-block dropdown-toggle ps-2 user_name">Sao lưu</span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>Sao lưu</h6>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="" data-bs-target="#myModalBackupAll" data-bs-toggle="modal">
+                <i class="bi bi-person"></i>
+                <span>Sao lưu toàn bộ dữ liệu</span>
+              </a>
+            </li>
+           
+         
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+           
+              <a class="dropdown-item d-flex align-items-center" href="" data-bs-target="#myModalBackupDB" data-bs-toggle="modal">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sao lưu Database</span>
+              </a>
+              
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
         <li class="nav-item pe-3">  
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="{{route('admin.bieumau')}}">
-            
             <span class="d-none d-md-block ps-2 user_name"><i class="fa-solid fa-file-excel"></i> Biểu mẫu</span>
           </a>
         </li>
@@ -84,14 +109,11 @@
 
             <li>
            
-              <a class="dropdown-item d-flex align-items-center" href="#dangxuat" onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();">
+              <a class="dropdown-item d-flex align-items-center" href="#dangxuat" data-bs-target="#ModalDangXuat" data-bs-toggle="modal">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Đăng xuất</span>
               </a>
-              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                  @csrf
-              </form>
+              
             </li>
 
           </ul><!-- End Profile Dropdown Items -->
@@ -283,14 +305,11 @@
      
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('logout')}}" onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();">
+        <a class="nav-link collapsed" href="dangxuat" data-bs-target="#ModalDangXuat" data-bs-toggle="modal" >
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Đăng xuất</span>
               </a>
-              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
+              
       </li><!-- End Login Page Nav -->
     </ul>
 
@@ -299,29 +318,66 @@
   
   @yield('content')
   @include('layouts.footer')
-  <form action="{{ route('admin.restoreDB') }}" method="post" enctype="multipart/form-data">
-    @csrf
-    <div class="modal fade" id="restoreDB" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="importModalLabel">Phục hồi</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="mb-0">
-              <label for="file_excel" class="form-label">Chọn file CSDL</label>
-              <input type="file" class="form-control" id="file_sql" name="file_sql" required />
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
-            <button type="submit" class="btn btn-danger">Phục hồi</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </form>
+  <form action="{{ route('app.backupAll')}}" method="get">
+		@csrf
+		<div class="modal fade" id="myModalBackupAll" tabindex="-1" role="dialog" aria-labelledby="myModalLabelDelete">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+                      <h5 class="modal-title">Sao lưu</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" >
+						<p class="fw-bold text-danger">Bạn muốn sao lưu toàn bộ dữ liệu hệ thống?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>
+						<button type="submit" class="btn btn-danger">Thực hiện</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>	
+  <form action="{{ route('app.backupDB')}}" method="get">
+		@csrf
+		<div class="modal fade" id="myModalBackupDB" tabindex="-1" role="dialog" aria-labelledby="myModalLabelDelete">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+                      <h5 class="modal-title">Sao lưu</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" >
+						<p class="fw-bold text-danger">Bạn muốn chỉ sao lưu database?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>
+						<button type="submit" class="btn btn-danger">Thực hiện</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>	
+  <form action="{{ route('logout') }}" method="POST">
+		@csrf
+		<div class="modal fade" id="ModalDangXuat" tabindex="-1" role="dialog" aria-labelledby="myModalLabelDelete">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+                      <h5 class="modal-title">Đăng xuất</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" >
+						<p class="fw-bold text-danger">Bạn chắc chắn muốn đăng xuất?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>
+						<button type="submit" class="btn btn-danger">Thực hiện</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>	
 </body>
 
 </html>

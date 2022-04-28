@@ -52,7 +52,56 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // Google OAuth
 Route::get('/login/google', [HomeController::class, 'getGoogleLogin'])->name('google.login');
 Route::get('/login/google/callback', [HomeController::class, 'getGoogleCallback'])->name('google.callback');
-
+// Cấu hình
+Route::prefix('app')->middleware(['isAdmin','auth','PreventBackHistory'])->group(function() {
+	Route::get('/v', function() {
+		$laravel = app();
+		return redirect()->route('admin.home')->with('status', 'Version: Laravel ' . $laravel::VERSION);
+	})->name('app.version');
+	
+	Route::get('/key', function() {
+		Artisan::call('key:generate');
+		return redirect()->route('admin.home')->with('status', 'Key is generated.');
+	})->name('app.key');
+	
+	Route::get('/down', function() {
+		Artisan::call('down');
+		return redirect()->route('admin.home')->with('status', 'Application is now in maintenance mode.');
+	})->name('app.down');
+	
+	Route::get('/up', function() {
+		Artisan::call('up');
+		return redirect()->route('admin.home')->with('status', 'Application is now live.');
+	})->name('app.up');
+	
+	Route::get('/clear/cache', function() {
+		Artisan::call('cache:clear');
+		return redirect()->route('admin.home')->with('status', 'Application cache is cleared.');
+	})->name('app.clear.cache');
+	
+	Route::get('/clear/config', function() {
+		Artisan::call('config:clear');
+		return redirect()->route('admin.home')->with('status', 'Configuration cache is cleared.');
+	})->name('app.clear.config');
+	
+	Route::get('/clear/route', function() {
+		Artisan::call('route:clear');
+		return redirect()->route('admin.home')->with('status', 'Route cache is cleared.');
+	})->name('app.clear.route');
+	
+	Route::get('/clear/view', function() {
+		Artisan::call('view:clear');
+		return redirect()->route('admin.home')->with('status', 'Compiled views cache are cleared.');
+	})->name('app.clear.view');
+  Route::get('/backupAll', function() {
+		Artisan::call('backup:run');
+		return redirect()->route('admin.getdashboard')->with('status', 'Đã sao lưu dữ liệu hệ thống. Vui lòng truy cập email để xem thông tin chi tiết.');
+	})->name('app.backupAll');
+  Route::get('/backupDB', function() {
+		Artisan::call('backup:run --only-db');
+		return redirect()->route('admin.dashboard')->with('status', 'Đã sao lưu database. Vui lòng truy cập email để xem thông tin chi tiết.');
+	})->name('app.backupDB');
+});
 Route::prefix('admin')->name('admin.')->middleware(['isHoiDongThi','auth','PreventBackHistory'])->group(function() {
 // Route::group(['prefix'=>'admin','name'=>'admin.', 'middleware'=>['isAdmin','auth','PreventBackHistory']], function(){
     
@@ -60,7 +109,7 @@ Route::prefix('admin')->name('admin.')->middleware(['isHoiDongThi','auth','Preve
         Route::get('/403', [AdminController::class,'getForbidden'])->name('forbidden');
         Route::get('dashboard',[AdminController::class,'index'])->name('dashboard');
 
-        Route::get('saoluu',[RestoreDataController::class,'Backup'])->name('saoluu');
+        //Route::get('saoluu',[RestoreDataController::class,'Backup'])->name('saoluu');
         Route::post('restoreDB',[RestoreDataController::class,'Restore'])->name('restoreDB');
       
         Route::get('bieumau',[AdminController::class,'getBieuMau'])->name('bieumau');

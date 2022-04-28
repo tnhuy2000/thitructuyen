@@ -13,7 +13,18 @@ Bảng điều khiển
     </div><!-- End Page Title -->
 
     <section class="section dashboard">
+      
       <div class="row">
+        @if (session('status'))       
+          <div class="col-lg-12">
+            <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
+                
+                <i class="bi bi-exclamation-circle"></i> {{ session('status') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <br/>
+         </div>
+        @endif
         <!-- Left side columns -->
         <div class="col-lg-8">
           <div class="row">
@@ -114,11 +125,8 @@ Bảng điều khiển
               </div>
 
             </div><!-- End Customers Card -->
-
-         
           </div>
         </div><!-- End Left side columns -->
-
         <!-- Right side columns -->
         <div class="col-lg-4">
         <!-- Recent Activity -->

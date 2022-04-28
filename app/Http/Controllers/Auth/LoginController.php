@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -57,7 +58,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-
+    
     public function login(Request $request){
        $input = $request->all();
        //Validate Inputs
@@ -66,7 +67,7 @@ class LoginController extends Controller
         'password'=>'required|min:4|max:30'
         ]);
         if( auth()->attempt(array('username'=>$input['username'], 'password'=>$input['password'])) ){
-            
+            \Auth::logoutOtherDevices(request('password'));
             if(auth()->user()->trangthai==1){
                 if( auth()->user()->role == 1 || auth()->user()->role == 4){
                     return redirect()->route('admin.dashboard');
@@ -83,7 +84,8 @@ class LoginController extends Controller
 
         }else{
             // redirect()->route('login')->with('fail','Tài khoản hoặc mật khẩu không đúng');
-            return redirect()->back()->with(['fail' => 'Tài khoản hoặc mật khẩu không đúng!']);
+            return redirect()->back()->with(['fail' => 'Tài khoản hoặc mật khẩu không đúng!','old_username'=>$input['username']]);
         }
     }
+    
 }

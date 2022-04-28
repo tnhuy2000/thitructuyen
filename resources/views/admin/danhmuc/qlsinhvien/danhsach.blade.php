@@ -28,12 +28,12 @@ Quản lý sinh viên
 		  	<a href="{{ route('admin.danhmuc.qlsinhvien.them') }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Thêm mới</a>
 		  	<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="fa-solid fa-upload"></i> Nhập từ Excel</a>
 			<a href="{{ route('admin.danhmuc.qlsinhvien.xuat') }}" class="btn btn-success"><i class="fa-solid fa-download"></i> Xuất ra Excel</a>
-            
+           
 		  <!-- Table with stripped rows -->
 		  <table class="table datatable table-hover">
 		  	<thead>
 				<tr>
-					<th width="2%">#</th>
+					<th width="2%" >#</th>
 					<th width="15%">Mã số sinh viên</th>
 					<th width="30%">Thông tin sinh viên</th>
 					<th width="15%">Mã lớp</th>
