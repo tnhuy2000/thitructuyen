@@ -112,6 +112,7 @@ class PhongThiController extends Controller
                 
                 'updated_at' => Carbon::now()
             ]);
+            
         }
 		
         toastr()->success('Thêm dữ liệu thành công');

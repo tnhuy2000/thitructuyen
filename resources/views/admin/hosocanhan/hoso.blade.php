@@ -37,7 +37,7 @@ Hồ sơ cá nhân
                                 <p class="profile-username text-center user_name">{{ Auth::user()->name }}</p>
                             </h3>
                             @if(Auth::user()->role==1)
-                            <h6 class="text-muted text-center">Quyền hạn: Admin</h6>
+                            <h6 class="text-muted text-center">Quyền hạn: Quản trị viên</h6>
                             @elseif(Auth::user()->role==4)
                             <h6 class="text-muted text-center">Quyền hạn: Hội đồng thi</h6>
                             @endif

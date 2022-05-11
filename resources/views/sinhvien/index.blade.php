@@ -33,8 +33,8 @@
                 {
                 @endphp
                 <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.3s" >
-                    <div class="price-item " style="height:400px;">
-                        <div class="border-bottom p-4 mb-4" >
+                    <div class="price-item " >
+                        <div class="border-bottom p-4 mb-2" >
                             <h5 class="text-primary mb-1">{{$value->tenkythi}}</h5>
                             <h2 class="display-6 mb-0">
                                 <small class="align-top" style="font-size: 22px; line-height: 45px;"></small>{{$value->maphong}}<small

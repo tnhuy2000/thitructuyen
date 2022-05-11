@@ -76,17 +76,17 @@
         <marquee direction="down" height="500px" onmouseover="stop()" onmouseout="start()">
         @foreach($thongbao_cu as $value)
             @if($value->id !=$thongbao->id)
-            <div class="card mb-3 bg-light h-100">
+            <div class="card mb-3 border-secondary  h-100">
             
                 <div class="card-body">
                   <h5 class="card-title"><a href="{{ route('sinhvien.thongbao.chitiet', ['id' => $value->id]) }}">{{ $value->tieude }}</a></h5>
                   @if($value->loai=='dinhkem')
                     <h6 class="card-text small"><span class="badge bg-info">Văn bản - đính kèm</span></h6>
                 @endif
-                  <h6 class="card-text small">Ngày đăng: {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $value->created_at)->format('d/m/Y') }}</h6>
+                  <h6 class="card-text text-muted small">Ngày đăng: {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $value->created_at)->format('d/m/Y') }}</h6>
                   
                 </div>
-                <div class="card-footer">
+                <div class="card-footer bg-transparent">
                 <a href="{{ route('sinhvien.thongbao.chitiet', ['id' => $value->id]) }}" class="btn btn-primary">Xem tiếp <i class="bi bi-arrow-right-circle"></i></a>
                 </div>
             

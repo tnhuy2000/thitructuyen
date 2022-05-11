@@ -3,7 +3,11 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>Đăng nhập</title>
+    
+    <!-- Favicons -->
+    <link href="{{asset('public/img/agulogo.png')}}" rel="icon">
+    <link href="{{asset('public/img/agulogo.png')}}" rel="apple-touch-icon">
 	<link href="{{asset('public/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('public/themes/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
     @yield('css')

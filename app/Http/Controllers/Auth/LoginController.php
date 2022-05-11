@@ -79,7 +79,7 @@ class LoginController extends Controller
                     return redirect()->route('sinhvien.dashboard');
                 }
             }else{
-                return redirect()->route('login')->with('fail','Tài khoản đã bị khoá');
+                return redirect()->route('login')->with(['fail' => 'Tài khoản đã bị khoá!','old_username'=>$input['username']]);
             }
 
         }else{

@@ -31,10 +31,11 @@
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
+        @if(Auth::user()->role==1)
         <li class="nav-item dropdown pe-3">  
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             
-            <span class="d-none d-md-block dropdown-toggle ps-2 user_name">Sao lưu</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2 user_name"> <i class="fa-brands fa-google-drive"></i> Sao lưu</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -47,12 +48,11 @@
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="" data-bs-target="#myModalBackupAll" data-bs-toggle="modal">
-                <i class="bi bi-person"></i>
-                <span>Sao lưu toàn bộ dữ liệu</span>
+               
+                <span><i class="fa-regular fa-clone"></i> Sao lưu toàn bộ dữ liệu</span>
               </a>
             </li>
            
-         
             <li>
               <hr class="dropdown-divider">
             </li>
@@ -60,15 +60,15 @@
             <li>
            
               <a class="dropdown-item d-flex align-items-center" href="" data-bs-target="#myModalBackupDB" data-bs-toggle="modal">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Sao lưu Database</span>
+              
+                <span><i class="fa-solid fa-database"></i> Sao lưu Database</span>
               </a>
               
             </li>
 
           </ul><!-- End Profile Dropdown Items -->
         </li><!-- End Profile Nav -->
-
+        @endif
         <li class="nav-item pe-3">  
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="{{route('admin.bieumau')}}">
             <span class="d-none d-md-block ps-2 user_name"><i class="fa-solid fa-file-excel"></i> Biểu mẫu</span>
@@ -279,15 +279,43 @@
           
         </ul>
       </li><!-- End Charts Nav -->
-
-    
-<!--      
+      @if(Auth::user()->role==1)
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-register.html">
-          <i class="bi bi-card-list"></i>
-          <span>Biểu mẫu</span>
+        <a class="nav-link {{ request()->is('*/app*') ? '' : 'collapsed' }}" data-bs-target="#setting-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-gear"></i><span>Hệ thống</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-      </li> -->
+        <ul id="setting-nav" class="nav-content collapse {{ request()->is('*/app*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+          <li>
+            <a  href="#backupall" data-bs-target="#myModalBackupAll" data-bs-toggle="modal">
+              <i class="bi bi-circle"></i><span>Sao lưu toàn bộ hệ thống</span>
+            </a>
+          </li>
+          <li>
+            <a href="" data-bs-target="#myModalBackupDB" data-bs-toggle="modal" >
+              <i class="bi bi-circle"></i><span>Sao lưu cơ sở dữ liệu</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{route('app.version')}}" >
+              <i class="bi bi-circle"></i><span>Xem phiên bản hệ thống</span>
+            </a>
+          </li>
+          @if(app()->isDownForMaintenance())
+          <li>
+            <a href="tatbaotri" data-bs-target="#ModalTatBaoTri" data-bs-toggle="modal" >
+              <i class="bi bi-circle"></i><span>Tắt chế độ bảo trì</span>
+            </a>
+          </li>
+          @else
+          <li>
+            <a href="batbaotri" data-bs-target="#ModalBatBaoTri" data-bs-toggle="modal"  >
+              <i class="bi bi-circle"></i><span>Bật chế độ bảo trì</span>
+            </a>
+          </li>
+          @endif
+        </ul>
+      </li><!-- End Charts Nav -->
+      @endif
 
       <li class="nav-heading">Hồ sơ</li>
 
@@ -369,6 +397,46 @@
 					</div>
 					<div class="modal-body" >
 						<p class="fw-bold text-danger">Bạn chắc chắn muốn đăng xuất?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>
+						<button type="submit" class="btn btn-danger">Thực hiện</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>	
+  <form action="{{route('app.down')}}" method="GET">
+		@csrf
+		<div class="modal fade" id="ModalBatBaoTri" tabindex="-1" role="dialog" aria-labelledby="myModalLabelDelete">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+                      <h5 class="modal-title">Bật chế độ bảo trì</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" >
+						<p class="fw-bold text-danger">Bạn muốn BẬT chế độ bảo trì trang web?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>
+						<button type="submit" class="btn btn-danger">Thực hiện</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>	
+  <form action="{{route('app.up')}}" method="GET">
+		@csrf
+		<div class="modal fade" id="ModalTatBaoTri" tabindex="-1" role="dialog" aria-labelledby="myModalLabelDelete">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+                      <h5 class="modal-title">Tắt chế độ bảo trì</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" >
+						<p class="fw-bold text-danger">Bạn muốn TẮT chế độ bảo trì trang web?</p>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>

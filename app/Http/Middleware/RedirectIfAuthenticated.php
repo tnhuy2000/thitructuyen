@@ -29,7 +29,7 @@ class RedirectIfAuthenticated
             //thư ký hoặc cán bộ coi thi
             elseif(Auth::guard($guard)->check() && (Auth::user()->role == 2 ||Auth::user()->role == 3) && Auth::user()->trangthai == 1)
             {
-                return redirect(RouteServiceProvider::THUKY);
+                return redirect(RouteServiceProvider::GIAMTHI);
             }
             //sinh viên
             elseif(Auth::guard($guard)->check() && Auth::user()->role == 5 && Auth::user()->trangthai == 1)

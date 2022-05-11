@@ -1030,7 +1030,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 30px;
 }
 .error-404 h1 {
-  font-size: 180px;
+  font-size: 100px;
   font-weight: 700;
   color: #4154f1;
   margin-bottom: 0;

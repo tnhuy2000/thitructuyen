@@ -5,12 +5,9 @@
     </div>
     <div class="credits">
       
-      Bạn đang đăng nhập với tên <a href="{{route('logout')}}" style="text-decoration: underline;" onclick="event.preventDefault();
-       document.getElementById('logout-form').submit();">{{Auth::user()->name}} (Thoát)</a>
+      Bạn đang đăng nhập với tên <a style="text-decoration: underline;" href="dangxuat" data-bs-target="#ModalDangXuat" data-bs-toggle="modal">{{Auth::user()->name}} (Thoát)</a>
      
-              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                  @csrf
-              </form>
+              
     </div>
   </footer><!-- End Footer -->
 

@@ -3,7 +3,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
  <meta name="csrf-token" content="{{ csrf_token() }}">
  
-  <title>@yield('pagetitle', 'Trang chủ') - {{ config('app.short_name', 'Online Exams') }}</title>
+  <title>@yield('pagetitle', 'Trang chủ') - {{ config('app.short_name', 'Online Exam') }}</title>
   <!-- Favicons -->
   <link href="{{asset('public/img/agulogo.png')}}" rel="icon">
   <link href="{{asset('public/img/agulogo.png')}}" rel="apple-touch-icon">
