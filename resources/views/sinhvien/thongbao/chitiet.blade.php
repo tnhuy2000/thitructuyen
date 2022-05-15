@@ -71,7 +71,7 @@
     </div>
         <div class="col-lg-3">
         <h6 class="text-secondary text-uppercase"><i class="fas fa-bullhorn"></i> Thông báo khác</h6>
-        <marquee direction="down" height="500px" onmouseover="stop()" onmouseout="start()">
+        <marquee direction="up" height="500px" onmouseover="stop()" onmouseout="start()">
         @foreach($thongbao_cu as $value)
             @if($value->id !=$thongbao->id)
           <div class="card mb-3 border-secondary">

@@ -3,8 +3,18 @@
 
 @include('layouts.header')
 
-<body>
+<body >
 
+ 
+  <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div class="spinner-border text-primary" style="width: 40px; height: 40px;" role="status">
+      <span class="visually-hidden">
+        <font style="vertical-align: inherit;">
+          <font style="vertical-align: inherit;">Đang tải...</font>
+        </font>
+      </span>
+    </div>
+  </div>
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -28,7 +38,7 @@
     </div><!-- End Logo -->
 
     
-
+   
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
         @if(Auth::user()->role==1)
@@ -357,10 +367,17 @@
 					</div>
 					<div class="modal-body" >
 						<p class="fw-bold text-danger">Bạn muốn sao lưu toàn bộ dữ liệu hệ thống?</p>
+            <div id="spinnerBackupAll">
+              <a href="" disabled="">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Đang sao lưu dữ liệu...</font>
+                </font>
+              </a>
+            </div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>
-						<button type="submit" class="btn btn-danger">Thực hiện</button>
+						<button id="buttonBackupAll" type="submit" class="btn btn-danger">Thực hiện</button>
 					</div>
 				</div>
 			</div>
@@ -377,10 +394,17 @@
 					</div>
 					<div class="modal-body" >
 						<p class="fw-bold text-danger">Bạn muốn chỉ sao lưu database?</p>
+            <div id="spinnerBackupDB">
+              <a href="" disabled="">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Đang sao lưu dữ liệu...</font>
+                </font>
+              </a>
+            </div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Hủy bỏ</button>
-						<button type="submit" class="btn btn-danger">Thực hiện</button>
+						<button id="buttonBackupDB" type="submit" class="btn btn-danger" onclick="myBackup()">Thực hiện</button>
 					</div>
 				</div>
 			</div>

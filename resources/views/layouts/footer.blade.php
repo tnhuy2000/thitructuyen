@@ -34,6 +34,17 @@
 
 
   <script type="text/javascript">
+  $(document).ready(function(){
+	$("#spinnerBackupDB").hide();
+	$("#buttonBackupDB").click(function(){
+		$("#spinnerBackupDB").toggle(1000);
+	});
+
+  $("#spinnerBackupAll").hide();
+	$("#buttonBackupAll").click(function(){
+		$("#spinnerBackupAll").toggle(1000);
+	});
+});
  
 </script>
 

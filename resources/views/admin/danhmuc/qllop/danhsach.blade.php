@@ -170,7 +170,22 @@ Quản lý lớp
     
     $(document).ready(function() {
 		
-        $('#ex').DataTable();
+       /// $('#ex').DataTable();
+		$("#ex").DataTable({
+				"aLengthMenu": [[5,10, 25, 50, 100, -1], [5,10, 25, 50, 100, "Tất cả"]],
+				"iDisplayLength": 5,
+				"oLanguage": {
+					
+					"oPaginate": {
+						
+						"sNext": "<i class='fa-solid fa-chevron-right'></i>",
+						"sPrevious": "<i class='fa-solid fa-chevron-left'></i>"
+					},
+					
+				}
+			});
+			
+			
         
         $('input.global_filter').on( 'keyup click', function () {
             filterGlobal();
@@ -190,6 +205,6 @@ Quản lý lớp
            $("#col3_filter").select2();  
 			
         });
-
+		
   </script>
 @endsection

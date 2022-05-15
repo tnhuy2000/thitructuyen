@@ -27,7 +27,7 @@ Quản lý lớp | Sửa
               
               <form action="{{ route('admin.danhmuc.qllop.sua', ['malop' => $ktlop->malop]) }}" method="post" class="row g-3 needs-validation" novalidate>
                     @csrf
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                     <label for="validationCustom01" class="form-label">Mã lớp</label>
                       <input type="text" class="form-control" id="malop" name="malop" value="{{ $ktlop->malop }}" readonly  required>
                       @error('malop')
@@ -35,7 +35,7 @@ Quản lý lớp | Sửa
                       @enderror
 
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                       <label for="validationCustom02" class="form-label">Tên lớp</label>
                       <input type="text" class="form-control @error('tenlop') is-invalid @enderror" value="{{ $ktlop->tenlop }}"  id="tenlop" name="tenlop" required>
                       @error('tenlop')
@@ -43,7 +43,7 @@ Quản lý lớp | Sửa
                       @enderror
                      
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                       <label for="validationCustom02" class="form-label">Niên khoá</label>
                       <input type="text" class="form-control @error('nienkhoa') is-invalid @enderror" value="{{ $ktlop->nienkhoa }}"  id="nienkhoa" name="nienkhoa" required>
                       @error('nienkhoa')
