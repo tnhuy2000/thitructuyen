@@ -22,7 +22,6 @@
         "spatie/laravel-backup": "^6.16",
         "yajra/laravel-datatables-oracle": "~9.0",
         "yoeunes/toastr": "^1.2"
-        
     },
     "require-dev": {
         "facade/ignition": "^2.5",

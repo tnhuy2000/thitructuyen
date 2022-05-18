@@ -134,3 +134,13 @@ Quản lý hội đồng thi | Sửa
 
 </main><!-- End #main -->
 @endsection
+@section('javascript')    
+<script type="text/javascript">
+        $(document).ready(function() {
+            $("#makhoa").select2({         
+              theme: "bootstrap-5",
+              });   
+        });
+</script>
+
+@endsection

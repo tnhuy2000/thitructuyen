@@ -53,7 +53,7 @@ Quản lý lớp | Sửa
                     </div>
                     <div class="form-group col-md-12 ">
                       <label for="makhoa" class="form-label">Khoa</label>
-                      <select class="form-select" id="statesKhoa" name="makhoa" required>
+                      <select class="form-select" id="statesKhoaSua" name="makhoa" required>
                         <option value="">-- Chọn Khoa --</option>
                         @foreach($ktkhoa as $value){
                           @if($ktlop->makhoa == $value->makhoa)
@@ -92,7 +92,9 @@ Quản lý lớp | Sửa
 @section('javascript')    
 <script type="text/javascript">
 $(document).ready(function() {
-            $("#statesKhoa").select2();   
+            $("#statesKhoaSua").select2({         
+              theme: "bootstrap-5",
+              });   
         });
 
 </script>

@@ -103,9 +103,12 @@ Quản lý ca thi | Thêm
         x.type = "password";
       }
     }
-    $(document).ready(function() {
-            $("#kythi_id").select2();   
+    
+        $(document).ready(function() {
+            $("#kythi_id").select2({         
+              theme: "bootstrap-5",
+              });   
         });
- 
 </script>
 @endsection
+

@@ -62,6 +62,7 @@ class ThongKeController extends Controller
               
         $phongthi = \DB::table('phongthi as p')
             ->orderBy('p.maphong', 'asc')->get(); 
+         
         $cathi = \DB::table('cathi')->get();
        
       $dem=\DB::table('cathi as ct')
@@ -77,7 +78,7 @@ class ThongKeController extends Controller
                   ->where('bt.trangthai', 1)
                   ->groupBy('pt.cathi_id','ct.tenca','ct.ngaythi','ct.giobatdau')->get();
      
-            return view('admin.thongke.bailamsinhvien',compact('baithi','cathi','dem','phongthi','cathi_phongthi'));
+      return view('admin.thongke.bailamsinhvien',compact('baithi','cathi','dem','phongthi','cathi_phongthi'));
         
     }
 

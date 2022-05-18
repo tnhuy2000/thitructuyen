@@ -85,10 +85,11 @@ Quản lý lớp | Thêm
 @endsection
 @section('javascript')    
 <script type="text/javascript">
-  $(document).ready(function() {
-            $("#statesKhoa").select2();   
+        $(document).ready(function() {
+            $("#statesKhoa").select2({         
+              theme: "bootstrap-5",
+              });   
         });
-
 </script>
 
 @endsection

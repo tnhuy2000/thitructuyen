@@ -230,6 +230,7 @@ Quản lý sinh viên - phòng thi
 			$('#ghichu_edit').val(ghichu);
 		}
 		$('#statesSV').select2({
+			
 			dropdownParent: $('#myModalThemSVPT'),
 			placeholder: "Nhập mã sinh viên",
     		allowClear: true

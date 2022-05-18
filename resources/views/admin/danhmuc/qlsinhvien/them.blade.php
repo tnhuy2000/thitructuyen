@@ -28,7 +28,7 @@ Quản lý sinh viên | Thêm
               <form action="{{ route('admin.danhmuc.qlsinhvien.them') }}" method="post" class="row g-3 needs-validation" novalidate>
                     @csrf 
                   
-                   <div class="col-md-4">
+                   <div class="col-md-12">
                     <label for="validationCustom01" class="form-label">Mã sinh viên</label>
                       <input type="text" placeholder="Vd: DTH185437" class="form-control @error('masinhvien') is-invalid @enderror" id="masinhvien" name="masinhvien" value="{{ old('masinhvien') }}" required>
                       
@@ -37,15 +37,15 @@ Quản lý sinh viên | Thêm
                       @enderror
 
                     </div>
-                    <div class="col-md-3">
-                      <label for="validationCustom02" class="form-label">Họ lót</label>
+                    <div class="col-md-6">
+                      <label for="validationCustom02" class="form-label">Họ</label>
                       <input type="text"  class="form-control @error('holot') is-invalid @enderror" id="holot" name="holot" value="{{ old('holot') }}" required>
                      
                       @error('holot')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                       @enderror
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                       <label for="validationCustom02" class="form-label">Tên điệm và tên</label>
                       <input type="text" class="form-control @error('ten') is-invalid @enderror" id="ten" name="ten" value="{{ old('ten') }}" required>
                       @error('ten')
@@ -53,7 +53,7 @@ Quản lý sinh viên | Thêm
                       @enderror
                     </div>
                     
-                      <div class="form-group col-sm-6">
+                      <div class="form-group col-sm-12">
                         <label for="validationCustom02" class="form-label">Địa chỉ email</label>
                         <input type="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required>
                         @error('email')
@@ -68,12 +68,12 @@ Quản lý sinh viên | Thêm
                         @enderror
                       </div>
                    
-                    <div class="form-group">
+                    <div class="form-group  col-sm-6">
                       <label for="MaLoai" class="form-label">Lớp</label>
                       <select class="form-control @error('malop') is-invalid @enderror" id="statesLop" name="malop" style="height: 100%" >
                         <option value="">-- Chọn Lớp --</option>
                         @foreach($ktkhoa as $value1){
-                        <optgroup label="{{$value1->tenkhoa}}">
+                        <optgroup label="{{$value1->tenkhoa}}" >
                           @foreach($ktlop as $value2){
                             @if($value2->makhoa==$value1->makhoa)
                             <option value="{{$value2->malop}}" {{(old('malop')==$value2->malop)?'selected':''}}>{{$value2->malop}}</option>
@@ -108,8 +108,9 @@ Quản lý sinh viên | Thêm
 @section('javascript')    
 <script type="text/javascript">
   $(document).ready(function() {
-            $("#statesLop").select2({ 
-             height : 'Resolution' });   
+            $("#statesLop").select2({         
+              theme: "bootstrap-5",
+              });   
         });
 
 </script>

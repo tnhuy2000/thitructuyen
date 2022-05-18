@@ -50,7 +50,7 @@ Quản lý ca thi | Sửa
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                       @enderror
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                     <label for="validationCustom01" class="form-label">Tên ca</label>
                       <input type="text" class="form-control @error('tenca') is-invalid @enderror" id="tenca" name="tenca" value="{{ $ktcathi->tenca }}" required>
                       
@@ -59,7 +59,7 @@ Quản lý ca thi | Sửa
                       @enderror
 
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <label for="validationCustom02" class="form-label">Ngày thi</label>
                       <input type="date" class="form-control @error('ngaythi') is-invalid @enderror" id="ngaythi" name="ngaythi" value="{{ $ktcathi->ngaythi }}" required>
                      
@@ -67,7 +67,7 @@ Quản lý ca thi | Sửa
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                       @enderror
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <label for="validationCustom02" class="form-label">Giờ bắt đầu</label>
                       <input type="time"  class="form-control @error('giobatdau') is-invalid @enderror" id="giobatdau" name="giobatdau" value="{{ $ktcathi->giobatdau }}" value="{{ old('giobatdau') }}" required>
                       @error('giobatdau')
@@ -113,8 +113,9 @@ Quản lý ca thi | Sửa
     }
 
     $(document).ready(function() {
-            $("#kythi_id").select2();   
+            $("#kythi_id").select2({         
+              theme: "bootstrap-5",
+              });   
         });
- 
 </script>
 @endsection

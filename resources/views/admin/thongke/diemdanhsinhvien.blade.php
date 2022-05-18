@@ -98,7 +98,7 @@ Thống kê điểm danh sinh viên
                                     <td>{{$phongthi->soluongthisinh-$svpt_comat->slsvvang}}</td>
                                 @else
                                     <td>0</td>
-                                    <td>{{$phongthi->soluongthisinh-0</td>
+                                    <td>{{$phongthi->soluongthisinh-0}}</td>
                                 @endif
                             
                             @endif
@@ -148,7 +148,12 @@ Thống kê điểm danh sinh viên
  //start   
             $(document).ready(function() {
                 $('#ex').DataTable();
-                
+                $("#col0_filter").select2({         
+                    theme: "bootstrap-5",
+                });
+                $("#col2_filter").select2({         
+                    theme: "bootstrap-5",
+                });
                 $('input.global_filter').on( 'keyup click', function () {
                     filterGlobal();
                 } );
@@ -156,6 +161,7 @@ Thống kê điểm danh sinh viên
                 $('input.column_filter').on( 'keyup click', function () {
                     filterColumn( $(this).parents('div').attr('data-column') );
                 } );
+                
             } );
 //end 
             $('select.column_filter').on('change', function () {

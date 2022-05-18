@@ -91,8 +91,10 @@ Quản lý phòng thi | Sửa
 @endsection
 @section('javascript')    
 <script type="text/javascript">
-$(document).ready(function() {
-            $("#statesCaThi").select2();   
+ $(document).ready(function() {
+            $("#statesCaThi").select2({         
+              theme: "bootstrap-5",
+              });   
         });
 
 </script>

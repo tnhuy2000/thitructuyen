@@ -37,7 +37,7 @@ Quản lý hội đồng thi | Thêm
 
                     </div>
                     <div class="col-md-3">
-                      <label for="validationCustom02" class="form-label">Họ lót</label>
+                      <label for="validationCustom02" class="form-label">Họ</label>
                       <input type="text" placeholder="Vd: Nguyễn"  class="form-control @error('holot') is-invalid @enderror" id="holot" name="holot" value="{{ old('holot') }}" required>
                      
                       @error('holot')
@@ -107,4 +107,14 @@ Quản lý hội đồng thi | Thêm
 </section>
 
 </main><!-- End #main -->
+@endsection
+@section('javascript')    
+<script type="text/javascript">
+        $(document).ready(function() {
+            $("#makhoa").select2({         
+              theme: "bootstrap-5",
+              });   
+        });
+</script>
+
 @endsection

@@ -140,11 +140,14 @@ Quản lý đề thi | Sửa
     $('#tendethi').val(x+ ' - học phần: '+ten);
   }
 
-  $(document).ready(function() {
-            $("#statesKyThi").select2();   
-        });
+
         $(document).ready(function() {
-            $("#statesHocPhan").select2();   
+            $("#statesKyThi").select2({         
+              theme: "bootstrap-5",
+              });
+            $("#statesHocPhan").select2({         
+              theme: "bootstrap-5",
+              });   
         });
 </script>
 @endsection

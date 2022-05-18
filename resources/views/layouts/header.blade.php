@@ -16,31 +16,39 @@
   <link rel="stylesheet" href="{{ asset('public/js/ijaboCropTool/ijaboCropTool.min.css') }}">
   <!-- Vendor CSS Files -->
   <link href="{{asset('public/themes/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
+  {{-- select2 css --}}
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+  <!-- Or for RTL support -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" /> 
+
   <link href="{{asset('public/themes/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
   <link href="{{asset('public/themes/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
   <link href="{{asset('public/themes/vendor/quill/quill.snow.css')}}" rel="stylesheet">
   <link href="{{asset('public/themes/vendor/quill/quill.bubble.css')}}" rel="stylesheet">
   <link href="{{asset('public/themes/vendor/remixicon/remixicon.css')}}" rel="stylesheet">
   <link href="{{asset('public/themes/vendor/simple-datatables/style.css')}}" rel="stylesheet">
-  {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet"> --}}
-  
+
+  <style>
+   .select2-results__group{
+     color: rgb(27, 11, 247) !important;
+     font-weight: bold !important;
+   }
+  </style>
 
   @yield('css')
    
     <script src="https://kit.fontawesome.com/44f5ed54db.js" crossorigin="anonymous"></script>
-  <!-- Template Main CSS File -->
+    <!-- Template Main CSS File -->
     <link href="{{asset('public/themes/css/style.css')}}" rel="stylesheet">
-    {{-- <link href="{{asset('public/select/select2.css')}}" rel="stylesheet"/>
-    <link href="{{asset('public/select/demo.css')}}" rel="stylesheet" type="text/css"/>  --}}
+    
      <link rel="stylesheet" href="{{ asset('public/vendor/datatables/datatables-1.10.22/css/dataTables.bootstrap4.min.css') }}" />
       
      @toastr_css
-    
-   
-     {{-- <script src="{{asset('public/select/select2.js')}}"></script>  --}}
 
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
     <script src="https://kit.fontawesome.com/44f5ed54db.js" crossorigin="anonymous"></script>
     
 </head>

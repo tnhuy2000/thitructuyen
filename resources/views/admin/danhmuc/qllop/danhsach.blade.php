@@ -201,10 +201,10 @@ Quản lý lớp
             filterColumn( $(this).parents('div').attr('data-column') );
         } );
 
-		$(document).ready(function() {
-           $("#col3_filter").select2();  
-			
-        });
+		
+		$("#col3_filter").select2({         
+              theme: "bootstrap-5",
+              });   
 		
   </script>
 @endsection

@@ -21,6 +21,9 @@
 
   <script src="{{asset('public/themes/vendor/apexcharts/apexcharts.min.js')}}"></script>
   <script src="{{asset('public/themes/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+  {{-- //select2 --}}
+
   <script src="{{asset('public/themes/vendor/chart.js/chart.min.js')}}"></script>
   <script src="{{asset('public/themes/vendor/echarts/echarts.min.js')}}"></script>
   <script src="{{asset('public/themes/vendor/quill/quill.min.js')}}"></script>

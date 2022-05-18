@@ -22,11 +22,14 @@ class BaiThiController extends Controller
 
         $time= $dt->addMinutes(15);
         $dulieubaithi = \DB::table('dulieubaithi')->where('baithi_id', '=', $request->id_lambailai)->first();
-
-
-         //xoá du liệu bài thi
-        \DB::table('dulieubaithi')->where('id', '=', $dulieubaithi->id)->delete();
-        Storage::deleteDirectory($dulieubaithi->duongdan);
+    
+        if($dulieubaithi!=null){
+            //xoá du liệu bài thi
+            \DB::table('dulieubaithi')->where('id', '=', $dulieubaithi->id)->delete();
+            Storage::deleteDirectory($dulieubaithi->duongdan);
+        }
+         
+       
 
         \DB::table('baithi')->where('id', '=', $request->id_lambailai)->update([
             'thoigianbatdau'=>NULL,

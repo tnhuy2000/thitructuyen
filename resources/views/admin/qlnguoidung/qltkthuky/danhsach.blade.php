@@ -25,9 +25,9 @@ Quản lý tài khoản thư ký
 	  <div class="card">
 		<div class="card-body">
 		  <h5 class="card-title">Danh sách tài khoản thư ký</h5>
-		  	{{-- <a href="#them" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModalThemUser"><i class="bx bxs-plus-square"></i> Thêm mới</a>
+		  	<a href="#them" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModalThemUser"><i class="bx bxs-plus-square"></i> Thêm mới</a>
 		  	<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bx bxs-archive-out"></i> Nhập từ Excel</a>
-			 --}}
+			
             
 		  <!-- Table with stripped rows -->
 		  <table class="table datatable table-hover table-sm">
