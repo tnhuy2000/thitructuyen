@@ -28,7 +28,7 @@ Quản lý lớp | Thêm
               <form action="{{ route('admin.danhmuc.qllop.them') }}" method="post" class="row g-3 needs-validation" novalidate>
                     @csrf
                     <div class="col-md-12">
-                    <label for="validationCustom01" class="form-label">Mã lớp</label>
+                    <label for="validationCustom01" class="form-label">Mã lớp <span class="text-danger">*</span></label>
                       <input type="text" class="form-control @error('malop') is-invalid @enderror" placeholder="Ví dụ: DH19TH1" id="malop" name="malop" value="{{ old('malop') }}" required>
                       
                       @error('malop')
@@ -37,7 +37,7 @@ Quản lý lớp | Thêm
 
                     </div>
                     <div class="col-md-12">
-                      <label for="validationCustom02" class="form-label">Tên lớp</label>
+                      <label for="validationCustom02" class="form-label">Tên lớp <span class="text-danger">*</span></label>
                       <input type="text" class="form-control @error('tenlop') is-invalid @enderror" placeholder="Ví dụ: Đại học chính quy - Công nghệ thông tin 1 - 2018" id="tenlop" name="tenlop" value="{{ old('tenlop') }}" required>
                      
                       @error('tenlop')
@@ -45,7 +45,7 @@ Quản lý lớp | Thêm
                       @enderror
                     </div>
                     <div class="col-md-12">
-                      <label for="validationCustom02" class="form-label">Niên khoá</label>
+                      <label for="validationCustom02" class="form-label">Niên khoá <span class="text-danger">*</span></label>
                       <input type="text" placeholder="Ví dụ: 2018-2022" class="form-control @error('nienkhoa') is-invalid @enderror" id="nienkhoa" name="nienkhoa" value="{{ old('nienkhoa') }}" required>
                       @error('nienkhoa')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
@@ -53,7 +53,7 @@ Quản lý lớp | Thêm
                     </div>
                     
                     <div class="col-md-12">
-                      <label for="MaLoai" class="form-label">Khoa</label>
+                      <label for="MaLoai" class="form-label">Khoa <span class="text-danger">*</span></label>
                      
                       <select class="form-select" id="statesKhoa" name="makhoa" required>
                         <option value="">-- Chọn Khoa --</option>

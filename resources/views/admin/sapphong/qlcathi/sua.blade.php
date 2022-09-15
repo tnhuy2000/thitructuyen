@@ -25,12 +25,12 @@ Quản lý ca thi | Sửa
 	  <div class="card">
       <div class="card-body">
               <h5 class="card-title">Sửa ca thi</h5>
-              
+              <h6 >Chú ý: (<span class="text-danger">*</span>) là bắt buộc.</h6>
               <form action="{{ route('admin.sapphong.qlcathi.sua', ['id' => $ktcathi->id]) }}" method="post" class="row g-3 needs-validation" novalidate>
                     @csrf
                     <div class="form-group">
-                      <label for="MaLoai" class="form-label">Kỳ thi</label>
-                      <select class="form-select @error('kythi_id') is-invalid @enderror" id="kythi_id" name="kythi_id">
+                      <label for="MaLoai" class="form-label">Kỳ thi <span class="text-danger">*</span></label>
+                      <select class="form-select" id="kythi_id" name="kythi_id" required>
                         <option value="">-- Chọn kỳ thi --</option>
                         @foreach($ktkythi as $value){
                           @if($ktcathi->kythi_id == $value->id)
@@ -51,7 +51,7 @@ Quản lý ca thi | Sửa
                       @enderror
                     </div>
                     <div class="col-md-12">
-                    <label for="validationCustom01" class="form-label">Tên ca</label>
+                    <label for="validationCustom01" class="form-label">Tên ca <span class="text-danger">*</span></label>
                       <input type="text" class="form-control @error('tenca') is-invalid @enderror" id="tenca" name="tenca" value="{{ $ktcathi->tenca }}" required>
                       
                       @error('tenca')
@@ -60,7 +60,7 @@ Quản lý ca thi | Sửa
 
                     </div>
                     <div class="col-md-6">
-                      <label for="validationCustom02" class="form-label">Ngày thi</label>
+                      <label for="validationCustom02" class="form-label">Ngày thi <span class="text-danger">*</span></label>
                       <input type="date" class="form-control @error('ngaythi') is-invalid @enderror" id="ngaythi" name="ngaythi" value="{{ $ktcathi->ngaythi }}" required>
                      
                       @error('ngaythi')
@@ -68,7 +68,7 @@ Quản lý ca thi | Sửa
                       @enderror
                     </div>
                     <div class="col-md-6">
-                      <label for="validationCustom02" class="form-label">Giờ bắt đầu</label>
+                      <label for="validationCustom02" class="form-label">Giờ bắt đầu <span class="text-danger">*</span></label>
                       <input type="time"  class="form-control @error('giobatdau') is-invalid @enderror" id="giobatdau" name="giobatdau" value="{{ $ktcathi->giobatdau }}" value="{{ old('giobatdau') }}" required>
                       @error('giobatdau')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>

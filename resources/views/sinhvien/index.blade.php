@@ -14,9 +14,7 @@
                 <h1 class="">Phòng thi của tôi</h1>
             </div>
             <div class="row g-4">
-            <!-- <iframe src="{{asset('public/uploads/QĐ ban hanh quy dinh tam thoi thi truc tuyen 2021.pdf')}}" frameBorder="0"
-    scrolling="auto" width="100%" height="1100px">
-            </iframe> -->
+              
             </div>
             <br>
             <div class="row g-4">
@@ -100,9 +98,11 @@
             </div>
         </div>
 </div>
+
   @endsection
 
   @section('javascript')
+
   <script type="text/javascript">
         
         function setCookie(cname, cvalue, exdays) {
@@ -127,7 +127,8 @@
                 setCookie('test_status', '5', 0.1);
             }
         });
-       
-    
+        
+
+          
         </script>
 @endsection

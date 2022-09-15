@@ -26,7 +26,8 @@ Quản lý phòng thi
 	  <div class="card">
 		<div class="card-body">
 		<h5 class="card-title">Danh sách phòng thi</h5>
-		<a href="{{ route('admin.sapphong.qlphongthi.them') }}" class="btn btn-primary  "><i class="fa-solid fa-plus"></i> Thêm mới</a>
+		{{-- <a href="{{ route('admin.sapphong.qlphongthi.them') }}" class="btn btn-primary  "><i class="fa-solid fa-plus"></i> Tạo phòng</a> --}}
+		<a href="{{ route('admin.sapphong.qlphongthi.themnhanh') }}" class="btn btn-primary  "><i class="fa-solid fa-plus"></i> Tạo phòng</a>
 		<a href="#nhap" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal"><i class="fa-solid fa-upload"></i> Nhập từ Excel</a>
 		{{-- <a href="#nhap" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importModal"><i class="fa-solid fa-download"></i> Xuất ra Excel</a>
 			 --}}

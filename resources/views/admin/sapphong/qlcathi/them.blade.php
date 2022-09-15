@@ -25,12 +25,12 @@ Quản lý ca thi | Thêm
 	  <div class="card">
       <div class="card-body">
               <h5 class="card-title">Thêm mới</h5>
-              
+              <h6 >Chú ý: (<span class="text-danger">*</span>) là bắt buộc.</h6>
               <form action="{{ route('admin.sapphong.qlcathi.them') }}" method="post" class="row g-3 needs-validation" novalidate>
                     @csrf
                     <div class="form-group">
-                      <label for="MaLoai" class="form-label">Kỳ thi</label>
-                      <select class="form-select @error('kythi_id') is-invalid @enderror" id="kythi_id" name="kythi_id">
+                      <label for="MaLoai" class="form-label">Kỳ thi <span class="text-danger">*</span></label>
+                      <select class="form-select " id="kythi_id" name="kythi_id" required>
                         <option value="">-- Chọn kỳ thi --</option>
                         @foreach($ktkythi as $value){
                           <option value="{{$value->id}}" {{(old('kythi_id')==$value->id)?'selected':''}}>{{$value->tenkythi}} - học kỳ {{$value->hocky}} - năm học {{$value->namhoc}} </option>
@@ -43,7 +43,7 @@ Quản lý ca thi | Thêm
                       @enderror
                     </div>
                     <div class="form-group col-md-12">
-                    <label for="validationCustom01" class="form-label">Tên ca</label>
+                    <label for="validationCustom01" class="form-label">Tên ca <span class="text-danger">*</span></label>
                       <input type="text" class="form-control @error('tenca') is-invalid @enderror" id="tenca" name="tenca" value="{{ old('tenca') }}" required>
                       
                       @error('tenca')
@@ -52,7 +52,7 @@ Quản lý ca thi | Thêm
 
                     </div>
                     <div class="col-md-6">
-                      <label for="validationCustom02" class="form-label">Ngày thi</label>
+                      <label for="validationCustom02" class="form-label">Ngày thi <span class="text-danger">*</span></label>
                       <input type="date" class="form-control @error('ngaythi') is-invalid @enderror" id="ngaythi" name="ngaythi" value="{{ old('ngaythi') }}" required>
                      
                       @error('ngaythi')
@@ -60,7 +60,7 @@ Quản lý ca thi | Thêm
                       @enderror
                     </div>
                     <div class="col-md-6">
-                      <label for="validationCustom02" class="form-label">Giờ bắt đầu</label>
+                      <label for="validationCustom02" class="form-label">Giờ bắt đầu <span class="text-danger">*</span></label>
                       <input type="time"  class="form-control @error('giobatdau') is-invalid @enderror" id="giobatdau" name="giobatdau" value="{{ old('giobatdau') }}" required>
                       @error('giobatdau')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
@@ -69,7 +69,7 @@ Quản lý ca thi | Thêm
                    
                     
                     <div class="form-group col-md-12">
-                      <label for="MaLoai" class="form-label">Mật khẩu ca thi</label>
+                      <label for="MaLoai" class="form-label">Mật khẩu ca thi <span class="text-danger">*</span></label>
                       <input type="password"  class="form-control @error('password') is-invalid @enderror" id="password" name="password" value="{{ old('password') }}" required>
                       @error('password')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>

@@ -104,7 +104,7 @@ class ThongBaoController extends Controller
 		if(isset($_SESSION['baseUrl'])) unset($_SESSION['baseUrl']);
 		$_SESSION['baseUrl'] = $path;
 		if(isset($_SESSION['resourceType'])) unset($_SESSION['resourceType']);
-		$_SESSION['resourceType'] = '*';
+		$_SESSION['resourceType'] = 'Files';
 		
 		$thongbao = ThongBao::where('id', $id)->first();
 		
@@ -136,11 +136,17 @@ class ThongBaoController extends Controller
 	
 	public function postXoa(Request $request)
 	{
-		try {  
-			VanBan::where('thongbao_id', $request->id_delete)->delete();
-			ThongBao::where('id', $request->id_delete)->delete();
+		try { 
+			$isExistHDT = VanBan::select('*')
+            ->where('thongbao_id', $request->ID_delete)
+            ->doesntExist();
+			
+			if($isExistHDT==false){
+				VanBan::where('thongbao_id', $request->ID_delete)->delete();
+			} 
+			ThongBao::where('id', $request->ID_delete)->delete();
            
-            Storage::deleteDirectory('file/posts/' . str_pad($request->id_delete, 7, '0', STR_PAD_LEFT));
+            Storage::deleteDirectory('file/posts/' . str_pad($request->ID_delete, 7, '0', STR_PAD_LEFT));
 			toastr()->success('Xoá dữ liệu thành công!');
 			return redirect()->route('admin.thongbao.danhsach');
         } catch (\Illuminate\Database\QueryException $e) {

@@ -105,7 +105,7 @@ class SinhVienController extends Controller
         if(isset($_SESSION['baseUrl'])) unset($_SESSION['baseUrl']);
         $_SESSION['baseUrl'] = $path;
         if(isset($_SESSION['resourceType'])) unset($_SESSION['resourceType']);
-        $_SESSION['resourceType'] = 'Images';
+        $_SESSION['resourceType'] = 'Files';
         
 
         $folder = 'file/baithi/'.$ngaythi.'/ca-'.$cathi->tenca.'/phong-'.$dethi_phongthi->maphong.'/'. str_pad(Auth::user()->masinhvien, 7, '0', STR_PAD_LEFT);
@@ -146,7 +146,7 @@ class SinhVienController extends Controller
         if(isset($_SESSION['baseUrl'])) unset($_SESSION['baseUrl']);
         $_SESSION['baseUrl'] = $path;
         if(isset($_SESSION['resourceType'])) unset($_SESSION['resourceType']);
-        $_SESSION['resourceType'] = 'Images';
+        $_SESSION['resourceType'] = 'Files';
         
         $folder = 'file/baithi/' . str_pad(Auth::user()->masinhvien, 7, '0', STR_PAD_LEFT);
 

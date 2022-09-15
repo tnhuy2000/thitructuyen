@@ -69,14 +69,14 @@
                             <form action="{{ route('admin.danhmuc.qlkhoa.them') }}" method="post" id="add-khoa-form" autocomplete="off">
                                 @csrf
                                 <div class="form-group mt-2">
-                                    <label for="">Mã khoa/phòng ban</label>
+                                    <label for="">Mã khoa/phòng ban <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control @error('makhoa') is-invalid @enderror" id="makhoa" name="makhoa" placeholder="Mã khoa" value="{{ old('makhoa') }}">
                                     @error('makhoa')
 									<div class="invalid-feedback"><strong>{{ $message }}</strong></div>
 								 	@enderror
                                 </div>
                                 <div class="form-group mt-2">
-                                    <label for="">Tên khoa/ phòng ban</label>
+                                    <label for="">Tên khoa/ phòng ban <span class="text-danger">*</span></label>
 									<textarea class="form-control @error('tenkhoa') is-invalid @enderror" style="height: 80px" name="tenkhoa" id="tenkhoa" placeholder="Tên khoa">{{ old('tenkhoa') }}</textarea>
                                     <!-- <input type="text" height="30px" class="form-control @error('tenkhoa') is-invalid @enderror" name="tenkhoa" id="tenkhoa" placeholder="Tên khoa" value="{{ old('tenkhoa') }}"> -->
 									@error('tenkhoa')
@@ -156,7 +156,7 @@
             <div class="modal-body">
                 <form>
                      <div class="form-group">
-                        <label for="validationCustom01" class="form-label">Mã khoa</label>
+                        <label for="validationCustom01" class="form-label">Mã khoa <span class="text-danger">*</span></label>
                       <input type="text" class="form-control" id="makhoa_edit" name="makhoa_edit" value="" readonly  required>
                       @error('makhoa_edit')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
@@ -164,7 +164,7 @@
 
                     </div>
                     <div class="form-group mt-2">
-                      <label for="validationCustom02" class="form-label">Tên khoa</label>
+                      <label for="validationCustom02" class="form-label">Tên khoa <span class="text-danger">*</span></label>
                       <input type="text" class="form-control @error('tenkhoa_edit') is-invalid @enderror"  id="tenkhoa_edit" name="tenkhoa_edit" required>
                       @error('tenkhoa_edit')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>

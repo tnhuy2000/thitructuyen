@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Carbon\Carbon;
 use Auth;
+use Illuminate\Validation\Rule;
+
 class KyThiController extends Controller
 {
     public function getDanhSach()
@@ -39,22 +41,23 @@ class KyThiController extends Controller
     }
     public function postThem(Request $request)
     {
-        $nambatdau=$request->namhocbatdau;
+        // $nambatdau=$request->namhocbatdau;
         
-        $min=$nambatdau+1;
-        $max=$nambatdau+1;
+        // $min=$nambatdau+1;
+        // $max=$nambatdau+1;
         
-     
+        $namhocX= KyThi::where('tenkythi',$request->tenkythi)->where('namhoc',$request->namhoc)->select('namhoc')->first();
         $this->validate($request, [
 			'tenkythi' => 'required|max:255:kythi,tenkythi',
             'hocky' => 'required|max:255:kythi,hocky',
-            'namhocketthuc' => 'required|numeric|min:'.$min.'|max:'.$max,
+            // 'namhocketthuc' => 'required|numeric|min:'.$min.'|max:'.$max,
+            'namhoc' =>  'required_without_all:'.$namhocX->namhoc,
 		] );
-        $namhoc=$nambatdau.'-'.$min;
+       // $namhoc=$nambatdau.'-'.$min;
 		\DB::table('kythi')->insert([
             'tenkythi' => $request->tenkythi,
 			'hocky' => $request->hocky,
-            'namhoc' => $namhoc,
+            'namhoc' => $request->namhoc,
             'updated_at' => Carbon::now()
 		]);
         toastr()->success('Thêm dữ liệu thành công');     

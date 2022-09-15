@@ -203,6 +203,8 @@ Route::prefix('admin')->name('admin.')->middleware(['isHoiDongThi','auth','Preve
           // Quản lý phòng thi
           Route::get('qlphongthi', [PhongThiController::class, 'getDanhSach'])->name('qlphongthi.danhsach');
           Route::get('qlphongthi/them', [PhongThiController::class, 'getThem'])->name('qlphongthi.them');
+          Route::get('qlphongthi/themnhanh', [PhongThiController::class, 'getThemNhanh'])->name('qlphongthi.themnhanh');
+          Route::post('qlphongthi/postthemnhanh', [PhongThiController::class, 'postThemNhanh'])->name('qlphongthi.postthemnhanh');
           Route::post('qlphongthi/them', [PhongThiController::class, 'postThem'])->name('qlphongthi.them');
           Route::get('qlphongthi/sua/{id}', [PhongThiController::class, 'getSua'])->name('qlphongthi.sua');
           Route::post('qlphongthi/sua/{id}', [PhongThiController::class, 'postSua'])->name('qlphongthi.sua');       
@@ -229,6 +231,7 @@ Route::prefix('admin')->name('admin.')->middleware(['isHoiDongThi','auth','Preve
 
           Route::post('qlphongthi/qlhdt_pt/xoa', [HoiDongThiPhongThiController::class, 'postXoa'])->name('qlhdt_pt.xoa');
           Route::post('qlphongthi/qlhdt_pt/them/{phongthi_id}', [HoiDongThiPhongThiController::class, 'postThem'])->name('qlhdt_pt.them');
+          
           Route::post('qlphongthi/qlhdt_pt/sua', [HoiDongThiPhongThiController::class, 'postSua'])->name('qlhdt_pt.sua');
 
           Route::post('qlphongthi/qlhdt_pt/nhap/{phongthi_id}', [HoiDongThiPhongThiController::class, 'postNhap'])->name('qlhdt_pt.nhap');

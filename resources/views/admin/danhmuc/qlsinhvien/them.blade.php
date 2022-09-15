@@ -29,7 +29,7 @@ Quản lý sinh viên | Thêm
                     @csrf 
                   
                    <div class="col-md-12">
-                    <label for="validationCustom01" class="form-label">Mã sinh viên</label>
+                    <label for="validationCustom01" class="form-label">Mã sinh viên <span class="text-danger">*</span></label>
                       <input type="text" placeholder="Vd: DTH185437" class="form-control @error('masinhvien') is-invalid @enderror" id="masinhvien" name="masinhvien" value="{{ old('masinhvien') }}" required>
                       
                       @error('masinhvien')
@@ -38,30 +38,30 @@ Quản lý sinh viên | Thêm
 
                     </div>
                     <div class="col-md-6">
-                      <label for="validationCustom02" class="form-label">Họ</label>
-                      <input type="text"  class="form-control @error('holot') is-invalid @enderror" id="holot" name="holot" value="{{ old('holot') }}" required>
+                      <label for="validationCustom02" class="form-label">Họ <span class="text-danger">*</span></label>
+                      <input type="text"  class="form-control @error('holot') is-invalid @enderror" id="holot" name="holot" value="{{ old('holot') }}" required placeholder="Vd: Nguyễn">
                      
                       @error('holot')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                       @enderror
                     </div>
                     <div class="col-md-6">
-                      <label for="validationCustom02" class="form-label">Tên điệm và tên</label>
-                      <input type="text" class="form-control @error('ten') is-invalid @enderror" id="ten" name="ten" value="{{ old('ten') }}" required>
+                      <label for="validationCustom02" class="form-label">Tên điệm và tên <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control @error('ten') is-invalid @enderror" id="ten" name="ten" value="{{ old('ten') }}" required placeholder="Vd: Văn An">
                       @error('ten')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                       @enderror
                     </div>
                     
                       <div class="form-group col-sm-12">
-                        <label for="validationCustom02" class="form-label">Địa chỉ email</label>
+                        <label for="validationCustom02" class="form-label">Địa chỉ email <span class="text-danger">*</span></label>
                         <input type="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required>
                         @error('email')
                         <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                         @enderror
                       </div>
                       <div class="form-group col-sm-6">
-                      <label for="validationCustom02" class="form-label">Điện thoại</label>
+                      <label for="validationCustom02" class="form-label">Điện thoại <span class="text-danger">*</span></label>
                         <input type="number" placeholder="Điện thoại" class="form-control @error('dienthoai') is-invalid @enderror" id="dienthoai" name="dienthoai" value="{{ old('dienthoai') }}" required>
                         @error('dienthoai')
                         <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
@@ -69,8 +69,8 @@ Quản lý sinh viên | Thêm
                       </div>
                    
                     <div class="form-group  col-sm-6">
-                      <label for="MaLoai" class="form-label">Lớp</label>
-                      <select class="form-control @error('malop') is-invalid @enderror" id="statesLop" name="malop" style="height: 100%" >
+                      <label for="MaLoai" class="form-label">Lớp <span class="text-danger">*</span></label>
+                      <select class="form-control " id="statesLop" name="malop" required >
                         <option value="">-- Chọn Lớp --</option>
                         @foreach($ktkhoa as $value1){
                         <optgroup label="{{$value1->tenkhoa}}" >

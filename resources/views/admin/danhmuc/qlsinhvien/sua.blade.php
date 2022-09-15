@@ -28,7 +28,7 @@ Quản lý sinh viên | Sửa
               <form action="{{ route('admin.danhmuc.qlsinhvien.sua', ['masinhvien' => $ktsinhvien->masinhvien]) }}" method="post" class="row g-3 needs-validation" novalidate>
                     @csrf
                     <div class="col-md-12">
-                    <label for="validationCustom01" class="form-label">Mã sinh viên</label>
+                    <label for="validationCustom01" class="form-label">Mã sinh viên <span class="text-danger">*</span></label>
                       <input type="text" readonly class="form-control @error('masinhvien') is-invalid @enderror" id="masinhvien" name="masinhvien" value="{{ $ktsinhvien->masinhvien }}" required>
                       
                       @error('masinhvien')
@@ -37,7 +37,7 @@ Quản lý sinh viên | Sửa
 
                     </div>
                     <div class="col-md-6">
-                      <label for="validationCustom02" class="form-label">Họ</label>
+                      <label for="validationCustom02" class="form-label">Họ <span class="text-danger">*</span></label>
                       <input type="text"  class="form-control @error('holot') is-invalid @enderror" id="holot" name="holot" value="{{ $ktsinhvien->holot }}" required>
                      
                       @error('holot')
@@ -45,7 +45,7 @@ Quản lý sinh viên | Sửa
                       @enderror
                     </div>
                     <div class="col-md-6">
-                      <label for="validationCustom02" class="form-label">Tên điệm và tên</label>
+                      <label for="validationCustom02" class="form-label">Tên điệm và tên <span class="text-danger">*</span></label>
                       <input type="text" class="form-control @error('ten') is-invalid @enderror" id="ten" name="ten" value="{{ $ktsinhvien->ten }}" required>
                       @error('ten')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
@@ -53,21 +53,21 @@ Quản lý sinh viên | Sửa
                     </div>
                     
                       <div class="form-group col-sm-12">
-                        <label for="validationCustom02" class="form-label">Địa chỉ email</label>
+                        <label for="validationCustom02" class="form-label">Địa chỉ email <span class="text-danger">*</span></label>
                         <input type="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ $ktsinhvien->email }}" required>
                         @error('email')
                         <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                         @enderror
                       </div>
                       <div class="form-group col-sm-6">
-                      <label for="validationCustom02" class="form-label">Điện thoại</label>
+                      <label for="validationCustom02" class="form-label">Điện thoại <span class="text-danger">*</span></label>
                         <input type="number" placeholder="Điện thoại" class="form-control @error('dienthoai') is-invalid @enderror" id="dienthoai" name="dienthoai" value="{{ $ktsinhvien->dienthoai }}" required>
                         @error('dienthoai')
                         <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                         @enderror
                       </div>
                     <div class="form-group col-sm-6">
-                      <label for="malop" class="form-label">Lớp</label>
+                      <label for="malop" class="form-label">Lớp <span class="text-danger">*</span></label>
                       
                       <select class="form-control @error('dienthoai') is-invalid @enderror" id="statesLopSua" name="malop" required>
                         <option value="">-- Chọn Lớp --</option>

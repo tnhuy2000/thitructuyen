@@ -36,7 +36,7 @@ class DuLieuDeThiController extends Controller
 		if(isset($_SESSION['baseUrl'])) unset($_SESSION['baseUrl']);
 		$_SESSION['baseUrl'] = $path;
 		if(isset($_SESSION['resourceType'])) unset($_SESSION['resourceType']);
-		$_SESSION['resourceType'] = 'Images';
+		$_SESSION['resourceType'] = 'Files';
 
 		$ktdulieudethi = \DB::table('dulieudethi')
                     ->where('dethi_id', '=', $dethi_id) ->get();
@@ -90,7 +90,7 @@ class DuLieuDeThiController extends Controller
 		if(isset($_SESSION['baseUrl'])) unset($_SESSION['baseUrl']);
 		$_SESSION['baseUrl'] = $path;
 		if(isset($_SESSION['resourceType'])) unset($_SESSION['resourceType']);
-		$_SESSION['resourceType'] = 'Images';
+		$_SESSION['resourceType'] = 'Files';
 		return 1;
 	}
 	public function postSua(Request $request)

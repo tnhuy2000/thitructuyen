@@ -25,11 +25,11 @@ Quản lý kỳ thi | Sửa
 	  <div class="card">
       <div class="card-body">
               <h5 class="card-title">Sửa kỳ thi</h5>
-              
+              <h6 >Chú ý: (<span class="text-danger">*</span>) là bắt buộc.</h6>
               <form action="{{ route('admin.sapphong.qlkythi.sua', ['id' => $ktkythi->id]) }}" method="post" class="row g-3 needs-validation" novalidate>
                     @csrf
                     <div class="col-md-12">
-                    <label for="validationCustom01" class="form-label">Tên kỳ thi</label>
+                    <label for="validationCustom01" class="form-label">Tên kỳ thi <span class="text-danger">*</span></label>
                       <input type="text" class="form-control @error('tenkythi') is-invalid @enderror" id="tenkythi" name="tenkythi" value="{{ $ktkythi->tenkythi }}"  required>
                       @error('tenkythi')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
@@ -37,7 +37,7 @@ Quản lý kỳ thi | Sửa
 
                     </div>
                     <div class="col-md-4">
-                      <label for="validationCustom02" class="form-label">Học kỳ</label>
+                      <label for="validationCustom02" class="form-label">Học kỳ <span class="text-danger">*</span></label>
                       <select class="form-control" id="hocky" name="hocky" required>
                         <option value="">-- Chọn học kỳ --</option>
                         @if($ktkythi->hocky=='1'){
@@ -69,7 +69,7 @@ Quản lý kỳ thi | Sửa
                     $namhocketthuc= $namhoc[1];
                     @endphp
                     <div class="col-md-4">
-                      <label for="validationCustom02" class="form-label">Năm học bắt đầu</label>
+                      <label for="validationCustom02" class="form-label">Năm học bắt đầu <span class="text-danger">*</span></label>
                       <input type="number"  class="form-control @error('namhocbatdau') is-invalid @enderror" id="namhocbatdau" name="namhocbatdau" value="{{$namhocbatdau}}" required>
                      
                       @error('namhocbatdau')
@@ -78,7 +78,7 @@ Quản lý kỳ thi | Sửa
                     </div>
                   
                     <div class="col-md-4">
-                      <label for="validationCustom02" class="form-label">Năm học kết thúc</label>
+                      <label for="validationCustom02" class="form-label">Năm học kết thúc <span class="text-danger">*</span></label>
                       <input type="number" class="form-control @error('namhocketthuc') is-invalid @enderror" id="namhocketthuc" name="namhocketthuc" value="{{ $namhocketthuc }}" readonly required>
                      
                       @error('namhocketthuc')

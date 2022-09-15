@@ -78,7 +78,6 @@ class LopController extends Controller
         ],[
             'tenlop.required'=>'Vui lòng nhập tên lớp',
             'nienkhoa.required'=>'Vui lòng nhập niên khoá',
-            'tenlop.unique'=>'Tên lớp '.$request->tenkhoa.' đã tồn tại'
         ]);
        
         \DB::table('lop')->where('malop', $request->malop)->update([

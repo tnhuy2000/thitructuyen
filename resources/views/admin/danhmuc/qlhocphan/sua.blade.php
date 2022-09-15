@@ -28,7 +28,7 @@ Quản lý học phần | Sửa
               <form action="{{ route('admin.danhmuc.qlhocphan.sua', ['mahocphan' => $kthocphan->mahocphan]) }}" method="post" class="row g-3 needs-validation" novalidate>
                     @csrf
                     <div class="col-md-4">
-                    <label for="validationCustom01" class="form-label">Mã học phần</label>
+                    <label for="validationCustom01" class="form-label">Mã học phần <span class="text-danger">*</span></label>
                       <input type="text" class="form-control" id="mahocphan" name="mahocphan" value="{{ $kthocphan->mahocphan }}" readonly  required>
                       @error('mahocphan')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
@@ -36,7 +36,7 @@ Quản lý học phần | Sửa
 
                     </div>
                     <div class="col-md-4">
-                      <label for="validationCustom02" class="form-label">Tên học phần</label>
+                      <label for="validationCustom02" class="form-label">Tên học phần <span class="text-danger">*</span></label>
                       <input type="text" class="form-control @error('tenhocphan') is-invalid @enderror" value="{{ $kthocphan->tenhocphan }}"  id="tenhocphan" name="tenhocphan" required>
                       @error('tenhocphan')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
@@ -44,7 +44,7 @@ Quản lý học phần | Sửa
                      
                     </div>
                     <div class="col-md-4">
-                      <label for="validationCustom02" class="form-label">Số tín chỉ</label>
+                      <label for="validationCustom02" class="form-label">Số tín chỉ <span class="text-danger">*</span></label>
                       <input type="text" class="form-control @error('sotinchi') is-invalid @enderror" value="{{ $kthocphan->sotinchi }}"  id="sotinchi" name="sotinchi" required>
                       @error('sotinchi')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>

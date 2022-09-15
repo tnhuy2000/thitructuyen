@@ -146,11 +146,14 @@ Quản lý sinh viên - phòng thi
 						<div class="mb-3">
 							<label for="message-text" class="col-form-label">Mã số sinh viên:</label>
 							<br>
-							<select class="form-select @error('masinhvien') is-invalid @enderror" style="width: 100%" id="stateSVEdit" name="masinhvien_edit" required>
+							<select class="form-select @error('masinhvien_edit') is-invalid @enderror" style="width: 100%" id="stateSVEdit" name="masinhvien_edit" required>
 								@foreach($ktsinhvien as $value)
 									<option value="{{$value->masinhvien}}">{{$value->masinhvien}} - {{$value->holot}} {{$value->ten}}</option>
 								@endforeach
 							</select>
+							@error('masinhvien_edit')
+							<div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+							@enderror
 						</div>
 						<div class="mb-0">
 							<label for="ghichu" class="form-label">Ghi chú</label>
@@ -246,6 +249,15 @@ Quản lý sinh viên - phòng thi
 		@if($errors->has('masinhvien') )
 	
 		var myModal = new bootstrap.Modal(document.getElementById("myModalThemSVPT"), {});
+		document.onreadystatechange = function () {
+		myModal.show();
+		};
+					
+		@endif
+
+		@if($errors->has('masinhvien_edit') )
+	
+		var myModal = new bootstrap.Modal(document.getElementById("ModalSua"), {});
 		document.onreadystatechange = function () {
 		myModal.show();
 		};

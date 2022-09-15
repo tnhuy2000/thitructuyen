@@ -147,7 +147,7 @@ class DeThiController extends Controller
         if(isset($_SESSION['baseUrl'])) unset($_SESSION['baseUrl']);
         $_SESSION['baseUrl'] = $path;
         if(isset($_SESSION['resourceType'])) unset($_SESSION['resourceType']);
-        $_SESSION['resourceType'] = 'Images';
+        $_SESSION['resourceType'] = 'Files';
         
         $folder = 'file/dethi/' . str_pad($next_id, 7, '0', STR_PAD_LEFT);
 

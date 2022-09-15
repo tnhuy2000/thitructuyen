@@ -87,10 +87,9 @@ class ThongKeController extends Controller
     {
         $phongthi = \DB::table('phongthi as p')
 				->join('cathi as c', 'p.cathi_id', '=', 'c.id')
-				->select('p.id','p.maphong','p.soluongthisinh','p.ma_meeting','p.ghichu','c.tenca','c.ngaythi','c.giobatdau')
-				->orderBy('p.id', 'desc')->get();
-        $cathi = \DB::table('cathi')->get();
-       
+				->select('p.id','p.maphong','p.soluongthisinh','p.ma_meeting','p.ghichu','c.tenca','c.ngaythi','c.giobatdau')->get();
+        $cathi = \DB::table('cathi')->orderBy('cathi.id', 'desc')->get();
+       //dd($cathi);
         $sinhvien_phongthi_comat1 =DB::table('sinhvien_phongthi as svpt')
                     ->join('sinhvien as sv', 'sv.masinhvien', '=', 'svpt.masinhvien')
                     ->leftjoin('phongthi as pt', 'pt.id', '=', 'svpt.phongthi_id')

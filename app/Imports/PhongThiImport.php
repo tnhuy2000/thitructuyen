@@ -62,7 +62,6 @@ class PhongThiImport implements ToModel, WithHeadingRow
         $data = new PhongThi();
         $data->cathi_id = $cathi->id;
         $data->maphong = $row['phong_thi'];
-        $data->soluongthisinh = $row['so_luong_thi_sinh'];
         $data->ma_meeting = $meeting->id;
         $data->join_url =  $meeting->join_url;
         $data->ghichu = $row['ghi_chu'];

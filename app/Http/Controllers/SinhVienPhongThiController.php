@@ -63,6 +63,10 @@ class SinhVienPhongThiController extends Controller
         
         try {  
             \DB::table('sinhvien_phongthi')->where('id', '=',$request->id_delete)->delete();
+            $sinhvien = SinhVien_PhongThi::where('phongthi_id',$request->phongthi_id_delete)->count();
+            $orm_edit = PhongThi::find($request->phongthi_id_delete);
+            $orm_edit->soluongthisinh = $sinhvien;
+            $orm_edit->save();
             toastr()->success('Xoá dữ liệu thành công!');
             return redirect()->route('admin.sapphong.qlsv_pt.danhsach',['id'=>$request->phongthi_id_delete]);
         } catch (\Illuminate\Database\QueryException $e) {
@@ -90,11 +94,15 @@ class SinhVienPhongThiController extends Controller
                 $sinhvien->masinhvien = $masv;
                 $sinhvien ->phongthi_id = $request->phongthi_id;
                 $sinhvien->save();
+                
                 toastr()->success('Thêm dữ liệu thành công');
           
             }
         }
-       
+        $sinhvien = SinhVien_PhongThi::where('phongthi_id',$request->phongthi_id)->count();
+        $orm_edit = PhongThi::find($request->phongthi_id);
+        $orm_edit->soluongthisinh = $sinhvien;
+        $orm_edit->save();
         return redirect()->route('admin.sapphong.qlsv_pt.danhsach',['id'=>$phongthi_id]);
         
     }
@@ -103,7 +111,10 @@ class SinhVienPhongThiController extends Controller
     public function postNhap(Request $request,$id)
     {
         Excel::import(new SinhVienPhongThiImport, $request->file('file_excel'));
-   
+        $sinhvien = SinhVien_PhongThi::where('phongthi_id',$id)->count();
+        $orm_edit = PhongThi::find($id);
+        $orm_edit->soluongthisinh = $sinhvien;
+        $orm_edit->save();
         return redirect()->route('admin.sapphong.qlsv_pt.danhsach',['id'=>$id]);
     }
     // Xuất ra Excel
@@ -125,7 +136,7 @@ class SinhVienPhongThiController extends Controller
        
 		$this->validate($request, [
 			'masinhvien_edit' => 'required|max:10:sinhvien_phongthi,masinhvien,',
-			'phongthi_id_edit' => 'required|max:255:sinhvien_phongthi,phongthi_id,'
+			'phongthi_id_edit' => 'required|max:255:sinhvien_phongthi,phongthi_id,',
 		]);
 		
             \DB::table('sinhvien_phongthi')->where('id', $request->id_edit)->update([

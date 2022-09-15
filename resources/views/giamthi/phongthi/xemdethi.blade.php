@@ -32,14 +32,41 @@
 					
 					<div class="card-body text-center">
 				
-						@php $count=1; @endphp
+						@php 
+							$count=0; 
+						
+						@endphp
+							
 						@foreach($dulieudethi as $value)
-							<h6 class="card-title bg-dark text-white">Trang {{$count++}}</h6>
+						@php
+							$ex=pathinfo($value->duongdan, PATHINFO_EXTENSION);
+						@endphp
+						@if ($ex=='png' || $ex=='jpg')
+
+							<h6 class="card-title bg-dark text-white">Trang {{($count++)+1}}</h6>
 							<img src="{{$path_dethi. $value->duongdan}}" class="img-thumnail" width="650px"/>
 							<hr>
-							
+						@else
+						<div style="padding: 5px 10px 10px 10px;">
+							<button class="btn btn-primary btn-rounded" id="prev">Trang trước</button>
+							<button class="btn btn-warning btn-rounded" id="next">Trang sau</button>
+							&nbsp; &nbsp;
+							<span>Trang: <input id="page_num" value="" onchange="onOfPage(this);" style="width: 40px; text-align: right;"/> / <span id="page_count"></span></span>
+						  </div>
+						  
+						  <canvas id="the-canvas" width="600px !important;" ></canvas>
+						  <?php
+						  //Khai báo biến lấy nội dung file và encode base64
+						  
+							$file=$path_dethi . $value->duongdan;
+							$getPDF = base64_encode(file_get_contents($file));
+						
+						  ?>
+					 	 @endif							
 						@endforeach
-						<h6>Đề thi có tổng số: {{$count-1}} trang</h6>
+						@if($count!=0)
+						<h6>Đề thi có tổng số: {{$count}} trang</h6>
+						@endif
 
 					</div>
 				</div>
@@ -58,5 +85,85 @@
 
 @endsection
 @section('javascript')    
-
+<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+<script>
+	//doc pdf
+	var pdfData = atob('<?php if(!empty($getPDF)) echo $getPDF; ?>');
+              
+          var pdfjsLib = window['pdfjs-dist/build/pdf'];
+          
+          pdfjsLib.GlobalWorkerOptions.workerSrc = "//mozilla.github.io/pdf.js/build/pdf.worker.js";
+        
+          var pdfDoc = null,
+            pageNum = 1,
+            pageRendering = false,
+            pageNumPending = null,
+            scale = 1.2,
+            canvas = document.getElementById('the-canvas'),
+            ctx = canvas.getContext('2d');
+          canvas.oncontextmenu = function() {return false};
+          var loadingTask = pdfjsLib.getDocument({data: pdfData});
+          loadingTask.promise.then(function(pdf) {
+            pdfDoc = pdf;
+            document.getElementById('page_count').textContent = pdf.numPages;
+            renderPage(pageNum);
+          }, function (reason) {
+            console.error(reason);
+          });
+          
+          function renderPage(num) {
+            pageRendering = true;
+            pdfDoc.getPage(num).then(function(page) {
+              var viewport = page.getViewport({scale: scale});
+              canvas.height = viewport.height;
+              canvas.width = viewport.width;
+              var renderContext = {
+                canvasContext: ctx,
+                viewport: viewport
+              };
+              var renderTask = page.render(renderContext);
+              renderTask.promise.then(function() {
+                pageRendering = false;
+                if (pageNumPending !== null) {
+                  renderPage(pageNumPending);
+                  pageNumPending = null;
+                }
+              });
+            });
+            document.getElementById('page_num').value = num;
+          }
+          
+          function queueRenderPage(num) {
+            if (pageRendering)
+              pageNumPending = num;
+            else
+              renderPage(num);
+          }
+          
+          function onPrevPage() {
+            if(pageNum <= 1)
+              return;
+            pageNum--;
+            queueRenderPage(pageNum);
+          }
+          document.getElementById('prev').addEventListener('click', onPrevPage);
+        
+          function onNextPage() {
+            if (pageNum >= pdfDoc.numPages)
+              return;
+            pageNum++;
+            queueRenderPage(pageNum);
+          }
+          document.getElementById('next').addEventListener('click', onNextPage);
+        
+          function onOfPage(e) {
+            var num = parseInt(e.value);
+            if(Number.isInteger(num) == false)
+              return;
+            if(num > pdfDoc.numPages || num < 1)
+              return;
+            pageNum = num;
+            queueRenderPage(pageNum);
+          }
+</script>
 @endsection

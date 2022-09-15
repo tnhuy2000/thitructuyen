@@ -28,7 +28,7 @@ Quản lý hội đồng thi | Thêm
               <form action="{{ route('admin.danhmuc.qlhoidongthi.them') }}" method="post" class="row g-3 needs-validation" novalidate>
                     @csrf
                     <div class="col-md-4">
-                    <label for="validationCustom01" class="form-label">Mã cán bộ</label>
+                    <label for="validationCustom01" class="form-label">Mã cán bộ <span class="text-danger">*</span></label>
                       <input type="text" placeholder="Vd: 0212" class="form-control @error('macanbo') is-invalid @enderror" id="macanbo" name="macanbo" value="{{ old('macanbo') }}" required>
                       
                       @error('macanbo')
@@ -37,7 +37,7 @@ Quản lý hội đồng thi | Thêm
 
                     </div>
                     <div class="col-md-3">
-                      <label for="validationCustom02" class="form-label">Họ</label>
+                      <label for="validationCustom02" class="form-label">Họ <span class="text-danger">*</span></label>
                       <input type="text" placeholder="Vd: Nguyễn"  class="form-control @error('holot') is-invalid @enderror" id="holot" name="holot" value="{{ old('holot') }}" required>
                      
                       @error('holot')
@@ -45,22 +45,22 @@ Quản lý hội đồng thi | Thêm
                       @enderror
                     </div>
                     <div class="col-md-5">
-                      <label for="validationCustom02" class="form-label">Tên điệm và tên</label>
-                      <input type="text" placeholder="Vd: Văn A" class="form-control @error('ten') is-invalid @enderror" id="ten" name="ten" value="{{ old('ten') }}" required>
+                      <label for="validationCustom02" class="form-label">Tên điệm và tên <span class="text-danger">*</span></label>
+                      <input type="text" placeholder="Vd: Văn An" class="form-control @error('ten') is-invalid @enderror" id="ten" name="ten" value="{{ old('ten') }}" required>
                       @error('ten')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                       @enderror
                     </div>
                     
                       <div class="form-group col-sm-6">
-                        <label for="validationCustom02" class="form-label">Địa chỉ email</label>
+                        <label for="validationCustom02" class="form-label">Địa chỉ email <span class="text-danger">*</span></label>
                         <input type="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required>
                         @error('email')
                         <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                         @enderror
                       </div>
                     <div class="form-group col-sm-6">
-                      <label for="validationCustom02" class="form-label">Điện thoại</label>
+                      <label for="validationCustom02" class="form-label">Điện thoại <span class="text-danger">*</span></label>
                         <input type="number" placeholder="Điện thoại" class="form-control @error('dienthoai') is-invalid @enderror" id="dienthoai" name="dienthoai" value="{{ old('dienthoai') }}" required>
                         @error('dienthoai')
                         <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
@@ -68,7 +68,7 @@ Quản lý hội đồng thi | Thêm
                       </div>
                    
                     <div class="col-md-6">
-                      <label for="MaLoai" class="form-label">Khoa/Phòng ban</label>
+                      <label for="MaLoai" class="form-label">Khoa/Phòng ban <span class="text-danger">*</span></label>
                       <select class="form-control" id="makhoa" name="makhoa" required>
                         <option value="">-- Chọn Khoa/Phòng ban --</option>
                         @foreach($ktkhoa as $value){
@@ -82,7 +82,7 @@ Quản lý hội đồng thi | Thêm
                       @enderror
                     </div>
                     <div class="col-md-6">
-                      <label for="validationCustom02" class="form-label">Vai trò</label>
+                      <label for="validationCustom02" class="form-label">Vai trò <span class="text-danger">*</span></label>
                       <select class="form-control" id="vaitro" name="vaitro" required>
                           <option value="" {{old('vaitro')=='' ?'selected':''}}>-- Chọn vai trò --</option>
                           <option value="canbocoithi" {{old('vaitro')=='canbocoithi' ?'selected':''}}>Cán bộ coi thi</option>

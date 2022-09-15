@@ -28,7 +28,7 @@ Quản lý học phần | Thêm
               <form action="{{ route('admin.danhmuc.qlhocphan.them') }}" method="post" class="row g-3 needs-validation" novalidate>
                     @csrf
                     <div class="col-md-4">
-                    <label for="validationCustom01" class="form-label">Mã học phần</label>
+                    <label for="validationCustom01" class="form-label">Mã học phần <span class="text-danger">*</span></label>
                       <input type="text" class="form-control @error('mahocphan') is-invalid @enderror" id="mahocphan" name="mahocphan" value="{{ old('mahocphan') }}" required>
                       
                       @error('mahocphan')
@@ -37,7 +37,7 @@ Quản lý học phần | Thêm
 
                     </div>
                     <div class="col-md-4">
-                      <label for="validationCustom02" class="form-label">Tên học phần</label>
+                      <label for="validationCustom02" class="form-label">Tên học phần <span class="text-danger">*</span></label>
                       <input type="text" class="form-control @error('tenhocphan') is-invalid @enderror" id="tenhocphan" name="tenhocphan" value="{{ old('tenhocphan') }}" required>
                      
                       @error('tenhocphan')
@@ -45,7 +45,7 @@ Quản lý học phần | Thêm
                       @enderror
                     </div>
                     <div class="col-md-4">
-                      <label for="validationCustom02" class="form-label">Số tín chỉ</label>
+                      <label for="validationCustom02" class="form-label">Số tín chỉ <span class="text-danger">*</span></label>
                       <input type="number" class="form-control @error('sotinchi') is-invalid @enderror" id="sotinchi" name="sotinchi" value="{{ old('sotinchi') }}" required>
                      
                       @error('sotinchi')

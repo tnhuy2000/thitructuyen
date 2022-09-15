@@ -26,7 +26,8 @@ Quản lý dữ liệu đề thi
 	  <div class="card">
 		<div class="card-body">
 
-		<h5 class="card-title">Học phần: {{$ktdethi->tenhocphan}} | Kỳ thi: {{$ktdethi->tenkythi}} | Học kỳ: {{$ktdethi->hocky}} | Năm học: {{$ktdethi->namhoc}} </h5>
+		<h5 class="card-title">Học phần: {{$ktdethi->tenhocphan}} | Kỳ thi: {{$ktdethi->tenkythi}} </h5>
+		<h6>Học kỳ: {{$ktdethi->hocky}} | Năm học: {{$ktdethi->namhoc}} </h5>
 		<h6>Thời gian làm bài: {{$ktdethi->thoigianlambai}} phút</h6>
 		<h6>Hình thức làm bài: 
 			@if($ktdethi->hinhthuc=="tuluan")
@@ -41,9 +42,9 @@ Quản lý dữ liệu đề thi
 				<tr>
 					<th scope="col" width="2%">#</th>
 				
-					<th scope="col" width="23%">Hình ảnh</th>
-					<th scope="col"  width="23%">Thứ tự hiển thị</th>
-					<th scope="col">Ghi chú</th>
+					<th scope="col">Tập tin</th>
+					<th scope="col"  width="15%">Thứ tự hiển thị</th>
+					<th scope="col" width="15%">Ghi chú</th>
 					<th scope="col" width="8%" class="text-center">Sửa</th>
 					<th scope="col" width="8%" class="text-center">Xóa</th>
 				</tr>
@@ -54,8 +55,19 @@ Quản lý dữ liệu đề thi
 					<tr >
 						<td>{{ $count++ }}</td>
 				
-                        <td><img class="img-thumbnail border-warning" src="{{ $path . $value->duongdan }}" width="100" height="130" />
-                    </td>
+                        <td>
+							@php
+								$ex=pathinfo($value->duongdan, PATHINFO_EXTENSION);
+							@endphp
+							@if ($ex=='png' || $ex=='jpg')
+							<img class="img-thumbnail border-warning" src="{{ $path . $value->duongdan }}" width="100" height="130" />
+							<span style="font-size: 0.8em;">{{$value->duongdan}}</span>
+							@else
+							<i class="fa-regular fa-file"></i> <span style="font-size: 0.8em;">{{$value->duongdan}}</span>
+							@endif
+							
+							
+                    	</td>
                         <td>{{ $value->thutuhienthi }}</td>
 						<td>{{ $value->ghichu }}</td>
 						

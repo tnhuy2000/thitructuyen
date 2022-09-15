@@ -29,8 +29,8 @@ Quản lý đề thi | Sửa
               <form action="{{ route('admin.dethi_baithi.qldethi.sua', ['id' => $ktdethi->id]) }}" method="post" class="row g-3 needs-validation" novalidate>
                     @csrf
                     <div class="col-md-6">
-                      <label for="validationCustom02" class="form-label">Kỳ thi</label>
-                      <select class="form-control @error('kythi_id') is-invalid @enderror"  onchange="testb(this)" id="statesKyThi" name="kythi_id" required>
+                      <label for="validationCustom02" class="form-label">Kỳ thi <span class="text-danger">*</span></label>
+                      <select class="form-control"  onchange="testb(this)" id="statesKyThi" name="kythi_id" required>
                         <option value="">-- Chọn kỳ thi --</option>
                         @foreach($ktkythi as $value){ 
                           @if($value->id==$ktdethi->kythi_id){
@@ -49,8 +49,8 @@ Quản lý đề thi | Sửa
                       @enderror
                     </div>
                     <div class="col-md-6">
-                    <label for="validationCustom01" class="form-label">Học phần</label>
-                    <select class="form-control @error('mahocphan') is-invalid @enderror"  onchange="test(this)" id="statesHocPhan" name="mahocphan" required>
+                    <label for="validationCustom01" class="form-label">Học phần <span class="text-danger">*</span></label>
+                    <select class="form-control"  onchange="test(this)" id="statesHocPhan" name="mahocphan" required>
                         <option value="">-- Chọn học phần --</option>
                         @foreach($kthocphan as $value){ 
                           @if($value->mahocphan==$ktdethi->mahocphan){
@@ -73,7 +73,7 @@ Quản lý đề thi | Sửa
                     <div class="form-group">
                     <input type="hidden" id="hocphan" required>
                       <input type="hidden" id="kythi" required>
-                      <label for="validationCustom02" class="form-label">Tên đề thi</label>
+                      <label for="validationCustom02" class="form-label">Tên đề thi <span class="text-danger">*</span></label>
                       <input type="hidden" id="hocphan" required>
                       <input type="hidden" id="kythi" required>
                       <input type="text" class="form-control @error('tendethi') is-invalid @enderror" id="tendethi" name="tendethi" value="{{ $ktdethi->tendethi }}" required>
@@ -82,7 +82,7 @@ Quản lý đề thi | Sửa
                       @enderror
                     </div>
                     <div class="form-group col-sm-6">
-                      <label for="validationCustom02" class="form-label">Thời gian làm bài (đơn vị: phút)</label>
+                      <label for="validationCustom02" class="form-label">Thời gian làm bài (đơn vị: phút) <span class="text-danger">*</span></label>
                       <input type="number" class="form-control @error('thoigianlambai') is-invalid @enderror" id="thoigianlambai" name="thoigianlambai" value="{{ $ktdethi->thoigianlambai }}" required>
                       @error('thoigianlambai')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
@@ -90,7 +90,7 @@ Quản lý đề thi | Sửa
                     </div>
                     
                     <div class="form-group col-sm-6">
-                      <label for="MaLoai" class="form-label">Hình thức</label>
+                      <label for="MaLoai" class="form-label">Hình thức <span class="text-danger">*</span></label>
                       <select class="form-control" id="hinhthuc" name="hinhthuc" required>
                           <option value="">-- Chọn hình thức --</option>
                           @if($ktdethi->hinhthuc=="tuluan"){

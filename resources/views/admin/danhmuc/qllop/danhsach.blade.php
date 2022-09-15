@@ -203,8 +203,8 @@ Quản lý lớp
 
 		
 		$("#col3_filter").select2({         
-              theme: "bootstrap-5",
-              });   
+			theme: "bootstrap-5",
+		});   
 		
   </script>
 @endsection

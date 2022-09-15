@@ -241,7 +241,8 @@ Quản lý hội đồng thi - phòng thi
 		$('#statesCB').select2({
 			dropdownParent: $('#myModalThemHDTPT'),
 			placeholder: "Nhập mã cán bộ",
-    		allowClear: true
+    		allowClear: true,
+			theme: "bootstrap-5"
 		});
 		$('#stateCBEdit').select2({
 			dropdownParent: $('#ModalSua')

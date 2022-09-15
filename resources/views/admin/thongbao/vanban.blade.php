@@ -234,11 +234,20 @@ Quản lý văn bản
 		}
 		
 		@if($errors->has('tenvanban') || $errors->has('duongdan'))
-			$('#myModal').modal('show');
+			var myModal = new bootstrap.Modal(document.getElementById("myModal"), {});
+			document.onreadystatechange = function () {
+			myModal.show();
+			}
 		@endif
 		
 		@if($errors->has('tenvanban') || $errors->has('duongdan_edit'))
-			$('#myModalEdit').modal('show');
+			var myModal = new bootstrap.Modal(document.getElementById("myModalEdit"), {});
+			document.onreadystatechange = function () {
+			myModal.show();
+			}
 		@endif
+		
+					
+	
 	</script>
 @endsection

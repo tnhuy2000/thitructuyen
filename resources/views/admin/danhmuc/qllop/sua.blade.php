@@ -28,7 +28,7 @@ Quản lý lớp | Sửa
               <form action="{{ route('admin.danhmuc.qllop.sua', ['malop' => $ktlop->malop]) }}" method="post" class="row g-3 needs-validation" novalidate>
                     @csrf
                     <div class="col-md-12">
-                    <label for="validationCustom01" class="form-label">Mã lớp</label>
+                    <label for="validationCustom01" class="form-label">Mã lớp <span class="text-danger">*</span></label>
                       <input type="text" class="form-control" id="malop" name="malop" value="{{ $ktlop->malop }}" readonly  required>
                       @error('malop')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
@@ -36,7 +36,7 @@ Quản lý lớp | Sửa
 
                     </div>
                     <div class="col-md-12">
-                      <label for="validationCustom02" class="form-label">Tên lớp</label>
+                      <label for="validationCustom02" class="form-label">Tên lớp <span class="text-danger">*</span></label>
                       <input type="text" class="form-control @error('tenlop') is-invalid @enderror" value="{{ $ktlop->tenlop }}"  id="tenlop" name="tenlop" required>
                       @error('tenlop')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
@@ -44,7 +44,7 @@ Quản lý lớp | Sửa
                      
                     </div>
                     <div class="col-md-12">
-                      <label for="validationCustom02" class="form-label">Niên khoá</label>
+                      <label for="validationCustom02" class="form-label">Niên khoá <span class="text-danger">*</span></label>
                       <input type="text" class="form-control @error('nienkhoa') is-invalid @enderror" value="{{ $ktlop->nienkhoa }}"  id="nienkhoa" name="nienkhoa" required>
                       @error('nienkhoa')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
@@ -52,7 +52,7 @@ Quản lý lớp | Sửa
                      
                     </div>
                     <div class="form-group col-md-12 ">
-                      <label for="makhoa" class="form-label">Khoa</label>
+                      <label for="makhoa" class="form-label">Khoa <span class="text-danger">*</span></label>
                       <select class="form-select" id="statesKhoaSua" name="makhoa" required>
                         <option value="">-- Chọn Khoa --</option>
                         @foreach($ktkhoa as $value){

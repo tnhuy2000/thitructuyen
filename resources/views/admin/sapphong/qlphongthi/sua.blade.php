@@ -48,7 +48,7 @@ Quản lý phòng thi | Sửa
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                       @enderror
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                     <label for="validationCustom01" class="form-label">Mã phòng</label>
                       <input type="text" class="form-control @error('maphong') is-invalid @enderror" id="maphong" name="maphong" value="{{ $ktphongthi->maphong }}" required>
                       
@@ -57,14 +57,7 @@ Quản lý phòng thi | Sửa
                       @enderror
 
                     </div>
-                    <div class="col-md-6">
-                      <label for="validationCustom02" class="form-label">Số lượng thí sinh</label>
-                      <input type="number" class="form-control @error('soluongthisinh') is-invalid @enderror" id="soluongthisinh" name="soluongthisinh" value="{{ $ktphongthi->soluongthisinh }}" required>
-                     
-                      @error('soluongthisinh')
-                      <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
-                      @enderror
-                    </div>
+                   
                     <div class="col-md-12">
                       <label for="validationCustom02" class="form-label">Ghi chú</label>
                       <textarea class="form-control @error('ghichu') is-invalid @enderror" id="ghichu" name="ghichu">{{ $ktphongthi->ghichu }}</textarea>

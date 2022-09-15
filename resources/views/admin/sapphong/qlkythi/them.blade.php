@@ -24,11 +24,11 @@ Quản lý kỳ thi | Thêm
 	  <div class="card">
       <div class="card-body">
               <h5 class="card-title">Thêm mới</h5>
-              
-              <form action="{{ route('admin.sapphong.qlkythi.them') }}" method="post" class="row g-3 needs-validation" novalidate>
+              <h6 >Chú ý: (<span class="text-danger">*</span>) là bắt buộc.</h6>
+              <form action="{{ route('admin.sapphong.qlkythi.them') }}" method="post" >
                     @csrf
                     <div class="col-md-12">
-                    <label for="validationCustom01" class="form-label">Tên kỳ thi</label>
+                    <label for="validationCustom01" class="form-label">Tên kỳ thi <span class="text-danger">*</span></label>
                       <input type="text" class="form-control @error('tenkythi') is-invalid @enderror" id="tenkythi" name="tenkythi" value="{{ old('tenkythi') }}" required>
                       
                       @error('tenkythi')
@@ -37,7 +37,7 @@ Quản lý kỳ thi | Thêm
 
                     </div>
                     <div class="col-md-4">
-                      <label for="validationCustom02" class="form-label">Học kỳ</label>
+                      <label for="validationCustom02" class="form-label">Học kỳ <span class="text-danger">*</span></label>
                       <select class="form-control" id="hocky" name="hocky" required>
                         <option value="" {{old('hocky')=='' ?'selected':''}}>-- Chọn học kỳ --</option>
                           <option value="1" {{old('hocky')=='1' ?'selected':''}}>1</option>
@@ -48,23 +48,31 @@ Quản lý kỳ thi | Thêm
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                       @enderror
                     </div>
-                    <div class="col-md-4">
-                      <label for="validationCustom02" class="form-label">Năm học bắt đầu</label>
+                    {{-- <div class="col-md-4">
+                      <label for="validationCustom02" class="form-label">Năm học bắt đầu <span class="text-danger">*</span></label>
                       <input type="number"   class="form-control @error('namhocbatdau') is-invalid @enderror" id="namhocbatdau" name="namhocbatdau" value="{{ old('namhocbatdau') }}" required>
                      
                       @error('namhocbatdau')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                       @enderror
+                    </div> --}}
+                    <div class="col-md-4">
+                      <label for="validationCustom02" class="form-label">Năm học <span class="text-danger">*</span></label>
+                      <input type="text"   class="form-control @error('namhoc') is-invalid @enderror" id="namhoc" name="namhoc" value="{{ old('namhoc') }}" required>
+                     
+                      @error('namhoc')
+                      <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                      @enderror
                     </div>
                   
-                    <div class="col-md-4">
-                      <label for="validationCustom02" class="form-label">Năm học kết thúc</label>
+                    {{-- <div class="col-md-4">
+                      <label for="validationCustom02" class="form-label">Năm học kết thúc <span class="text-danger">*</span></label>
                       <input type="number"  class="form-control @error('namhocketthuc') is-invalid @enderror" id="namhocketthuc" name="namhocketthuc" value="{{ old('namhocketthuc') }}" readonly required>
                     
                       @error('namhocketthuc')
                       <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                       @enderror
-                    </div>
+                    </div> --}}
                     
                     <div class="col-12">
                       <button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk"></i> Thực hiện</button>
@@ -82,16 +90,16 @@ Quản lý kỳ thi | Thêm
 @section('javascript')    
 <script type="text/javascript">
 
-    const source = document.getElementById('namhocbatdau');
-    const result = document.getElementById('namhocketthuc');
+    // const source = document.getElementById('namhocbatdau');
+    // const result = document.getElementById('namhocketthuc');
 
-    const inputHandler = function(e) {
-      var namkethuc= e.target.value;
-      result.value = parseInt(namkethuc) +1;
-    }
+    // const inputHandler = function(e) {
+    //   var namkethuc= e.target.value;
+    //   result.value = parseInt(namkethuc) +1;
+    // }
 
-    source.addEventListener('input', inputHandler);
-    source.addEventListener('propertychange', inputHandler); // for IE8
+    // source.addEventListener('input', inputHandler);
+    // source.addEventListener('propertychange', inputHandler); // for IE8
 
 </script>
 @endsection

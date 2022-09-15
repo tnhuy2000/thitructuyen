@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Traits\MeetingZoomTrait;
+use App\Imports\HoiDongThiPhongThiImport;
 use App\Models\PhongThi;
 use App\Imports\PhongThiImport;
+use App\Imports\PhongThiXemTruocImport;
+use App\Imports\SinhVienPhongThiImport;
+use App\Models\DeThi_PhongThi;
+use App\Models\SinhVien_PhongThi;
 use Excel;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;
+
 use MacsiDigital\Zoom\Facades\Zoom;
 class PhongThiController extends Controller
 {
@@ -87,6 +93,65 @@ class PhongThiController extends Controller
 
         return view('admin.sapphong.qlphongthi.them')->with('ktphongthi',$phongthi)->with('ktcathi',$cathi);
     }
+    public function getThemNhanh()
+    {
+        $ktphongthi=\DB::table('phongthi')->get();
+        $ktcathi=\DB::table('cathi') ->orderBy('cathi.id', 'desc')->get();
+        $ktdethi=\DB::table('dethi') ->orderBy('dethi.id', 'desc')->get();
+        
+
+        return view('admin.sapphong.qlphongthi.themnhanh',compact('ktdethi','ktcathi','ktphongthi'));
+    }
+    public function postThemNhanh(Request $request)
+    {
+        $this->validate($request, [
+            'dethi_id' => 'required|max:255:phongthi,dethi_id',
+            'maphong' => 'required|max:255|unique:phongthi,maphong',
+            'ghichu' => 'nullable|max:255:phongthi,ghichu',
+            'cathi_id' => 'required|max:255:phongthi,cathi_id'
+		],
+        [
+            'maphong.unique'=>'Mã phòng thi đã tồn tại',
+            
+        ]);
+        
+       if($request->meeting=="zoom"){
+        //Zoom
+        $meeting= $this->createMeeting($request);
+       
+        $orm = new PhongThi();
+		$orm->cathi_id = $request->cathi_id;
+		$orm->maphong = $request->maphong;
+        $orm->ma_meeting = $meeting->id;
+        $orm->join_url = $meeting->join_url;
+        $orm->ghichu = $request->ghichu;
+		$orm->save();
+
+        
+        $dt = new DeThi_PhongThi();
+        $dt->dethi_id = $request->dethi_id;
+        $dt->phongthi_id = $orm->id;
+       
+        $dt->save();
+				
+        if(!empty($request->file('file_excel'))){
+            Excel::import(new SinhVienPhongThiImport, $request->file('file_excel'));
+            $sinhvien = SinhVien_PhongThi::where('phongthi_id',$orm->id)->count();
+            $orm_edit = PhongThi::find($orm->id);
+            $orm_edit->soluongthisinh = $sinhvien;
+            $orm_edit->save();
+        }
+
+        if(!empty($request->file('file_excelhdt'))){
+            Excel::import(new HoiDongThiPhongThiImport, $request->file('file_excelhdt'));
+        }
+        
+        
+    }
+		
+    toastr()->success('Thêm dữ liệu thành công');
+    return redirect()->route('admin.sapphong.qlphongthi.danhsach');
+    }
     public function postThem(Request $request)
     {
         $this->validate($request, [
@@ -128,18 +193,15 @@ class PhongThiController extends Controller
     {
         $this->validate($request, [
             'maphong'=>'required|max:255|unique:phongthi,maphong,' . $request->id . ',id',
-            'soluongthisinh' => 'required|max:300|numeric:phongthi,soluongthisinh',
             'ghichu' => 'max:255:phongthi,ghichu',
             'cathi_id' => 'required|max:255:phongthi,cathi_id'
         ],[
             'maphong.required'=>'Vui lòng nhập mã phòng',
-            'soluongthisinh.required'=>'Vui lòng nhập số lượng thí sinh',
             'maphong.unique'=>'Mã phòng '.$request->maphong.' đã tồn tại'
         ]);
        
         \DB::table('phongthi')->where('id', $request->id)->update([
             'maphong' => $request->maphong,
-            'soluongthisinh' => $request->soluongthisinh,
             'ghichu' => $request->ghichu,
             'cathi_id' => $request->cathi_id,
         ]);
